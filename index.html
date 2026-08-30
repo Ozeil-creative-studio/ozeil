@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#05001D">
+<title>Ozeil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#05001d;
+    --bg-elevated:#0b0630;
+    --bg-elevated-2:#100b3d;
+    --surface:#150f45;
+    --line:rgba(255,255,255,.09);
+    --text:#f4f2fb;
+    --text-soft:#a6a2c9;
+    --text-faint:#726e99;
+    --gold:#dcb279;
+    --gold-soft:rgba(220,178,121,.35);
+    --radius:20px;
+    --radius-sm:16px;
+    --font: 'Montserrat Alternates', sans-serif;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    font-family:var(--font);
+    background:var(--bg);
+    color:var(--text);
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:.001ms !important; transition-duration:.001ms !important;}
+  }
+
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  ul{list-style:none;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+  input,textarea{font-family:inherit;}
+
+  .container{width:100%;max-width:1240px;margin:0 auto;padding:0 32px;}
+
+  .mark{fill:currentColor;}
+
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:200;
+    background:rgba(5,0,29,.72);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+
+  .nav{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    padding:16px 28px;
+    max-width:1240px;
+    margin:0 auto;
+  }
+
+  .nav-pill{justify-self:start;}
+  .nav-icon-btn{justify-self:end;}
+
+  .nav-center{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    justify-self:center;
+  }
+
+  .nav-link{
+    font-size:17px;
+    font-weight:600;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+    position:relative;
+    padding:4px 0;
+    color:var(--text);
+  }
+  .nav-link::after{
+    content:"";
+    position:absolute;
+    left:0;bottom:-2px;
+    width:0;height:1px;
+    background:var(--gold);
+    transition:width .25s ease;
+  }
+  .nav-link:hover::after{width:100%;}
+
+  .nav-pill{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 18px 9px 9px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.04em;
+    color:var(--text-soft);
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .nav-pill:hover{border-color:var(--gold-soft);color:var(--text);}
+  .nav-pill .icon-circle{
+    width:24px;height:24px;
+    border-radius:50%;
+    background:var(--surface);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .nav-pill .icon-circle svg{width:13px;height:13px;}
+
+  .nav-icon-btn{
+    width:38px;height:38px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .nav-icon-btn:hover{border-color:var(--gold-soft);background:var(--surface);}
+  .nav-icon-btn svg{width:17px;height:17px;}
+
+  .nav-logo{
+    display:flex;
+    align-items:center;
+  }
+  .nav-logo svg{width:50px;height:50px;color:var(--text);}
+
+  @media (max-width:640px){
+    .nav{padding:14px 18px;}
+    .nav-center{gap:10px;}
+    .nav-pill span.label{display:none;}
+    .nav-pill{padding:8px;}
+    .nav-link{font-size:13px;}
+    .nav-logo svg{width:38px;height:38px;}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    z-index:0;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:
+      radial-gradient(ellipse 60% 45% at 50% 30%, rgba(220,178,121,.10), transparent 60%),
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(50,30,110,.35), transparent 70%),
+      var(--bg);
+  }
+
+  .hero-giant-mark{
+    position:absolute;
+    left:50%;
+    bottom:-40%;
+    width:min(820px,105vw);
+    max-width:none;
+    transform:translate(-50%,0);
+    color:rgba(244,242,251,.9);
+    filter:drop-shadow(0 0 90px rgba(220,178,121,.12));
+    pointer-events:none;
+    z-index:1;
+    will-change:transform;
+  }
+
+  .hero-wordmark{
+    position:relative;
+    z-index:3;
+    display:inline-flex;
+    padding:30px 64px;
+    border-radius:var(--radius);
+    background:rgba(5,0,29,.5);
+    border:1px solid rgba(255,255,255,.1);
+    isolation:isolate;
+  }
+  .hero-wordmark::before{
+    content:"";
+    position:absolute;
+    inset:-70%;
+    z-index:-1;
+    background:radial-gradient(circle, var(--gold) 0%, transparent 68%);
+    filter:blur(46px);
+    opacity:.4;
+  }
+  .hero-wordmark h1{
+    font-size:clamp(38px,7vw,88px);
+    font-weight:700;
+    letter-spacing:.28em;
+    text-indent:.28em;
+  }
+
+  /* ---------- Sections ---------- */
+  .section{padding:120px 0;position:relative;z-index:1;background:var(--bg);}
+  .section.alt{background:var(--bg-elevated);}
+
+  .section-head{
+    text-align:center;
+    max-width:560px;
+    margin:0 auto 56px;
+  }
+  .section-eyebrow{
+    font-size:11px;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:600;
+    margin-bottom:14px;
+  }
+  .section-head h2{
+    font-size:clamp(28px,4vw,42px);
+    font-weight:700;
+    text-wrap:balance;
+    margin-bottom:14px;
+  }
+  .section-head p{
+    font-size:14.5px;
+    font-weight:300;
+    color:var(--text-soft);
+    line-height:1.75;
+  }
+  .section-sub{
+    font-size:13px;
+    font-weight:400;
+    color:var(--text-soft);
+    letter-spacing:.04em;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:15px 34px;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    border-radius:999px;
+    transition:all .25s ease;
+    border:1px solid transparent;
+  }
+  .btn svg{width:14px;height:14px;}
+  .btn-primary{background:var(--text);color:var(--bg);}
+  .btn-primary:hover{background:var(--gold);}
+  .btn-ghost{border-color:var(--line);color:var(--text);}
+  .btn-ghost:hover{border-color:var(--gold-soft);background:var(--surface);}
+
+  /* ---------- Product placeholder art ---------- */
+  .product-art{
+    position:relative;
+    border-radius:var(--radius);
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .product-art.tone-1{background:linear-gradient(150deg,#2c1f4c,#150f45);}
+  .product-art.tone-2{background:linear-gradient(150deg,#3a2a3f,#150f45);}
+  .product-art.tone-3{background:linear-gradient(150deg,#1f2a4c,#120c3c);}
+  .product-art.tone-4{background:linear-gradient(150deg,#33234f,#0e0932);}
+  .product-art svg.icon-glyph{width:34%;height:34%;color:rgba(244,242,251,.55);}
+
+  /* ---------- Nouveauté ---------- */
+  .feature-card{
+    position:relative;
+    width:min(360px,80vw);
+    aspect-ratio:1/1;
+    margin:0 auto 32px;
+    border-radius:50%;
+    border:26px solid rgba(255,255,255,.10);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .feature-badge{
+    position:absolute;
+    top:10%;left:10%;
+    transform:translate(-35%,-35%);
+    z-index:3;
+    background:var(--text);
+    color:var(--bg);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    padding:7px 14px;
+    border-radius:999px;
+  }
+  .feature-card > svg{width:36%;height:36%;color:rgba(244,242,251,.7);}
+
+  .feature-info{text-align:center;}
+  .feature-info h3{font-size:17px;font-weight:600;margin-bottom:4px;}
+  .feature-info .price{font-size:14px;color:var(--text-soft);font-weight:300;margin-bottom:22px;}
+
+  /* ---------- Bestseller collage ---------- */
+  .bestseller-collage{
+    position:relative;
+    width:min(440px,88vw);
+    aspect-ratio:1/1;
+    margin:0 auto 36px;
+  }
+  .collage-item{
+    position:absolute;
+    border-radius:var(--radius-sm);
+    box-shadow:0 22px 46px rgba(0,0,0,.45);
+    overflow:hidden;
+  }
+  .collage-main{width:58%;height:58%;top:21%;left:21%;z-index:5;}
+  .collage-a{width:34%;height:34%;top:0;left:2%;z-index:2;transform:rotate(-6deg);}
+  .collage-b{width:32%;height:32%;top:4%;right:0;z-index:3;transform:rotate(5deg);}
+  .collage-c{width:32%;height:32%;bottom:2%;left:0;z-index:2;transform:rotate(4deg);}
+  .collage-d{width:34%;height:34%;bottom:0;right:2%;z-index:4;transform:rotate(-5deg);}
+
+  .bestseller-info{text-align:center;}
+  .bestseller-info h3{font-size:17px;font-weight:600;margin-bottom:4px;}
+  .bestseller-info .price{font-size:14px;color:var(--text-soft);font-weight:300;margin-bottom:22px;}
+
+  /* ---------- Accessoires ---------- */
+  .accessoires-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:26px;
+  }
+  .accessoire-card{display:flex;flex-direction:column;align-items:center;gap:16px;}
+  .accessoire-art{width:100%;aspect-ratio:1/1;}
+  .accessoire-card h4{font-size:14px;font-weight:600;}
+  .accessoire-link{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    font-size:12px;
+    font-weight:500;
+    color:var(--text-soft);
+    letter-spacing:.03em;
+    transition:color .2s ease;
+  }
+  .accessoire-link svg{width:14px;height:14px;}
+  .accessoire-link:hover{color:var(--gold);}
+
+  /* ---------- Contact ---------- */
+  #contact{overflow:hidden;}
+  .contact-slide-mark{
+    position:absolute;
+    top:50%;
+    left:0;
+    width:min(420px,60vw);
+    color:rgba(255,255,255,.5);
+    transform:translate(-20%,-50%);
+    pointer-events:none;
+    z-index:0;
+    will-change:transform;
+  }
+  .contact-panel{
+    position:relative;
+    z-index:1;
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    background:rgba(255,255,255,.06);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .contact-form{padding:56px;}
+  .contact-form h2{font-size:clamp(24px,3vw,32px);font-weight:700;margin-bottom:12px;}
+  .contact-form > p{font-size:14px;font-weight:300;color:var(--text-soft);line-height:1.7;margin-bottom:32px;max-width:420px;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+  .field{display:flex;flex-direction:column;gap:8px;}
+  .field label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);}
+  .field input,.field textarea{
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:var(--radius-sm);
+    padding:13px 16px;
+    color:var(--text);
+    font-size:14px;
+    resize:vertical;
+    transition:border-color .2s ease;
+  }
+  .field input:focus,.field textarea:focus{border-color:var(--gold-soft);outline:none;}
+  .field.full{grid-column:1/-1;margin-bottom:24px;}
+  .contact-side{
+    padding:56px 44px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    border-left:1px solid rgba(255,255,255,.12);
+  }
+  .contact-side h4{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:10px;}
+  .contact-side a.email{font-size:15px;font-weight:500;color:var(--text);}
+  .contact-side a.email:hover{color:var(--gold);}
+  .contact-social{display:flex;gap:12px;margin-top:20px;}
+  .contact-social a{
+    width:38px;height:38px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.14);
+    display:flex;align-items:center;justify-content:center;
+    transition:all .2s ease;
+  }
+  .contact-social a:hover{background:var(--gold);border-color:var(--gold);color:var(--bg);}
+  .contact-social svg{width:16px;height:16px;}
+
+  /* ---------- À propos ---------- */
+  .apropos-head{margin-bottom:140px;}
+  .apropos-wrap{
+    position:relative;
+    display:flex;
+    justify-content:center;
+  }
+  .apropos-bg-mark{
+    position:absolute;
+    width:360px;
+    top:-170px;
+    color:rgba(255,255,255,.55);
+    z-index:0;
+    will-change:transform;
+  }
+  .apropos-card{
+    position:relative;
+    z-index:1;
+    max-width:640px;
+    width:100%;
+    background:rgba(255,255,255,.09);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:var(--radius);
+    padding:52px;
+    text-align:center;
+  }
+  .apropos-card h3{font-size:24px;font-weight:700;margin-bottom:20px;}
+  .apropos-card p{font-size:14.5px;font-weight:300;line-height:1.85;color:var(--text-soft);margin-bottom:16px;}
+  .apropos-card .btn{margin-top:16px;}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--bg-elevated);border-top:1px solid var(--line);padding:70px 0 28px;}
+  .footer-top{
+    display:flex;
+    justify-content:space-between;
+    gap:60px;
+    padding-bottom:48px;
+    border-bottom:1px solid var(--line);
+    flex-wrap:wrap;
+  }
+  .footer-brand{display:flex;align-items:center;}
+  .footer-brand-mark{display:flex;align-items:center;gap:24px;}
+  .footer-brand-mark svg{width:104px;height:104px;color:var(--text);}
+  .footer-brand-mark span{font-size:46px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;}
+  .footer-links{display:flex;gap:64px;flex-wrap:wrap;}
+  .footer-col h5{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:18px;}
+  .footer-col ul li{margin-bottom:12px;}
+  .footer-col ul a{font-size:13.5px;font-weight:400;color:var(--text-soft);transition:color .2s ease;}
+  .footer-col ul a:hover{color:var(--text);}
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-top:24px;
+    font-size:12px;
+    color:var(--text-faint);
+    font-weight:300;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  /* ---------- Modal ---------- */
+  .modal-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(5,0,29,.72);
+    backdrop-filter:blur(6px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    z-index:500;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .25s ease;
+  }
+  .modal-backdrop.open{opacity:1;pointer-events:auto;}
+  .modal{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    max-width:680px;
+    width:100%;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    overflow:hidden;
+    transform:translateY(16px);
+    transition:transform .25s ease;
+    max-height:90vh;
+  }
+  .modal-backdrop.open .modal{transform:translateY(0);}
+  .modal-media{aspect-ratio:1/1;}
+  .modal-info{padding:40px;position:relative;display:flex;flex-direction:column;}
+  .modal-close{
+    position:absolute;top:16px;right:16px;
+    width:32px;height:32px;
+    border-radius:50%;
+    background:var(--bg-elevated-2);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .modal-close svg{width:14px;height:14px;}
+  .modal-info h3{font-size:20px;font-weight:700;margin-bottom:8px;padding-right:36px;}
+  .modal-info .price{font-size:15px;color:var(--gold);font-weight:500;margin-bottom:18px;}
+  .modal-info .desc{font-size:13.5px;font-weight:300;line-height:1.75;color:var(--text-soft);margin-bottom:26px;}
+  .modal-info .btn{margin-top:auto;justify-content:center;}
+
+  @media (max-width:720px){
+    .contact-panel{grid-template-columns:1fr;}
+    .contact-side{order:-1;border-left:none;border-bottom:1px solid rgba(255,255,255,.12);}
+    .modal{grid-template-columns:1fr;}
+    .modal-media{aspect-ratio:16/10;}
+  }
+  @media (max-width:860px){
+    .accessoires-grid{grid-template-columns:1fr 1fr;}
+    .footer-top{flex-direction:column;}
+  }
+  @media (max-width:560px){
+    .section{padding:88px 0;}
+    .accessoires-grid{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;}
+    .contact-form,.contact-side,.apropos-card{padding:32px 24px;}
+    .footer-links{gap:36px;}
+    .footer-brand-mark svg{width:68px;height:68px;}
+    .footer-brand-mark span{font-size:30px;}
+    .apropos-head{margin-bottom:90px;}
+    .apropos-bg-mark{width:220px;top:-100px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- reusable icon/logo symbols -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ozeil-mark" viewBox="0 0 1182 1182">
+    <g transform="matrix(1.093613,0,0,1.093613,136.507054,235.290731)">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M448.079,145.978C447.09,145.79 377.749,155.364 314.444,174.328C161.322,220.2 104.757,274.056 106.249,264.512C116.036,201.92 177.351,44.803 363.503,7.515C415.019,-2.803 513.654,-4.789 605.262,57.851C609.348,60.644 611.611,63.244 614.412,62.247C645.142,51.309 786.567,-7.858 822.866,60.315C834.218,81.635 828.709,119.544 801.135,159.248C695.384,311.519 400.959,459.284 383.591,465.614C370.787,470.28 415.72,461.927 418.485,461.413C541.962,438.458 628.986,406.373 742.275,336.141C744.581,334.712 746.05,333.737 745.979,336.463C740.862,530.931 552.199,688.843 345.592,638.12C271.774,619.997 225.288,579.799 211.741,568.206C204.572,562.07 201.246,556.552 197.6,557.796C170.128,567.172 56.555,612.526 13.722,562.302C-6.962,538.049 -0.856,493.916 35.598,445.572C95.184,366.549 186.158,301.75 269.693,246.798C330.377,206.878 408.834,166.422 421.252,160.019C425.158,158.004 437.725,150.867 447.405,147.38C447.522,147.338 447.455,147.276 448.079,145.978ZM739.558,91.983C741.393,91.829 757.582,90.469 762.569,92.357C768.394,94.562 743.152,135.122 714.616,163.616C709.728,168.498 708.453,173.765 705.144,167.704C691.352,142.449 666.568,112.37 666.655,111.542C666.749,110.641 704.85,96.141 739.558,91.983ZM92.443,521.025C68.237,523.169 67.28,521.493 67.461,519.499C69.127,501.119 119.249,442.821 122.519,443.459C122.952,443.544 138.379,480.199 154.163,502.72C156.041,505.399 154.689,505.875 151.609,506.835C123.8,515.5 113.171,517.929 92.443,521.025Z"/>
+    </g>
+  </symbol>
+  <symbol id="icon-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 20c1.6-3.6 4.6-5.4 7.5-5.4s5.9 1.8 7.5 5.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="icon-bag" viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7L6 8Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="icon-eye" viewBox="0 0 24 24"><path d="M2 12s3.8-6.5 10-6.5S22 12 22 12s-3.8 6.5-10 6.5S2 12 2 12Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.8" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="icon-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="icon-tshirt" viewBox="0 0 24 24"><path d="M8 4 4 7l2 3 2-1.2V20h8V8.8L18 10l2-3-4-3-2 1.6h-4L8 4Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-hoodie" viewBox="0 0 24 24"><path d="M9 3.5c1-1 5-1 6 0l4 3-2 3-2-1.2V20H9V8.3L7 9.5l-2-3 4-3Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M9.5 4.2C9.9 6.6 10.8 8 12 8s2.1-1.4 2.5-3.8" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M10.5 13.5c0 1.6 3 1.6 3 0v-1h-3v1Z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-cap" viewBox="0 0 24 24"><path d="M3.5 14.5c0-4.7 3.8-8.5 8.5-8.5s8.5 3.8 8.5 8.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M12.5 14.3h7.3c.7 0 1 .8.5 1.3-1.9 1.7-4.5 2.5-7.1 2.2l-.7-3.5Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M3.5 14.5h9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="icon-case" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="18" r="1" fill="currentColor"/></symbol>
+  <symbol id="icon-backpack" viewBox="0 0 24 24"><path d="M8 8V6.5a4 4 0 0 1 8 0V8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M6 10a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3v-8Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><rect x="9.5" y="10.5" width="5" height="4" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M9 21v-4M15 21v-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+  <symbol id="icon-instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></symbol>
+  <symbol id="icon-tiktok" viewBox="0 0 24 24"><path d="M14 4v10.5a3.5 3.5 0 1 1-3-3.46M14 4c.5 2.2 2 3.7 4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-youtube" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 9.5v5l4.5-2.5-4.5-2.5Z" fill="currentColor"/></symbol>
+</defs>
+</svg>
+
+<header>
+  <nav class="nav">
+    <button class="nav-pill" type="button">
+      <span class="icon-circle"><svg><use href="#icon-user"/></svg></span>
+      <span class="label">Se connecter</span>
+    </button>
+
+    <div class="nav-center">
+      <a href="#top" class="nav-link">Accueil</a>
+      <a href="#top" id="top" class="nav-logo" aria-label="Ozeil — accueil">
+        <svg class="mark"><use href="#ozeil-mark"/></svg>
+      </a>
+      <a href="#nouveaute" class="nav-link">Boutique</a>
+    </div>
+
+    <button class="nav-icon-btn" type="button" aria-label="Panier">
+      <svg><use href="#icon-bag"/></svg>
+    </button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-wordmark">
+    <h1>OZEIL</h1>
+  </div>
+  <svg class="hero-giant-mark mark" id="heroMark" viewBox="0 0 1182 1182"><use href="#ozeil-mark"/></svg>
+</section>
+
+<section class="section alt" id="nouveaute">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Nouveau</div>
+      <h2>La dernière sortie</h2>
+    </div>
+    <div class="feature-card">
+      <span class="feature-badge">Nouveau</span>
+      <svg><use href="#icon-tshirt"/></svg>
+    </div>
+    <div class="feature-info">
+      <h3>T-shirt Comète</h3>
+      <div class="price">45,00 $</div>
+      <button class="btn btn-ghost" type="button" data-open-modal
+        data-name="T-shirt Comète" data-price="45,00 $" data-icon="icon-tshirt" data-tone="tone-1"
+        data-desc="Coton lourd 240g, coupe droite, sérigraphie du logo Ozeil sur la poitrine. Disponible du S au XXL.">
+        <svg><use href="#icon-eye"/></svg> Voir plus de détail
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="meilleur-vendeur">
+  <div class="container">
+    <div class="section-head">
+      <h2>Meilleur vendeur</h2>
+      <div class="section-sub">Depuis août 2025</div>
+    </div>
+    <div class="bestseller-collage">
+      <div class="collage-item collage-a product-art tone-2"><svg class="icon-glyph"><use href="#icon-hoodie"/></svg></div>
+      <div class="collage-item collage-b product-art tone-3"><svg class="icon-glyph"><use href="#icon-hoodie"/></svg></div>
+      <div class="collage-item collage-main product-art tone-1"><svg class="icon-glyph" style="width:46%;height:46%"><use href="#icon-hoodie"/></svg></div>
+      <div class="collage-item collage-c product-art tone-4"><svg class="icon-glyph"><use href="#icon-hoodie"/></svg></div>
+      <div class="collage-item collage-d product-art tone-2"><svg class="icon-glyph"><use href="#icon-hoodie"/></svg></div>
+    </div>
+    <div class="bestseller-info">
+      <h3>Hoodie Éclipse</h3>
+      <div class="price">68,00 $</div>
+      <button class="btn btn-ghost" type="button" data-open-modal
+        data-name="Hoodie Éclipse" data-price="68,00 $" data-icon="icon-hoodie" data-tone="tone-2"
+        data-desc="Molleton épais 320g, capuchon doublé, poche kangourou. Notre pièce la plus vendue depuis août 2025.">
+        <svg><use href="#icon-eye"/></svg> Voir plus de détail
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="accessoires">
+  <div class="container">
+    <div class="section-head">
+      <h2>Nos accessoires</h2>
+    </div>
+    <div class="accessoires-grid">
+      <div class="accessoire-card">
+        <div class="accessoire-art product-art tone-2"><svg class="icon-glyph"><use href="#icon-cap"/></svg></div>
+        <h4>Casquette Orbite</h4>
+        <button class="accessoire-link" type="button" data-open-modal
+          data-name="Casquette Orbite" data-price="32,00 $" data-icon="icon-cap" data-tone="tone-2"
+          data-desc="Casquette ajustable brodée, logo Ozeil à l'avant. Une taille, ajustement à sangle.">
+          <svg><use href="#icon-eye"/></svg> Voir plus de détail
+        </button>
+      </div>
+      <div class="accessoire-card">
+        <div class="accessoire-art product-art tone-3"><svg class="icon-glyph"><use href="#icon-case"/></svg></div>
+        <h4>Coque Aurore</h4>
+        <button class="accessoire-link" type="button" data-open-modal
+          data-name="Coque Aurore" data-price="28,00 $" data-icon="icon-case" data-tone="tone-3"
+          data-desc="Coque de téléphone souple et résistante aux chocs. Précise ton modèle à la commande.">
+          <svg><use href="#icon-eye"/></svg> Voir plus de détail
+        </button>
+      </div>
+      <div class="accessoire-card">
+        <div class="accessoire-art product-art tone-4"><svg class="icon-glyph"><use href="#icon-backpack"/></svg></div>
+        <h4>Sac Nova</h4>
+        <button class="accessoire-link" type="button" data-open-modal
+          data-name="Sac Nova" data-price="75,00 $" data-icon="icon-backpack" data-tone="tone-4"
+          data-desc="Sac à dos 22L, compartiment laptop rembourré, logo Ozeil brodé. Idéal pour l'école ou le travail.">
+          <svg><use href="#icon-eye"/></svg> Voir plus de détail
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section alt" id="contact">
+  <svg class="contact-slide-mark mark" id="contactMark" viewBox="0 0 1182 1182"><use href="#ozeil-mark"/></svg>
+  <div class="container">
+    <div class="contact-panel">
+      <form class="contact-form" onsubmit="return false;">
+        <h2>Dire bonjour</h2>
+        <p>Si tu as des demandes, questions ou suggestions, tu peux nous écrire simplement ici.</p>
+        <div class="form-row">
+          <div class="field"><label for="prenom">Prénom</label><input id="prenom" type="text" autocomplete="given-name"></div>
+          <div class="field"><label for="nom">Nom</label><input id="nom" type="text" autocomplete="family-name"></div>
+        </div>
+        <div class="field full"><label for="courriel">E-mail *</label><input id="courriel" type="email" required autocomplete="email"></div>
+        <div class="field full"><label for="message">Message</label><textarea id="message" rows="4"></textarea></div>
+        <button class="btn btn-primary" type="submit">Envoyer</button>
+      </form>
+      <div class="contact-side">
+        <div>
+          <h4>E-mail</h4>
+          <a class="email" href="mailto:ozeil.proff@gmail.com">ozeil.proff@gmail.com</a>
+        </div>
+        <div>
+          <h4>Réseaux sociaux</h4>
+          <div class="contact-social">
+            <a href="#" aria-label="YouTube"><svg><use href="#icon-youtube"/></svg></a>
+            <a href="#" aria-label="TikTok"><svg><use href="#icon-tiktok"/></svg></a>
+            <a href="#" aria-label="Instagram"><svg><use href="#icon-instagram"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="apropos">
+  <div class="container">
+    <div class="section-head apropos-head">
+      <h2>À propos</h2>
+    </div>
+    <div class="apropos-wrap">
+      <svg class="apropos-bg-mark mark" id="aproposMark" viewBox="0 0 1182 1182"><use href="#ozeil-mark"/></svg>
+      <div class="apropos-card">
+        <h3>Ozeil</h3>
+        <p>Ozeil est né de l'envie de vendre facilement des vêtements à notre monde, directement sur les réseaux sociaux. Au début, les designs ne trouvaient pas vraiment preneur — alors on a continué d'essayer des styles différents, un à la fois, jusqu'à ce que la marque devienne une vraie boutique de vêtements variés.</p>
+        <p>On est maintenant deux à faire vivre Ozeil et à créer de nouveaux designs à vendre.</p>
+        <p>Nos prix peuvent sembler élevés, mais on te garantit que ce sont les meilleurs qu'on peut offrir pour la qualité de nos vêtements.</p>
+        <a href="#contact" class="btn btn-ghost">En savoir plus</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-mark">
+          <svg class="mark"><use href="#ozeil-mark"/></svg>
+          <span>Ozeil</span>
+        </div>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>Légal</h5>
+          <ul>
+            <li><a href="#">Politique de confidentialité</a></li>
+            <li><a href="#">Politique de confidentialité de Printify</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <ul>
+            <li><a href="mailto:ozeil.proff@gmail.com">ozeil.proff@gmail.com</a></li>
+            <li><a href="#contact">Formulaire de contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Ozeil. Tous droits réservés.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-media product-art" id="modalMedia"><svg class="icon-glyph" id="modalIcon" style="width:38%;height:38%"><use href="#icon-tshirt"/></svg></div>
+    <div class="modal-info">
+      <button class="modal-close" type="button" id="modalCloseBtn" aria-label="Fermer"><svg><use href="#icon-close"/></svg></button>
+      <h3 id="modalTitle">Produit</h3>
+      <div class="price" id="modalPrice">0,00 $</div>
+      <p class="desc" id="modalDesc"></p>
+      <button class="btn btn-primary" type="button">Ajouter au panier</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // scroll-driven parallax: hero mark rises, contact mark slides across, apropos mark rises
+  var heroMark = document.getElementById('heroMark');
+  var contactMark = document.getElementById('contactMark');
+  var contactSection = document.getElementById('contact');
+  var aproposMark = document.getElementById('aproposMark');
+  var aproposSection = document.getElementById('apropos');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function clamp01(n) { return Math.max(0, Math.min(1, n)); }
+
+  function updateParallax() {
+    var vh = window.innerHeight;
+
+    if (heroMark) {
+      var offset = Math.min(window.scrollY * 0.28, 260);
+      heroMark.style.transform = 'translate(-50%,0) translateY(-' + offset + 'px)';
+    }
+
+    if (contactMark && contactSection) {
+      var cRect = contactSection.getBoundingClientRect();
+      var cProgress = clamp01((vh - cRect.top) / (vh + cRect.height));
+      var x = -20 + cProgress * 140;
+      contactMark.style.transform = 'translate(' + x + '%,-50%)';
+    }
+
+    if (aproposMark && aproposSection) {
+      var aRect = aproposSection.getBoundingClientRect();
+      var aProgress = clamp01((vh - aRect.top) / (vh + aRect.height));
+      var y = 70 - aProgress * 140;
+      aproposMark.style.transform = 'translateY(' + y + 'px)';
+    }
+  }
+
+  if (!reduceMotion) {
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        window.requestAnimationFrame(function () {
+          updateParallax();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+    updateParallax();
+  }
+
+  // product modal
+  var backdrop = document.getElementById('modalBackdrop');
+  var modalTitle = document.getElementById('modalTitle');
+  var modalPrice = document.getElementById('modalPrice');
+  var modalDesc = document.getElementById('modalDesc');
+  var modalMedia = document.getElementById('modalMedia');
+  var modalIcon = document.getElementById('modalIcon');
+
+  function openModal(btn) {
+    modalTitle.textContent = btn.dataset.name;
+    modalPrice.textContent = btn.dataset.price;
+    modalDesc.textContent = btn.dataset.desc;
+    modalMedia.className = 'modal-media product-art ' + btn.dataset.tone;
+    modalIcon.innerHTML = '<use href="#' + btn.dataset.icon + '"/>';
+    backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('[data-open-modal]').forEach(function (btn) {
+    btn.addEventListener('click', function () { openModal(btn); });
+  });
+  document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+  backdrop.addEventListener('click', function (e) {
+    if (e.target === backdrop) closeModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>
+
+</body>
+</html>
