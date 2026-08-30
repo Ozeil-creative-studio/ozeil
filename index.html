@@ -261,21 +261,6 @@
   .btn-ghost{border-color:var(--line);color:var(--text);}
   .btn-ghost:hover{border-color:var(--gold-soft);background:var(--surface);}
 
-  /* ---------- Product placeholder art ---------- */
-  .product-art{
-    position:relative;
-    border-radius:var(--radius);
-    overflow:hidden;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-  .product-art.tone-1{background:linear-gradient(150deg,#2c1f4c,#150f45);}
-  .product-art.tone-2{background:linear-gradient(150deg,#3a2a3f,#150f45);}
-  .product-art.tone-3{background:linear-gradient(150deg,#1f2a4c,#120c3c);}
-  .product-art.tone-4{background:linear-gradient(150deg,#33234f,#0e0932);}
-  .product-art svg.icon-glyph{width:34%;height:34%;color:rgba(244,242,251,.55);}
-
   /* ---------- Nouveauté ---------- */
   .feature-card{
     position:relative;
@@ -302,7 +287,7 @@
     padding:7px 14px;
     border-radius:999px;
   }
-  .feature-card > svg{width:36%;height:36%;color:rgba(244,242,251,.7);}
+  .feature-card img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
 
   .feature-info{text-align:center;}
   .feature-info h3{font-size:17px;font-weight:600;margin-bottom:4px;}
@@ -321,11 +306,11 @@
     box-shadow:0 22px 46px rgba(0,0,0,.45);
     overflow:hidden;
   }
-  .collage-main{width:58%;height:58%;top:21%;left:21%;z-index:5;}
+  .collage-item img{width:100%;height:100%;object-fit:cover;}
+  .collage-main{width:56%;height:56%;top:20%;left:22%;z-index:5;}
   .collage-a{width:34%;height:34%;top:0;left:2%;z-index:2;transform:rotate(-6deg);}
   .collage-b{width:32%;height:32%;top:4%;right:0;z-index:3;transform:rotate(5deg);}
-  .collage-c{width:32%;height:32%;bottom:2%;left:0;z-index:2;transform:rotate(4deg);}
-  .collage-d{width:34%;height:34%;bottom:0;right:2%;z-index:4;transform:rotate(-5deg);}
+  .collage-c{width:34%;height:34%;bottom:0;left:33%;z-index:4;transform:rotate(3deg);}
 
   .bestseller-info{text-align:center;}
   .bestseller-info h3{font-size:17px;font-weight:600;margin-bottom:4px;}
@@ -338,7 +323,8 @@
     gap:26px;
   }
   .accessoire-card{display:flex;flex-direction:column;align-items:center;gap:16px;}
-  .accessoire-art{width:100%;aspect-ratio:1/1;}
+  .accessoire-art{width:100%;aspect-ratio:1/1;border-radius:var(--radius);overflow:hidden;}
+  .accessoire-art img{width:100%;height:100%;object-fit:cover;}
   .accessoire-card h4{font-size:14px;font-weight:600;}
   .accessoire-link{
     display:inline-flex;
@@ -357,65 +343,68 @@
   #contact{overflow:hidden;}
   .contact-slide-mark{
     position:absolute;
-    top:50%;
+    top:30px;
     left:0;
     width:min(420px,60vw);
     color:rgba(255,255,255,.5);
-    transform:translate(-20%,-50%);
+    transform:translate(-20%,0);
     pointer-events:none;
     z-index:0;
     will-change:transform;
   }
+  .contact-head h2{text-shadow:0 0 30px rgba(255,255,255,.55), 0 0 70px rgba(255,255,255,.25);}
   .contact-panel{
     position:relative;
     z-index:1;
     display:grid;
-    grid-template-columns:1.3fr 1fr;
-    background:rgba(255,255,255,.06);
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
-    border:1px solid rgba(255,255,255,.14);
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:48px;
+    background:rgba(255,255,255,.62);
+    backdrop-filter:blur(26px);
+    -webkit-backdrop-filter:blur(26px);
+    border:1px solid rgba(255,255,255,.55);
     border-radius:var(--radius);
     overflow:hidden;
+    padding:56px;
+    color:#18171d;
   }
-  .contact-form{padding:56px;}
-  .contact-form h2{font-size:clamp(24px,3vw,32px);font-weight:700;margin-bottom:12px;}
-  .contact-form > p{font-size:14px;font-weight:300;color:var(--text-soft);line-height:1.7;margin-bottom:32px;max-width:420px;}
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+  .contact-info{display:flex;flex-direction:column;justify-content:space-between;}
+  .contact-intro h3{font-size:clamp(22px,3vw,30px);font-weight:700;margin-bottom:12px;color:#141319;}
+  .contact-intro p{font-size:14px;font-weight:400;color:#5c5a63;line-height:1.7;max-width:380px;}
+  .contact-meta{display:flex;gap:56px;margin-top:32px;}
+  .contact-meta h4{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8b8890;margin-bottom:10px;}
+  .contact-meta a.email{font-size:15px;font-weight:600;color:#141319;}
+  .contact-meta a.email:hover{color:var(--gold);}
+  .contact-form{border-left:1px solid rgba(0,0,0,.1);padding-left:48px;}
+  .form-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-bottom:16px;}
   .field{display:flex;flex-direction:column;gap:8px;}
-  .field label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);}
+  .field label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8b8890;}
   .field input,.field textarea{
-    background:rgba(255,255,255,.05);
-    backdrop-filter:blur(6px);
-    border:1px solid rgba(255,255,255,.14);
+    width:100%;
+    background:#fff;
+    border:1px solid rgba(0,0,0,.14);
     border-radius:var(--radius-sm);
     padding:13px 16px;
-    color:var(--text);
+    color:#18171d;
     font-size:14px;
     resize:vertical;
     transition:border-color .2s ease;
   }
-  .field input:focus,.field textarea:focus{border-color:var(--gold-soft);outline:none;}
+  .field input::placeholder,.field textarea::placeholder{color:#b3b1b8;}
+  .field input:focus,.field textarea:focus{border-color:#18171d;outline:none;}
   .field.full{grid-column:1/-1;margin-bottom:24px;}
-  .contact-side{
-    padding:56px 44px;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    border-left:1px solid rgba(255,255,255,.12);
-  }
-  .contact-side h4{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:10px;}
-  .contact-side a.email{font-size:15px;font-weight:500;color:var(--text);}
-  .contact-side a.email:hover{color:var(--gold);}
-  .contact-social{display:flex;gap:12px;margin-top:20px;}
+  .btn-dark{background:#18171d;color:#fff;}
+  .btn-dark:hover{background:#000;}
+  .contact-social{display:flex;gap:12px;}
   .contact-social a{
     width:38px;height:38px;
     border-radius:50%;
-    border:1px solid rgba(255,255,255,.14);
+    background:#18171d;
+    color:#fff;
     display:flex;align-items:center;justify-content:center;
     transition:all .2s ease;
   }
-  .contact-social a:hover{background:var(--gold);border-color:var(--gold);color:var(--bg);}
+  .contact-social a:hover{background:var(--gold);color:#18171d;}
   .contact-social svg{width:16px;height:16px;}
 
   /* ---------- À propos ---------- */
@@ -511,7 +500,8 @@
     max-height:90vh;
   }
   .modal-backdrop.open .modal{transform:translateY(0);}
-  .modal-media{aspect-ratio:1/1;}
+  .modal-media{aspect-ratio:1/1;background:#eeece6;}
+  .modal-media img{width:100%;height:100%;object-fit:cover;}
   .modal-info{padding:40px;position:relative;display:flex;flex-direction:column;}
   .modal-close{
     position:absolute;top:16px;right:16px;
@@ -526,9 +516,12 @@
   .modal-info .desc{font-size:13.5px;font-weight:300;line-height:1.75;color:var(--text-soft);margin-bottom:26px;}
   .modal-info .btn{margin-top:auto;justify-content:center;}
 
+  @media (max-width:900px){
+    .contact-panel{grid-template-columns:1fr;gap:32px;}
+    .contact-form{border-left:none;padding-left:0;border-top:1px solid rgba(0,0,0,.1);padding-top:32px;}
+    .contact-meta{gap:36px;}
+  }
   @media (max-width:720px){
-    .contact-panel{grid-template-columns:1fr;}
-    .contact-side{order:-1;border-left:none;border-bottom:1px solid rgba(255,255,255,.12);}
     .modal{grid-template-columns:1fr;}
     .modal-media{aspect-ratio:16/10;}
   }
@@ -540,7 +533,8 @@
     .section{padding:88px 0;}
     .accessoires-grid{grid-template-columns:1fr;}
     .form-row{grid-template-columns:1fr;}
-    .contact-form,.contact-side,.apropos-card{padding:32px 24px;}
+    .contact-panel,.apropos-card{padding:32px 24px;}
+    .contact-meta{flex-direction:column;gap:20px;}
     .footer-links{gap:36px;}
     .footer-brand-mark svg{width:68px;height:68px;}
     .footer-brand-mark span{font-size:30px;}
@@ -563,11 +557,6 @@
   <symbol id="icon-bag" viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7L6 8Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
   <symbol id="icon-eye" viewBox="0 0 24 24"><path d="M2 12s3.8-6.5 10-6.5S22 12 22 12s-3.8 6.5-10 6.5S2 12 2 12Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.8" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
   <symbol id="icon-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
-  <symbol id="icon-tshirt" viewBox="0 0 24 24"><path d="M8 4 4 7l2 3 2-1.2V20h8V8.8L18 10l2-3-4-3-2 1.6h-4L8 4Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
-  <symbol id="icon-hoodie" viewBox="0 0 24 24"><path d="M9 3.5c1-1 5-1 6 0l4 3-2 3-2-1.2V20H9V8.3L7 9.5l-2-3 4-3Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M9.5 4.2C9.9 6.6 10.8 8 12 8s2.1-1.4 2.5-3.8" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M10.5 13.5c0 1.6 3 1.6 3 0v-1h-3v1Z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
-  <symbol id="icon-cap" viewBox="0 0 24 24"><path d="M3.5 14.5c0-4.7 3.8-8.5 8.5-8.5s8.5 3.8 8.5 8.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M12.5 14.3h7.3c.7 0 1 .8.5 1.3-1.9 1.7-4.5 2.5-7.1 2.2l-.7-3.5Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M3.5 14.5h9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
-  <symbol id="icon-case" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="18" r="1" fill="currentColor"/></symbol>
-  <symbol id="icon-backpack" viewBox="0 0 24 24"><path d="M8 8V6.5a4 4 0 0 1 8 0V8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M6 10a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3v-8Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><rect x="9.5" y="10.5" width="5" height="4" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M9 21v-4M15 21v-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
   <symbol id="icon-instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></symbol>
   <symbol id="icon-tiktok" viewBox="0 0 24 24"><path d="M14 4v10.5a3.5 3.5 0 1 1-3-3.46M14 4c.5 2.2 2 3.7 4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="icon-youtube" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 9.5v5l4.5-2.5-4.5-2.5Z" fill="currentColor"/></symbol>
@@ -610,13 +599,13 @@
     </div>
     <div class="feature-card">
       <span class="feature-badge">Nouveau</span>
-      <svg><use href="#icon-tshirt"/></svg>
+      <img src="images/tshirt-nouveaute.png" alt="T-shirt Comète">
     </div>
     <div class="feature-info">
       <h3>T-shirt Comète</h3>
       <div class="price">45,00 $</div>
       <button class="btn btn-ghost" type="button" data-open-modal
-        data-name="T-shirt Comète" data-price="45,00 $" data-icon="icon-tshirt" data-tone="tone-1"
+        data-name="T-shirt Comète" data-price="45,00 $" data-img="images/tshirt-nouveaute.png"
         data-desc="Coton lourd 240g, coupe droite, sérigraphie du logo Ozeil sur la poitrine. Disponible du S au XXL.">
         <svg><use href="#icon-eye"/></svg> Voir plus de détail
       </button>
@@ -631,17 +620,16 @@
       <div class="section-sub">Depuis août 2025</div>
     </div>
     <div class="bestseller-collage">
-      <div class="collage-item collage-a product-art tone-2"><svg class="icon-glyph"><use href="#icon-hoodie"/></svg></div>
-      <div class="collage-item collage-b product-art tone-3"><svg class="icon-glyph"><use href="#icon-hoodie"/></svg></div>
-      <div class="collage-item collage-main product-art tone-1"><svg class="icon-glyph" style="width:46%;height:46%"><use href="#icon-hoodie"/></svg></div>
-      <div class="collage-item collage-c product-art tone-4"><svg class="icon-glyph"><use href="#icon-hoodie"/></svg></div>
-      <div class="collage-item collage-d product-art tone-2"><svg class="icon-glyph"><use href="#icon-hoodie"/></svg></div>
+      <div class="collage-item collage-a"><img src="images/hoodie-folded.png" alt="Hoodie Éclipse plié"></div>
+      <div class="collage-item collage-b"><img src="images/hoodie-back.jpg" alt="Hoodie Éclipse, vue arrière"></div>
+      <div class="collage-item collage-main"><img src="images/hoodie-front.png" alt="Hoodie Éclipse porté"></div>
+      <div class="collage-item collage-c"><img src="images/casquette.jpg" alt="Casquette Orbite"></div>
     </div>
     <div class="bestseller-info">
       <h3>Hoodie Éclipse</h3>
       <div class="price">68,00 $</div>
       <button class="btn btn-ghost" type="button" data-open-modal
-        data-name="Hoodie Éclipse" data-price="68,00 $" data-icon="icon-hoodie" data-tone="tone-2"
+        data-name="Hoodie Éclipse" data-price="68,00 $" data-img="images/hoodie-front.png"
         data-desc="Molleton épais 320g, capuchon doublé, poche kangourou. Notre pièce la plus vendue depuis août 2025.">
         <svg><use href="#icon-eye"/></svg> Voir plus de détail
       </button>
@@ -656,28 +644,28 @@
     </div>
     <div class="accessoires-grid">
       <div class="accessoire-card">
-        <div class="accessoire-art product-art tone-2"><svg class="icon-glyph"><use href="#icon-cap"/></svg></div>
+        <div class="accessoire-art"><img src="images/casquette.jpg" alt="Casquette Orbite"></div>
         <h4>Casquette Orbite</h4>
         <button class="accessoire-link" type="button" data-open-modal
-          data-name="Casquette Orbite" data-price="32,00 $" data-icon="icon-cap" data-tone="tone-2"
+          data-name="Casquette Orbite" data-price="32,00 $" data-img="images/casquette.jpg"
           data-desc="Casquette ajustable brodée, logo Ozeil à l'avant. Une taille, ajustement à sangle.">
           <svg><use href="#icon-eye"/></svg> Voir plus de détail
         </button>
       </div>
       <div class="accessoire-card">
-        <div class="accessoire-art product-art tone-3"><svg class="icon-glyph"><use href="#icon-case"/></svg></div>
+        <div class="accessoire-art"><img src="images/coque-iphone.jpg" alt="Coque Aurore"></div>
         <h4>Coque Aurore</h4>
         <button class="accessoire-link" type="button" data-open-modal
-          data-name="Coque Aurore" data-price="28,00 $" data-icon="icon-case" data-tone="tone-3"
+          data-name="Coque Aurore" data-price="28,00 $" data-img="images/coque-iphone.jpg"
           data-desc="Coque de téléphone souple et résistante aux chocs. Précise ton modèle à la commande.">
           <svg><use href="#icon-eye"/></svg> Voir plus de détail
         </button>
       </div>
       <div class="accessoire-card">
-        <div class="accessoire-art product-art tone-4"><svg class="icon-glyph"><use href="#icon-backpack"/></svg></div>
+        <div class="accessoire-art"><img src="images/sac-a-dos.jpg" alt="Sac Nova"></div>
         <h4>Sac Nova</h4>
         <button class="accessoire-link" type="button" data-open-modal
-          data-name="Sac Nova" data-price="75,00 $" data-icon="icon-backpack" data-tone="tone-4"
+          data-name="Sac Nova" data-price="75,00 $" data-img="images/sac-a-dos.jpg"
           data-desc="Sac à dos 22L, compartiment laptop rembourré, logo Ozeil brodé. Idéal pour l'école ou le travail.">
           <svg><use href="#icon-eye"/></svg> Voir plus de détail
         </button>
@@ -690,32 +678,39 @@
 <section class="section alt" id="contact">
   <svg class="contact-slide-mark mark" id="contactMark" viewBox="0 0 1182 1182"><use href="#ozeil-mark"/></svg>
   <div class="container">
+    <div class="section-head contact-head">
+      <h2>Contact</h2>
+    </div>
     <div class="contact-panel">
+      <div class="contact-info">
+        <div class="contact-intro">
+          <h3>Dire bonjour</h3>
+          <p>Si tu as des demandes, questions ou suggestions, tu peux nous écrire simplement ici.</p>
+        </div>
+        <div class="contact-meta">
+          <div>
+            <h4>E-mail</h4>
+            <a class="email" href="mailto:ozeil.proff@gmail.com">ozeil.proff@gmail.com</a>
+          </div>
+          <div>
+            <h4>Réseaux sociaux</h4>
+            <div class="contact-social">
+              <a href="#" aria-label="YouTube"><svg><use href="#icon-youtube"/></svg></a>
+              <a href="#" aria-label="TikTok"><svg><use href="#icon-tiktok"/></svg></a>
+              <a href="#" aria-label="Instagram"><svg><use href="#icon-instagram"/></svg></a>
+            </div>
+          </div>
+        </div>
+      </div>
       <form class="contact-form" onsubmit="return false;">
-        <h2>Dire bonjour</h2>
-        <p>Si tu as des demandes, questions ou suggestions, tu peux nous écrire simplement ici.</p>
         <div class="form-row">
           <div class="field"><label for="prenom">Prénom</label><input id="prenom" type="text" autocomplete="given-name"></div>
           <div class="field"><label for="nom">Nom</label><input id="nom" type="text" autocomplete="family-name"></div>
         </div>
         <div class="field full"><label for="courriel">E-mail *</label><input id="courriel" type="email" required autocomplete="email"></div>
         <div class="field full"><label for="message">Message</label><textarea id="message" rows="4"></textarea></div>
-        <button class="btn btn-primary" type="submit">Envoyer</button>
+        <button class="btn btn-dark" type="submit">Envoyer</button>
       </form>
-      <div class="contact-side">
-        <div>
-          <h4>E-mail</h4>
-          <a class="email" href="mailto:ozeil.proff@gmail.com">ozeil.proff@gmail.com</a>
-        </div>
-        <div>
-          <h4>Réseaux sociaux</h4>
-          <div class="contact-social">
-            <a href="#" aria-label="YouTube"><svg><use href="#icon-youtube"/></svg></a>
-            <a href="#" aria-label="TikTok"><svg><use href="#icon-tiktok"/></svg></a>
-            <a href="#" aria-label="Instagram"><svg><use href="#icon-instagram"/></svg></a>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -772,7 +767,7 @@
 
 <div class="modal-backdrop" id="modalBackdrop">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-media product-art" id="modalMedia"><svg class="icon-glyph" id="modalIcon" style="width:38%;height:38%"><use href="#icon-tshirt"/></svg></div>
+    <div class="modal-media" id="modalMedia"><img id="modalImg" src="" alt=""></div>
     <div class="modal-info">
       <button class="modal-close" type="button" id="modalCloseBtn" aria-label="Fermer"><svg><use href="#icon-close"/></svg></button>
       <h3 id="modalTitle">Produit</h3>
@@ -806,7 +801,7 @@
       var cRect = contactSection.getBoundingClientRect();
       var cProgress = clamp01((vh - cRect.top) / (vh + cRect.height));
       var x = -20 + cProgress * 140;
-      contactMark.style.transform = 'translate(' + x + '%,-50%)';
+      contactMark.style.transform = 'translate(' + x + '%,0)';
     }
 
     if (aproposMark && aproposSection) {
@@ -836,15 +831,14 @@
   var modalTitle = document.getElementById('modalTitle');
   var modalPrice = document.getElementById('modalPrice');
   var modalDesc = document.getElementById('modalDesc');
-  var modalMedia = document.getElementById('modalMedia');
-  var modalIcon = document.getElementById('modalIcon');
+  var modalImg = document.getElementById('modalImg');
 
   function openModal(btn) {
     modalTitle.textContent = btn.dataset.name;
     modalPrice.textContent = btn.dataset.price;
     modalDesc.textContent = btn.dataset.desc;
-    modalMedia.className = 'modal-media product-art ' + btn.dataset.tone;
-    modalIcon.innerHTML = '<use href="#' + btn.dataset.icon + '"/>';
+    modalImg.src = btn.dataset.img;
+    modalImg.alt = btn.dataset.name;
     backdrop.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
