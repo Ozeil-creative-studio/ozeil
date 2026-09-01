@@ -245,14 +245,14 @@ header{
 }
 .hero .section-bg-overlay{
   background:
-    radial-gradient(ellipse 60% 45% at 50% 30%, rgba(220,178,121,.12), transparent 60%),
-    linear-gradient(180deg, rgba(5,0,29,.3) 0%, rgba(5,0,29,.6) 60%, var(--bg) 100%);
+    radial-gradient(ellipse 60% 45% at 50% 30%, rgba(220,178,121,.10), transparent 60%),
+    linear-gradient(180deg, rgba(5,0,29,.08) 0%, rgba(5,0,29,.22) 60%, var(--bg) 100%);
 }
 .overlay-to-elevated{
-  background:linear-gradient(180deg, rgba(11,6,48,.5) 0%, rgba(11,6,48,.9) 65%, var(--bg-elevated) 100%);
+  background:linear-gradient(180deg, rgba(11,6,48,.12) 0%, rgba(11,6,48,.4) 65%, var(--bg-elevated) 100%);
 }
 .overlay-to-base{
-  background:linear-gradient(180deg, rgba(5,0,29,.4) 0%, rgba(5,0,29,.88) 65%, var(--bg) 100%);
+  background:linear-gradient(180deg, rgba(5,0,29,.1) 0%, rgba(5,0,29,.4) 65%, var(--bg) 100%);
 }
 
 .section-head{
@@ -264,7 +264,7 @@ header{
   font-size:11px;
   letter-spacing:.3em;
   text-transform:uppercase;
-  color:var(--gold);
+  color:var(--text-soft);
   font-weight:600;
   margin-bottom:14px;
 }
@@ -338,7 +338,7 @@ header{
   padding:7px 14px;
   border-radius:999px;
 }
-.feature-photo{position:absolute;inset:0;border-radius:50%;overflow:hidden;}
+.feature-photo{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:rgba(255,255,255,.4);}
 .feature-card img{
   position:absolute;
   top:50%;left:50%;
@@ -353,6 +353,26 @@ header{
 .feature-info{text-align:center;}
 .feature-info h3{font-size:17px;font-weight:600;margin-bottom:4px;}
 .feature-info .price{font-size:14px;color:var(--text-soft);font-weight:300;margin-bottom:22px;}
+
+/* ---------- Bestseller collage ---------- */
+.bestseller-collage{
+  position:relative;
+  width:min(600px,calc(100vw - 64px));
+  aspect-ratio:1/1;
+  margin:0 auto 36px;
+}
+.collage-item{
+  position:absolute;
+  border-radius:var(--radius-sm);
+  box-shadow:0 22px 46px rgba(0,0,0,.45);
+  overflow:hidden;
+  background:rgba(255,255,255,.4);
+}
+.collage-item img{width:100%;height:100%;object-fit:cover;}
+.collage-main{width:56%;height:56%;top:20%;left:22%;z-index:5;}
+.collage-a{width:34%;height:34%;top:0;left:2%;z-index:2;transform:rotate(-6deg);}
+.collage-b{width:32%;height:32%;top:4%;right:0;z-index:3;transform:rotate(5deg);}
+.collage-c{width:34%;height:34%;bottom:0;left:33%;z-index:4;transform:rotate(3deg);}
 
 /* ---------- Accessoires (accueil) ---------- */
 .accessoires-grid{
@@ -568,6 +588,24 @@ footer{background:var(--bg-elevated);border-top:1px solid var(--line);padding:70
   font-weight:300;
   flex-wrap:wrap;
   gap:10px;
+}
+
+.footer-credit{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:var(--text-faint);
+  text-decoration:none;
+  font-size:12px;
+  font-weight:300;
+  transition:opacity .2s ease;
+  opacity:.85;
+}
+.footer-credit:hover{opacity:1;}
+.footer-credit-mark{
+  width:60px;
+  height:auto;
+  flex-shrink:0;
 }
 
 /* ---------- Modal ---------- */
