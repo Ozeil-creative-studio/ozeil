@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#05001D">
+<title>Boutique — Ozeil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- reusable icon/logo symbols -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ozeil-mark" viewBox="0 0 1182 1182">
+    <g transform="matrix(1.093613,0,0,1.093613,136.507054,235.290731)">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M448.079,145.978C447.09,145.79 377.749,155.364 314.444,174.328C161.322,220.2 104.757,274.056 106.249,264.512C116.036,201.92 177.351,44.803 363.503,7.515C415.019,-2.803 513.654,-4.789 605.262,57.851C609.348,60.644 611.611,63.244 614.412,62.247C645.142,51.309 786.567,-7.858 822.866,60.315C834.218,81.635 828.709,119.544 801.135,159.248C695.384,311.519 400.959,459.284 383.591,465.614C370.787,470.28 415.72,461.927 418.485,461.413C541.962,438.458 628.986,406.373 742.275,336.141C744.581,334.712 746.05,333.737 745.979,336.463C740.862,530.931 552.199,688.843 345.592,638.12C271.774,619.997 225.288,579.799 211.741,568.206C204.572,562.07 201.246,556.552 197.6,557.796C170.128,567.172 56.555,612.526 13.722,562.302C-6.962,538.049 -0.856,493.916 35.598,445.572C95.184,366.549 186.158,301.75 269.693,246.798C330.377,206.878 408.834,166.422 421.252,160.019C425.158,158.004 437.725,150.867 447.405,147.38C447.522,147.338 447.455,147.276 448.079,145.978ZM739.558,91.983C741.393,91.829 757.582,90.469 762.569,92.357C768.394,94.562 743.152,135.122 714.616,163.616C709.728,168.498 708.453,173.765 705.144,167.704C691.352,142.449 666.568,112.37 666.655,111.542C666.749,110.641 704.85,96.141 739.558,91.983ZM92.443,521.025C68.237,523.169 67.28,521.493 67.461,519.499C69.127,501.119 119.249,442.821 122.519,443.459C122.952,443.544 138.379,480.199 154.163,502.72C156.041,505.399 154.689,505.875 151.609,506.835C123.8,515.5 113.171,517.929 92.443,521.025Z"/>
+    </g>
+  </symbol>
+  <symbol id="icon-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 20c1.6-3.6 4.6-5.4 7.5-5.4s5.9 1.8 7.5 5.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="icon-bag" viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7L6 8Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="icon-eye" viewBox="0 0 24 24"><path d="M2 12s3.8-6.5 10-6.5S22 12 22 12s-3.8 6.5-10 6.5S2 12 2 12Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.8" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="icon-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+</defs>
+</svg>
+
+<header>
+  <nav class="nav">
+    <a href="login.html" class="nav-pill">
+      <span class="icon-circle"><svg><use href="#icon-user"/></svg></span>
+      <span class="label">Se connecter</span>
+    </a>
+
+    <div class="nav-center">
+      <a href="index.html" class="nav-link">Accueil</a>
+      <a href="index.html" class="nav-logo" aria-label="Ozeil — accueil">
+        <svg class="mark"><use href="#ozeil-mark"/></svg>
+      </a>
+      <a href="boutique.html" class="nav-link current">Boutique</a>
+    </div>
+
+    <button class="nav-icon-btn" type="button" aria-label="Panier (bientôt disponible)" aria-disabled="true">
+      <svg><use href="#icon-bag"/></svg>
+    </button>
+  </nav>
+</header>
+
+<section class="shop-hero">
+  <div class="container">
+    <h1>Boutique</h1>
+    <p>Toute la collection Ozeil au même endroit.</p>
+  </div>
+</section>
+
+<section class="section tight collections" id="collections">
+  <div class="container">
+    <div class="section-head">
+      <h2>Collections</h2>
+      <p>Bientôt disponible — reviens voir les différentes collections Ozeil ici.</p>
+    </div>
+    <div class="collections-grid" id="collectionsGrid"></div>
+  </div>
+</section>
+
+<section class="section alt tight" id="produits">
+  <div class="container">
+    <div class="shop-grid" id="productsGrid"></div>
+    <p class="empty-note" id="productsEmpty" style="display:none;">Aucun produit pour l'instant.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-mark">
+          <svg class="mark"><use href="#ozeil-mark"/></svg>
+          <span>Ozeil</span>
+        </div>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>Légal</h5>
+          <ul>
+            <li><a href="#">Politique de confidentialité</a></li>
+            <li><a href="#">Politique de confidentialité de Printify</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <ul>
+            <li><a href="mailto:ozeil.proff@gmail.com">ozeil.proff@gmail.com</a></li>
+            <li><a href="index.html#contact">Formulaire de contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Ozeil. Tous droits réservés.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-media" id="modalMedia"><img id="modalImg" src="" alt=""></div>
+    <div class="modal-info">
+      <button class="modal-close" type="button" id="modalCloseBtn" aria-label="Fermer"><svg><use href="#icon-close"/></svg></button>
+      <h3 id="modalTitle">Produit</h3>
+      <div class="price" id="modalPrice">0,00 $</div>
+      <p class="desc" id="modalDesc"></p>
+      <button class="btn btn-primary" type="button">Ajouter au panier</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="supabase-client.js"></script>
+<script src="main.js"></script>
+<script>
+  (function () {
+    function formatPrice(n) {
+      return Number(n).toFixed(2).replace('.', ',') + ' $';
+    }
+
+    function el(tag, cls, text) {
+      var e = document.createElement(tag);
+      if (cls) e.className = cls;
+      if (text !== undefined) e.textContent = text;
+      return e;
+    }
+
+    function buildProductCard(product) {
+      var card = el('div', 'shop-card');
+      var art = el('div', 'shop-art');
+
+      var img = document.createElement('img');
+      img.src = product.image_url || '';
+      img.alt = product.title || '';
+      art.appendChild(img);
+
+      var priceText = formatPrice(product.price);
+      var btn = document.createElement('button');
+      btn.className = 'shop-link';
+      btn.type = 'button';
+      btn.setAttribute('data-open-modal', '');
+      btn.dataset.name = product.title || '';
+      btn.dataset.price = priceText;
+      btn.dataset.img = product.image_url || '';
+      btn.dataset.desc = product.description || '';
+      btn.innerHTML = '<svg><use href="#icon-eye"/></svg> Voir plus de détail';
+      art.appendChild(btn);
+
+      card.appendChild(art);
+      card.appendChild(el('h4', null, product.title || ''));
+      card.appendChild(el('div', 'price', priceText));
+      return card;
+    }
+
+    function buildCollectionCard(collection) {
+      var card = el('div', 'collection-card');
+      var img = document.createElement('img');
+      img.src = collection.image_url || '';
+      img.alt = collection.title || '';
+      card.appendChild(img);
+      card.appendChild(el('div', 'label', collection.title || ''));
+      return card;
+    }
+
+    async function loadCollections() {
+      var grid = document.getElementById('collectionsGrid');
+      if (!window.ozeilSupabase || !grid) return;
+      var res = await window.ozeilSupabase.from('collections').select('*').order('created_at', { ascending: true });
+      if (res.error || !res.data || res.data.length === 0) return;
+      res.data.forEach(function (c) { grid.appendChild(buildCollectionCard(c)); });
+    }
+
+    async function loadProducts() {
+      var grid = document.getElementById('productsGrid');
+      var emptyNote = document.getElementById('productsEmpty');
+      if (!window.ozeilSupabase || !grid) return;
+      var res = await window.ozeilSupabase.from('products').select('*').order('created_at', { ascending: true });
+      if (res.error || !res.data || res.data.length === 0) {
+        if (emptyNote) emptyNote.style.display = 'block';
+        return;
+      }
+      res.data.forEach(function (p) { grid.appendChild(buildProductCard(p)); });
+      if (window.ozeilWireModalTriggers) window.ozeilWireModalTriggers();
+    }
+
+    loadCollections();
+    loadProducts();
+  })();
+</script>
+
+</body>
+</html>
