@@ -225,7 +225,8 @@ header{
 .section.tight{padding:90px 0;}
 
 #nouveaute{background:var(--bg-elevated);}
-#accessoires{background:var(--bg-elevated);}
+#accessoires{background:var(--bg);}
+#meilleur-vendeur{background:var(--bg-elevated);}
 #apropos{background:var(--bg);}
 
 /* ---------- Section background video ---------- */

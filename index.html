@@ -92,33 +92,11 @@
   </div>
 </section>
 
-<section class="section" id="meilleur-vendeur">
-  <div class="container">
-    <div class="section-head">
-      <h2>Meilleur vendeur</h2>
-    </div>
-    <div class="bestseller-collage">
-      <div class="collage-item collage-a"><img id="bestsellerImgA" src="" alt=""></div>
-      <div class="collage-item collage-b"><img id="bestsellerImgB" src="" alt=""></div>
-      <div class="collage-item collage-main"><img id="bestsellerImg" src="" alt=""></div>
-      <div class="collage-item collage-c"><img id="bestsellerImgC" src="" alt=""></div>
-      <div class="collage-item collage-d"><img id="bestsellerImgD" src="" alt=""></div>
-    </div>
-    <div class="feature-info">
-      <h3 id="bestsellerTitle"></h3>
-      <div class="price" id="bestsellerPrice"></div>
-      <button class="btn btn-primary" type="button" id="bestsellerBtn" data-open-modal>
-        <svg><use href="#icon-eye"/></svg> Voir plus de détail
-      </button>
-    </div>
-  </div>
-</section>
-
-<section class="section alt" id="accessoires">
+<section class="section" id="accessoires">
   <video class="section-bg-video" autoplay muted loop playsinline poster="images/bg-accessoires.jpg">
     <source src="images/bg-accessoires.mp4" type="video/mp4">
   </video>
-  <div class="section-bg-overlay overlay-to-elevated"></div>
+  <div class="section-bg-overlay overlay-to-base"></div>
   <div class="container">
     <div class="section-head">
       <h2>Nos accessoires</h2>
@@ -157,6 +135,28 @@
         </div>
         <h4>Sac Nova</h4>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="meilleur-vendeur">
+  <div class="container">
+    <div class="section-head">
+      <h2>Meilleur vendeur</h2>
+    </div>
+    <div class="bestseller-collage">
+      <div class="collage-item collage-a"><img id="bestsellerImgA" src="" alt=""></div>
+      <div class="collage-item collage-b"><img id="bestsellerImgB" src="" alt=""></div>
+      <div class="collage-item collage-main"><img id="bestsellerImg" src="" alt=""></div>
+      <div class="collage-item collage-c"><img id="bestsellerImgC" src="" alt=""></div>
+      <div class="collage-item collage-d"><img id="bestsellerImgD" src="" alt=""></div>
+    </div>
+    <div class="feature-info">
+      <h3 id="bestsellerTitle"></h3>
+      <div class="price" id="bestsellerPrice"></div>
+      <button class="btn btn-primary" type="button" id="bestsellerBtn" data-open-modal>
+        <svg><use href="#icon-eye"/></svg> Voir plus de détail
+      </button>
     </div>
   </div>
 </section>
@@ -349,37 +349,15 @@
       btn.dataset.desc = product.description || '';
     }
 
-    async function loadFeatured() {
-      if (!window.ozeilSupabase) return;
-      var res = await window.ozeilSupabase
-        .from('products')
-        .select('*')
-        .in('featured_slot', ['nouveaute', 'meilleur_vendeur']);
-      if (res.error || !res.data) return;
-      var nouveaute = res.data.find(function (p) { return p.featured_slot === 'nouveaute'; });
-      var bestseller = res.data.find(function (p) { return p.featured_slot === 'meilleur_vendeur'; });
-      fillFeatured('nouveaute', 'nouveaute', nouveaute);
-      fillFeatured('bestseller', 'meilleur-vendeur', bestseller);
-      if (window.ozeilWireModalTriggers) window.ozeilWireModalTriggers();
-      if (window.ozeilWireFeatureCardParallax) window.ozeilWireFeatureCardParallax();
-    }
-    loadFeatured();
-
-    // most recent arrivals (up to 3, newest first) — purely date-driven, no manual selection
-    async function loadArrivals() {
+    function renderArrivals(products) {
       var grid = document.getElementById('arrivalsGrid');
       var emptyNote = document.getElementById('arrivalsEmpty');
-      if (!window.ozeilSupabase || !grid) return;
-      var res = await window.ozeilSupabase
-        .from('products')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(3);
-      if (res.error || !res.data || res.data.length === 0) {
+      if (!grid) return;
+      if (products.length === 0) {
         if (emptyNote) emptyNote.style.display = 'block';
         return;
       }
-      res.data.forEach(function (p, i) {
+      products.forEach(function (p, i) {
         var card = document.createElement('div');
         card.className = 'arrival-card' + (i === 0 ? ' arrival-main' : '');
 
@@ -413,9 +391,33 @@
 
         grid.appendChild(card);
       });
-      if (window.ozeilWireModalTriggers) window.ozeilWireModalTriggers();
     }
-    loadArrivals();
+
+    async function loadHomepageProducts() {
+      if (!window.ozeilSupabase) return;
+      var res = await window.ozeilSupabase
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (res.error || !res.data) return;
+      var all = res.data;
+
+      var nouveaute = all.find(function (p) { return p.featured_slot === 'nouveaute'; });
+      var bestseller = all.find(function (p) { return p.featured_slot === 'meilleur_vendeur'; });
+      fillFeatured('nouveaute', 'nouveaute', nouveaute);
+      fillFeatured('bestseller', 'meilleur-vendeur', bestseller);
+
+      // "Nouvellement arrivé" = the 3 most recent products, excluding whichever one is
+      // already shown as "Nouveauté" above — purely date-driven otherwise, no manual selection.
+      var arrivals = all.filter(function (p) {
+        return !nouveaute || p.id !== nouveaute.id;
+      }).slice(0, 3);
+      renderArrivals(arrivals);
+
+      if (window.ozeilWireModalTriggers) window.ozeilWireModalTriggers();
+      if (window.ozeilWireFeatureCardParallax) window.ozeilWireFeatureCardParallax();
+    }
+    loadHomepageProducts();
   })();
 </script>
 
