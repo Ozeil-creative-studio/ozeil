@@ -161,6 +161,15 @@
   </div>
 </section>
 
+<section class="section" id="derniers-arrives">
+  <div class="container">
+    <div class="section-head">
+      <h2>Nouvellement arrivé</h2>
+    </div>
+    <div class="arrivals-grid" id="arrivalsGrid"></div>
+    <p class="empty-note" id="arrivalsEmpty" style="display:none;">Aucun produit pour l'instant.</p>
+  </div>
+</section>
 
 <section class="section alt" id="contact">
   <svg class="contact-slide-mark mark" id="contactMark" viewBox="0 0 1182 1182"><use href="#ozeil-mark"/></svg>
@@ -355,6 +364,58 @@
       if (window.ozeilWireFeatureCardParallax) window.ozeilWireFeatureCardParallax();
     }
     loadFeatured();
+
+    // most recent arrivals (up to 3, newest first) — purely date-driven, no manual selection
+    async function loadArrivals() {
+      var grid = document.getElementById('arrivalsGrid');
+      var emptyNote = document.getElementById('arrivalsEmpty');
+      if (!window.ozeilSupabase || !grid) return;
+      var res = await window.ozeilSupabase
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(3);
+      if (res.error || !res.data || res.data.length === 0) {
+        if (emptyNote) emptyNote.style.display = 'block';
+        return;
+      }
+      res.data.forEach(function (p, i) {
+        var card = document.createElement('div');
+        card.className = 'arrival-card' + (i === 0 ? ' arrival-main' : '');
+
+        var art = document.createElement('div');
+        art.className = 'arrival-art';
+        var img = document.createElement('img');
+        img.src = p.image_url || '';
+        img.alt = p.title || '';
+        art.appendChild(img);
+
+        var priceText = formatPrice(p.price);
+        var btn = document.createElement('button');
+        btn.className = 'accessoire-link';
+        btn.type = 'button';
+        btn.setAttribute('data-open-modal', '');
+        btn.dataset.name = p.title || '';
+        btn.dataset.price = priceText;
+        btn.dataset.img = p.image_url || '';
+        btn.dataset.desc = p.description || '';
+        btn.innerHTML = '<svg><use href="#icon-eye"/></svg> Voir plus de détail';
+        art.appendChild(btn);
+
+        card.appendChild(art);
+        var h4 = document.createElement('h4');
+        h4.textContent = p.title || '';
+        card.appendChild(h4);
+        var price = document.createElement('div');
+        price.className = 'price';
+        price.textContent = priceText;
+        card.appendChild(price);
+
+        grid.appendChild(card);
+      });
+      if (window.ozeilWireModalTriggers) window.ozeilWireModalTriggers();
+    }
+    loadArrivals();
   })();
 </script>
 
