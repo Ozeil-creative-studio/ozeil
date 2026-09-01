@@ -32,6 +32,8 @@
 </defs>
 </svg>
 
+<div id="promoBarHost"></div>
+
 <header>
   <nav class="nav">
     <a href="login.html" class="nav-pill">
@@ -63,6 +65,8 @@
   </div>
   <svg class="hero-giant-mark mark" id="heroMark" viewBox="0 0 1182 1182"><use href="#ozeil-mark"/></svg>
 </section>
+
+<div id="promoSectionHost"></div>
 
 <section class="section alt" id="nouveaute">
   <video class="section-bg-video" autoplay muted loop playsinline poster="images/bg-nouveaute.jpg">
@@ -157,7 +161,6 @@
   </div>
 </section>
 
-<div id="dynamicSections"></div>
 
 <section class="section alt" id="contact">
   <svg class="contact-slide-mark mark" id="contactMark" viewBox="0 0 1182 1182"><use href="#ozeil-mark"/></svg>
@@ -306,9 +309,9 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="supabase-client.js"></script>
 <script src="main.js"></script>
-<script src="page-sections.js"></script>
+<script src="promo.js"></script>
 <script>
-  if (window.ozeilRenderPageSections) window.ozeilRenderPageSections('accueil');
+  if (window.ozeilRenderPromo) window.ozeilRenderPromo();
   // fetch the two featured products (Nouveauté / Meilleur vendeur) from Supabase
   (function () {
     function formatPrice(n) {

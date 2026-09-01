@@ -28,6 +28,8 @@
 </defs>
 </svg>
 
+<div id="promoBarHost"></div>
+
 <header>
   <nav class="nav">
     <a href="login.html" class="nav-pill">
@@ -72,8 +74,6 @@
     <p class="empty-note" id="productsEmpty" style="display:none;">Aucun produit pour l'instant.</p>
   </div>
 </section>
-
-<div id="dynamicSections"></div>
 
 <footer>
   <div class="container">
@@ -147,9 +147,9 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="supabase-client.js"></script>
 <script src="main.js"></script>
-<script src="page-sections.js"></script>
+<script src="promo.js"></script>
 <script>
-  if (window.ozeilRenderPageSections) window.ozeilRenderPageSections('boutique');
+  if (window.ozeilRenderPromo) window.ozeilRenderPromo();
   (function () {
     function formatPrice(n) {
       return Number(n).toFixed(2).replace('.', ',') + ' $';
