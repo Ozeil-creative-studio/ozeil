@@ -142,19 +142,6 @@
   </div>
 </footer>
 
-<div class="modal-backdrop" id="modalBackdrop">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-media" id="modalMedia"><img id="modalImg" src="" alt=""></div>
-    <div class="modal-info">
-      <button class="modal-close" type="button" id="modalCloseBtn" aria-label="Fermer"><svg><use href="#icon-close"/></svg></button>
-      <h3 id="modalTitle">Produit</h3>
-      <div class="price" id="modalPrice">0,00 $</div>
-      <p class="desc" id="modalDesc"></p>
-      <button class="btn btn-primary" type="button">Ajouter au panier</button>
-    </div>
-  </div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="supabase-client.js"></script>
 <script src="main.js"></script>
@@ -171,30 +158,31 @@
       return e;
     }
 
-    function buildProductCard(product) {
+    function buildProductCard(product, collectionsMap) {
       var card = el('div', 'shop-card');
-      var art = el('div', 'shop-art');
 
+      var photo = el('div', 'shop-card-photo');
       var img = document.createElement('img');
       img.src = product.image_url || '';
       img.alt = product.title || '';
-      art.appendChild(img);
+      photo.appendChild(img);
+      card.appendChild(photo);
 
-      var priceText = formatPrice(product.price);
-      var btn = document.createElement('button');
-      btn.className = 'shop-link';
-      btn.type = 'button';
-      btn.setAttribute('data-open-modal', '');
-      btn.dataset.name = product.title || '';
-      btn.dataset.price = priceText;
-      btn.dataset.img = product.image_url || '';
-      btn.dataset.desc = product.description || '';
-      btn.innerHTML = '<svg><use href="#icon-eye"/></svg> Voir plus de détail';
-      art.appendChild(btn);
+      var body = el('div', 'shop-card-body');
+      body.appendChild(el('h4', null, product.title || ''));
+      var collectionTitle = product.collection_id ? collectionsMap[product.collection_id] : null;
+      if (collectionTitle) body.appendChild(el('div', 'shop-card-collection', collectionTitle));
+      body.appendChild(el('div', 'shop-card-price', formatPrice(product.price)));
 
-      card.appendChild(art);
-      card.appendChild(el('h4', null, product.title || ''));
-      card.appendChild(el('div', 'price', priceText));
+      var buy = document.createElement('a');
+      var href = product.printify_url || '';
+      buy.className = 'shop-card-buy' + (href ? '' : ' is-disabled');
+      buy.href = href || '#';
+      if (href) { buy.target = '_blank'; buy.rel = 'noopener'; }
+      buy.innerHTML = '<svg><use href="#icon-bag"/></svg> Commander';
+      body.appendChild(buy);
+
+      card.appendChild(body);
       return card;
     }
 
@@ -210,13 +198,18 @@
 
     async function loadCollections() {
       var grid = document.getElementById('collectionsGrid');
-      if (!window.ozeilSupabase || !grid) return;
+      if (!window.ozeilSupabase) return {};
       var res = await window.ozeilSupabase.from('collections').select('*').order('created_at', { ascending: true });
-      if (res.error || !res.data || res.data.length === 0) return;
-      res.data.forEach(function (c) { grid.appendChild(buildCollectionCard(c)); });
+      if (res.error || !res.data) return {};
+      var map = {};
+      res.data.forEach(function (c) { map[c.id] = c.title; });
+      if (grid && res.data.length > 0) {
+        res.data.forEach(function (c) { grid.appendChild(buildCollectionCard(c)); });
+      }
+      return map;
     }
 
-    async function loadProducts() {
+    async function loadProducts(collectionsMap) {
       var grid = document.getElementById('productsGrid');
       var emptyNote = document.getElementById('productsEmpty');
       if (!window.ozeilSupabase || !grid) return;
@@ -225,12 +218,10 @@
         if (emptyNote) emptyNote.style.display = 'block';
         return;
       }
-      res.data.forEach(function (p) { grid.appendChild(buildProductCard(p)); });
-      if (window.ozeilWireModalTriggers) window.ozeilWireModalTriggers();
+      res.data.forEach(function (p) { grid.appendChild(buildProductCard(p, collectionsMap)); });
     }
 
-    loadCollections();
-    loadProducts();
+    loadCollections().then(function (collectionsMap) { loadProducts(collectionsMap); });
   })();
 </script>
 

@@ -94,6 +94,10 @@
         <textarea id="productDesc" rows="3"></textarea>
       </div>
       <div class="field">
+        <label for="productPrintify">Lien Printify</label>
+        <input id="productPrintify" type="url" placeholder="https://...">
+      </div>
+      <div class="field">
         <label for="productCollection">Collection</label>
         <select id="productCollection">
           <option value="">Aucune</option>
@@ -218,6 +222,7 @@
     document.getElementById('productTitle').value = p.title || '';
     document.getElementById('productPrice').value = p.price || '';
     document.getElementById('productDesc').value = p.description || '';
+    document.getElementById('productPrintify').value = p.printify_url || '';
     document.getElementById('productCollection').value = p.collection_id || '';
     document.getElementById('productFeatured').value = p.featured_slot || '';
     var preview = document.getElementById('productThumbPreview');
@@ -326,6 +331,7 @@
         title: document.getElementById('productTitle').value.trim(),
         price: parseFloat(document.getElementById('productPrice').value),
         description: document.getElementById('productDesc').value.trim(),
+        printify_url: document.getElementById('productPrintify').value.trim() || null,
         collection_id: document.getElementById('productCollection').value || null,
         featured_slot: featuredSlot,
         image_url: imageUrl
