@@ -22,6 +22,8 @@
   </symbol>
   <symbol id="icon-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M13.5 6.5l4 4" stroke="currentColor" stroke-width="1.5"/></symbol>
   <symbol id="icon-trash" viewBox="0 0 24 24"><path d="M5 7h14M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2m-9 0 1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
 </defs>
 </svg>
 
@@ -46,84 +48,94 @@
   <section class="admin-section active" id="productsSection">
     <div class="admin-section-head">
       <h2>Produits</h2>
-      <span id="productsCount"></span>
+      <div class="right">
+        <span id="productsCount"></span>
+        <button class="btn btn-primary" type="button" id="productAddBtn"><svg><use href="#icon-plus"/></svg> Ajouter un produit</button>
+      </div>
     </div>
-    <div class="admin-layout">
-      <div class="admin-list" id="productsList"></div>
-
-      <form class="admin-form" id="productForm">
-        <h3 id="productFormTitle">Ajouter un produit</h3>
-
-        <div class="admin-thumb-preview" id="productThumbPreview"><span>Aperçu de l'image</span></div>
-
-        <div class="field">
-          <label for="productImage">Image</label>
-          <input id="productImage" type="file" accept="image/*">
-        </div>
-        <div class="field">
-          <label for="productTitle">Titre</label>
-          <input id="productTitle" type="text" required>
-        </div>
-        <div class="field">
-          <label for="productPrice">Prix ($)</label>
-          <input id="productPrice" type="number" step="0.01" min="0" required>
-        </div>
-        <div class="field">
-          <label for="productDesc">Description</label>
-          <textarea id="productDesc" rows="3"></textarea>
-        </div>
-        <div class="field">
-          <label for="productCollection">Collection</label>
-          <select id="productCollection">
-            <option value="">Aucune</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="productFeatured">Mis en vedette (accueil)</label>
-          <select id="productFeatured">
-            <option value="">Aucun</option>
-            <option value="nouveaute">Nouveauté</option>
-            <option value="meilleur_vendeur">Meilleur vendeur</option>
-          </select>
-        </div>
-
-        <button class="btn btn-primary" type="submit" id="productSubmitBtn">Ajouter</button>
-        <button class="btn btn-ghost" type="button" id="productCancelBtn" style="display:none;">Annuler la modification</button>
-        <p class="admin-msg" id="productMsg"></p>
-      </form>
-    </div>
+    <div class="admin-list" id="productsList"></div>
   </section>
 
   <section class="admin-section" id="collectionsSection">
     <div class="admin-section-head">
       <h2>Collections</h2>
-      <span id="collectionsCount"></span>
+      <div class="right">
+        <span id="collectionsCount"></span>
+        <button class="btn btn-primary" type="button" id="collectionAddBtn"><svg><use href="#icon-plus"/></svg> Ajouter une collection</button>
+      </div>
     </div>
-    <div class="admin-layout">
-      <div class="admin-list" id="collectionsList"></div>
-
-      <form class="admin-form" id="collectionForm">
-        <h3 id="collectionFormTitle">Ajouter une collection</h3>
-
-        <div class="admin-thumb-preview" id="collectionThumbPreview"><span>Aperçu de l'image</span></div>
-
-        <div class="field">
-          <label for="collectionImage">Image</label>
-          <input id="collectionImage" type="file" accept="image/*">
-        </div>
-        <div class="field">
-          <label for="collectionTitle">Titre</label>
-          <input id="collectionTitle" type="text" required>
-        </div>
-
-        <button class="btn btn-primary" type="submit" id="collectionSubmitBtn">Ajouter</button>
-        <button class="btn btn-ghost" type="button" id="collectionCancelBtn" style="display:none;">Annuler la modification</button>
-        <p class="admin-msg" id="collectionMsg"></p>
-      </form>
-    </div>
+    <div class="admin-list" id="collectionsList"></div>
   </section>
 
 </main>
+
+<div class="modal-backdrop" id="productModalBackdrop">
+  <div class="admin-modal-box">
+    <button class="modal-close" type="button" id="productModalCloseBtn" aria-label="Fermer"><svg><use href="#icon-close"/></svg></button>
+    <form class="admin-form" id="productForm">
+      <h3 id="productFormTitle">Ajouter un produit</h3>
+
+      <div class="admin-thumb-preview" id="productThumbPreview"><span>Aperçu de l'image</span></div>
+
+      <div class="field">
+        <label for="productImage">Image</label>
+        <input id="productImage" type="file" accept="image/*">
+      </div>
+      <div class="field">
+        <label for="productTitle">Titre</label>
+        <input id="productTitle" type="text" required>
+      </div>
+      <div class="field">
+        <label for="productPrice">Prix ($)</label>
+        <input id="productPrice" type="number" step="0.01" min="0" required>
+      </div>
+      <div class="field">
+        <label for="productDesc">Description</label>
+        <textarea id="productDesc" rows="3"></textarea>
+      </div>
+      <div class="field">
+        <label for="productCollection">Collection</label>
+        <select id="productCollection">
+          <option value="">Aucune</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="productFeatured">Mis en vedette (accueil)</label>
+        <select id="productFeatured">
+          <option value="">Aucun</option>
+          <option value="nouveaute">Nouveauté</option>
+          <option value="meilleur_vendeur">Meilleur vendeur</option>
+        </select>
+      </div>
+
+      <button class="btn btn-primary" type="submit" id="productSubmitBtn">Ajouter</button>
+      <p class="admin-msg" id="productMsg"></p>
+    </form>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="collectionModalBackdrop">
+  <div class="admin-modal-box">
+    <button class="modal-close" type="button" id="collectionModalCloseBtn" aria-label="Fermer"><svg><use href="#icon-close"/></svg></button>
+    <form class="admin-form" id="collectionForm">
+      <h3 id="collectionFormTitle">Ajouter une collection</h3>
+
+      <div class="admin-thumb-preview" id="collectionThumbPreview"><span>Aperçu de l'image</span></div>
+
+      <div class="field">
+        <label for="collectionImage">Image</label>
+        <input id="collectionImage" type="file" accept="image/*">
+      </div>
+      <div class="field">
+        <label for="collectionTitle">Titre</label>
+        <input id="collectionTitle" type="text" required>
+      </div>
+
+      <button class="btn btn-primary" type="submit" id="collectionSubmitBtn">Ajouter</button>
+      <p class="admin-msg" id="collectionMsg"></p>
+    </form>
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="supabase-client.js"></script>
@@ -177,13 +189,23 @@
 
   // ================= PRODUCTS =================
 
+  var productModal = document.getElementById('productModalBackdrop');
+
+  function closeProductModal() {
+    productModal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function openProductModal() {
+    productModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
   function resetProductForm() {
     editingProductId = null;
     productImageFile = null;
     document.getElementById('productForm').reset();
     document.getElementById('productFormTitle').textContent = 'Ajouter un produit';
     document.getElementById('productSubmitBtn').textContent = 'Ajouter';
-    document.getElementById('productCancelBtn').style.display = 'none';
     document.getElementById('productThumbPreview').innerHTML = '<span>Aperçu de l\'image</span>';
     document.getElementById('productMsg').textContent = '';
   }
@@ -193,7 +215,6 @@
     productImageFile = null;
     document.getElementById('productFormTitle').textContent = 'Modifier le produit';
     document.getElementById('productSubmitBtn').textContent = 'Enregistrer';
-    document.getElementById('productCancelBtn').style.display = 'block';
     document.getElementById('productTitle').value = p.title || '';
     document.getElementById('productPrice').value = p.price || '';
     document.getElementById('productDesc').value = p.description || '';
@@ -201,8 +222,17 @@
     document.getElementById('productFeatured').value = p.featured_slot || '';
     var preview = document.getElementById('productThumbPreview');
     preview.innerHTML = p.image_url ? '<img src="' + p.image_url + '" alt="">' : '<span>Aperçu de l\'image</span>';
-    window.scrollTo({ top: document.getElementById('productForm').getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth' });
+    openProductModal();
   }
+
+  document.getElementById('productAddBtn').addEventListener('click', function () {
+    resetProductForm();
+    openProductModal();
+  });
+  document.getElementById('productModalCloseBtn').addEventListener('click', closeProductModal);
+  productModal.addEventListener('click', function (e) {
+    if (e.target === productModal) closeProductModal();
+  });
 
   document.getElementById('productImage').addEventListener('change', function (e) {
     var file = e.target.files[0];
@@ -214,8 +244,6 @@
     };
     reader.readAsDataURL(file);
   });
-
-  document.getElementById('productCancelBtn').addEventListener('click', resetProductForm);
 
   async function renderProducts() {
     var res = await sb.from('products').select('*').order('created_at', { ascending: true });
@@ -321,6 +349,7 @@
       msg.className = 'admin-msg ok';
       msg.textContent = 'Enregistré.';
       resetProductForm();
+      closeProductModal();
       renderProducts();
     } catch (err) {
       msg.className = 'admin-msg error';
@@ -332,13 +361,23 @@
 
   // ================= COLLECTIONS =================
 
+  var collectionModal = document.getElementById('collectionModalBackdrop');
+
+  function closeCollectionModal() {
+    collectionModal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function openCollectionModal() {
+    collectionModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
   function resetCollectionForm() {
     editingCollectionId = null;
     collectionImageFile = null;
     document.getElementById('collectionForm').reset();
     document.getElementById('collectionFormTitle').textContent = 'Ajouter une collection';
     document.getElementById('collectionSubmitBtn').textContent = 'Ajouter';
-    document.getElementById('collectionCancelBtn').style.display = 'none';
     document.getElementById('collectionThumbPreview').innerHTML = '<span>Aperçu de l\'image</span>';
     document.getElementById('collectionMsg').textContent = '';
   }
@@ -348,12 +387,20 @@
     collectionImageFile = null;
     document.getElementById('collectionFormTitle').textContent = 'Modifier la collection';
     document.getElementById('collectionSubmitBtn').textContent = 'Enregistrer';
-    document.getElementById('collectionCancelBtn').style.display = 'block';
     document.getElementById('collectionTitle').value = c.title || '';
     var preview = document.getElementById('collectionThumbPreview');
     preview.innerHTML = c.image_url ? '<img src="' + c.image_url + '" alt="">' : '<span>Aperçu de l\'image</span>';
-    window.scrollTo({ top: document.getElementById('collectionForm').getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth' });
+    openCollectionModal();
   }
+
+  document.getElementById('collectionAddBtn').addEventListener('click', function () {
+    resetCollectionForm();
+    openCollectionModal();
+  });
+  document.getElementById('collectionModalCloseBtn').addEventListener('click', closeCollectionModal);
+  collectionModal.addEventListener('click', function (e) {
+    if (e.target === collectionModal) closeCollectionModal();
+  });
 
   document.getElementById('collectionImage').addEventListener('change', function (e) {
     var file = e.target.files[0];
@@ -365,8 +412,6 @@
     };
     reader.readAsDataURL(file);
   });
-
-  document.getElementById('collectionCancelBtn').addEventListener('click', resetCollectionForm);
 
   async function populateCollectionSelect() {
     var select = document.getElementById('productCollection');
@@ -470,6 +515,7 @@
       msg.className = 'admin-msg ok';
       msg.textContent = 'Enregistré.';
       resetCollectionForm();
+      closeCollectionModal();
       renderCollections();
     } catch (err) {
       msg.className = 'admin-msg error';
@@ -477,6 +523,12 @@
     } finally {
       btn.disabled = false;
     }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    closeProductModal();
+    closeCollectionModal();
   });
 
   // ---------- boot ----------
