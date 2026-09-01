@@ -151,8 +151,9 @@ header{
   justify-content:center;
   text-align:center;
   background:
-    radial-gradient(ellipse 60% 45% at 50% 30%, rgba(220,178,121,.10), transparent 60%),
-    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(50,30,110,.35), transparent 70%),
+    radial-gradient(ellipse 60% 45% at 50% 30%, rgba(220,178,121,.12), transparent 60%),
+    linear-gradient(180deg, rgba(5,0,29,.35) 0%, rgba(5,0,29,.6) 55%, var(--bg) 100%),
+    url('images/bg-hero.jpg') center 35%/cover no-repeat,
     var(--bg);
 }
 
@@ -225,6 +226,25 @@ header{
 .section{padding:120px 0;position:relative;z-index:1;background:var(--bg);}
 .section.alt{background:var(--bg-elevated);}
 .section.tight{padding:90px 0;}
+
+#nouveaute{
+  background:
+    linear-gradient(180deg, rgba(11,6,48,.55) 0%, rgba(11,6,48,.9) 65%, var(--bg-elevated) 100%),
+    url('images/bg-nouveaute.jpg') center/cover no-repeat,
+    var(--bg-elevated);
+}
+#accessoires{
+  background:
+    linear-gradient(180deg, rgba(11,6,48,.55) 0%, rgba(11,6,48,.9) 65%, var(--bg-elevated) 100%),
+    url('images/bg-accessoires.jpg') center/cover no-repeat,
+    var(--bg-elevated);
+}
+#apropos{
+  background:
+    linear-gradient(180deg, rgba(5,0,29,.45) 0%, rgba(5,0,29,.88) 65%, var(--bg) 100%),
+    url('images/bg-apropos.jpg') center/cover no-repeat,
+    var(--bg);
+}
 
 .section-head{
   text-align:center;
