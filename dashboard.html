@@ -24,6 +24,8 @@
   <symbol id="icon-trash" viewBox="0 0 24 24"><path d="M5 7h14M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2m-9 0 1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="icon-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
   <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="icon-up" viewBox="0 0 24 24"><path d="M5 15l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-down" viewBox="0 0 24 24"><path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </defs>
 </svg>
 
@@ -43,6 +45,7 @@
   <div class="admin-tabs">
     <button class="admin-tab active" type="button" data-tab="productsSection">Produits</button>
     <button class="admin-tab" type="button" data-tab="collectionsSection">Collections</button>
+    <button class="admin-tab" type="button" data-tab="pageSectionsSection">Sections</button>
   </div>
 
   <section class="admin-section active" id="productsSection">
@@ -65,6 +68,22 @@
       </div>
     </div>
     <div class="admin-list" id="collectionsList"></div>
+  </section>
+
+  <section class="admin-section" id="pageSectionsSection">
+    <div class="admin-tabs" style="margin-bottom:24px;">
+      <button class="admin-tab active" type="button" data-page="accueil">Accueil</button>
+      <button class="admin-tab" type="button" data-page="boutique">Boutique</button>
+    </div>
+    <div class="admin-section-head">
+      <h2>Sections</h2>
+      <div class="right">
+        <span id="pageSectionsCount"></span>
+        <button class="btn btn-primary" type="button" id="pageSectionAddBtn"><svg><use href="#icon-plus"/></svg> Ajouter un bloc</button>
+      </div>
+    </div>
+    <p class="empty-note" style="text-align:left;padding:0 0 20px;">Les blocs s'affichent dans l'ordre ci-dessous, regroupés dans une zone dédiée de la page (avant "Contact" sur l'accueil, à la fin de la Boutique).</p>
+    <div class="admin-list" id="pageSectionsList"></div>
   </section>
 
 </main>
@@ -141,6 +160,55 @@
   </div>
 </div>
 
+<div class="modal-backdrop" id="pageSectionModalBackdrop">
+  <div class="admin-modal-box">
+    <button class="modal-close" type="button" id="pageSectionModalCloseBtn" aria-label="Fermer"><svg><use href="#icon-close"/></svg></button>
+    <form class="admin-form" id="pageSectionForm">
+      <h3 id="pageSectionFormTitle">Ajouter un bloc</h3>
+
+      <div class="field">
+        <label for="pageSectionType">Type de bloc</label>
+        <select id="pageSectionType">
+          <option value="texte">Texte</option>
+          <option value="image_texte">Image + texte</option>
+          <option value="bandeau">Bandeau</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="pageSectionHeading">Titre</label>
+        <input id="pageSectionHeading" type="text" required>
+      </div>
+      <div class="field">
+        <label for="pageSectionBody">Texte</label>
+        <textarea id="pageSectionBody" rows="4"></textarea>
+      </div>
+      <div class="field" data-only="image_texte,bandeau">
+        <div class="admin-thumb-preview" id="pageSectionThumbPreview"><span>Aperçu de l'image</span></div>
+        <label for="pageSectionImage">Image</label>
+        <input id="pageSectionImage" type="file" accept="image/*">
+      </div>
+      <div class="field" data-only="image_texte">
+        <label for="pageSectionImageSide">Position de l'image</label>
+        <select id="pageSectionImageSide">
+          <option value="left">Gauche</option>
+          <option value="right">Droite</option>
+        </select>
+      </div>
+      <div class="field" data-only="image_texte,bandeau">
+        <label for="pageSectionButtonText">Texte du bouton (optionnel)</label>
+        <input id="pageSectionButtonText" type="text">
+      </div>
+      <div class="field" data-only="image_texte,bandeau">
+        <label for="pageSectionButtonUrl">Lien du bouton</label>
+        <input id="pageSectionButtonUrl" type="text" placeholder="https:// ou #contact">
+      </div>
+
+      <button class="btn btn-primary" type="submit" id="pageSectionSubmitBtn">Ajouter</button>
+      <p class="admin-msg" id="pageSectionMsg"></p>
+    </form>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="supabase-client.js"></script>
 <script>
@@ -153,9 +221,13 @@
 
   var editingProductId = null;
   var editingCollectionId = null;
+  var editingPageSectionId = null;
   var productImageFile = null;
   var collectionImageFile = null;
+  var pageSectionImageFile = null;
   var collectionsCache = [];
+  var pageSectionsCache = [];
+  var currentSectionsPage = 'accueil';
 
   function formatPrice(n) {
     return Number(n).toFixed(2).replace('.', ',') + ' $';
@@ -182,9 +254,9 @@
   });
 
   // ---------- tabs ----------
-  document.querySelectorAll('.admin-tab').forEach(function (tab) {
+  document.querySelectorAll('.admin-tab[data-tab]').forEach(function (tab) {
     tab.addEventListener('click', function () {
-      document.querySelectorAll('.admin-tab').forEach(function (t) { t.classList.remove('active'); });
+      document.querySelectorAll('.admin-tab[data-tab]').forEach(function (t) { t.classList.remove('active'); });
       document.querySelectorAll('.admin-section').forEach(function (s) { s.classList.remove('active'); });
       tab.classList.add('active');
       document.getElementById(tab.dataset.tab).classList.add('active');
@@ -531,10 +603,234 @@
     }
   });
 
+  // ================= PAGE SECTIONS =================
+
+  var pageSectionModal = document.getElementById('pageSectionModalBackdrop');
+
+  function closePageSectionModal() {
+    pageSectionModal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function openPageSectionModal() {
+    pageSectionModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function updatePageSectionFieldVisibility() {
+    var type = document.getElementById('pageSectionType').value;
+    document.querySelectorAll('#pageSectionForm .field[data-only]').forEach(function (field) {
+      var only = field.dataset.only.split(',');
+      field.style.display = only.indexOf(type) !== -1 ? '' : 'none';
+    });
+  }
+  document.getElementById('pageSectionType').addEventListener('change', updatePageSectionFieldVisibility);
+
+  function resetPageSectionForm() {
+    editingPageSectionId = null;
+    pageSectionImageFile = null;
+    document.getElementById('pageSectionForm').reset();
+    document.getElementById('pageSectionFormTitle').textContent = 'Ajouter un bloc';
+    document.getElementById('pageSectionSubmitBtn').textContent = 'Ajouter';
+    document.getElementById('pageSectionThumbPreview').innerHTML = '<span>Aperçu de l\'image</span>';
+    document.getElementById('pageSectionMsg').textContent = '';
+    updatePageSectionFieldVisibility();
+  }
+
+  function fillPageSectionForm(s) {
+    editingPageSectionId = s.id;
+    pageSectionImageFile = null;
+    document.getElementById('pageSectionFormTitle').textContent = 'Modifier le bloc';
+    document.getElementById('pageSectionSubmitBtn').textContent = 'Enregistrer';
+    document.getElementById('pageSectionType').value = s.type;
+    document.getElementById('pageSectionHeading').value = s.heading || '';
+    document.getElementById('pageSectionBody').value = s.body || '';
+    document.getElementById('pageSectionImageSide').value = s.image_side || 'left';
+    document.getElementById('pageSectionButtonText').value = s.button_text || '';
+    document.getElementById('pageSectionButtonUrl').value = s.button_url || '';
+    var preview = document.getElementById('pageSectionThumbPreview');
+    preview.innerHTML = s.image_url ? '<img src="' + s.image_url + '" alt="">' : '<span>Aperçu de l\'image</span>';
+    updatePageSectionFieldVisibility();
+    openPageSectionModal();
+  }
+
+  document.getElementById('pageSectionAddBtn').addEventListener('click', function () {
+    resetPageSectionForm();
+    openPageSectionModal();
+  });
+  document.getElementById('pageSectionModalCloseBtn').addEventListener('click', closePageSectionModal);
+  pageSectionModal.addEventListener('click', function (e) {
+    if (e.target === pageSectionModal) closePageSectionModal();
+  });
+
+  document.getElementById('pageSectionImage').addEventListener('change', function (e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    pageSectionImageFile = file;
+    var reader = new FileReader();
+    reader.onload = function (ev) {
+      document.getElementById('pageSectionThumbPreview').innerHTML = '<img src="' + ev.target.result + '" alt="">';
+    };
+    reader.readAsDataURL(file);
+  });
+
+  document.querySelectorAll('#pageSectionsSection .admin-tab[data-page]').forEach(function (pill) {
+    pill.addEventListener('click', function () {
+      document.querySelectorAll('#pageSectionsSection .admin-tab[data-page]').forEach(function (p) { p.classList.remove('active'); });
+      pill.classList.add('active');
+      currentSectionsPage = pill.dataset.page;
+      renderPageSectionsList();
+    });
+  });
+
+  var pageSectionTypeLabels = { texte: 'Texte', image_texte: 'Image + texte', bandeau: 'Bandeau' };
+
+  async function movePageSection(index, direction) {
+    var neighborIndex = index + direction;
+    if (neighborIndex < 0 || neighborIndex >= pageSectionsCache.length) return;
+    var a = pageSectionsCache[index];
+    var b = pageSectionsCache[neighborIndex];
+    await sb.from('page_sections').update({ position: b.position }).eq('id', a.id);
+    await sb.from('page_sections').update({ position: a.position }).eq('id', b.id);
+    renderPageSectionsList();
+  }
+
+  async function renderPageSectionsList() {
+    var res = await sb.from('page_sections').select('*').eq('page', currentSectionsPage).order('position', { ascending: true });
+    var list = document.getElementById('pageSectionsList');
+    var countEl = document.getElementById('pageSectionsCount');
+    list.innerHTML = '';
+    if (res.error) { list.innerHTML = '<p class="empty-note">Erreur de chargement.</p>'; return; }
+    pageSectionsCache = res.data || [];
+    countEl.textContent = pageSectionsCache.length + (pageSectionsCache.length > 1 ? ' blocs' : ' bloc');
+    if (pageSectionsCache.length === 0) {
+      list.innerHTML = '<p class="empty-note">Aucun bloc pour l\'instant sur cette page.</p>';
+      return;
+    }
+    pageSectionsCache.forEach(function (s, index) {
+      var row = document.createElement('div');
+      row.className = 'admin-row';
+
+      var img = document.createElement('img');
+      img.src = s.image_url || '';
+      img.alt = '';
+      row.appendChild(img);
+
+      var info = document.createElement('div');
+      info.className = 'info';
+      var h4 = document.createElement('h4');
+      h4.textContent = s.heading || '(sans titre)';
+      var span = document.createElement('span');
+      span.textContent = pageSectionTypeLabels[s.type] || s.type;
+      info.appendChild(h4);
+      info.appendChild(span);
+      row.appendChild(info);
+
+      var actions = document.createElement('div');
+      actions.className = 'actions';
+
+      var upBtn = document.createElement('button');
+      upBtn.type = 'button';
+      upBtn.className = 'admin-icon-btn';
+      upBtn.setAttribute('aria-label', 'Monter');
+      upBtn.innerHTML = '<svg><use href="#icon-up"/></svg>';
+      if (index === 0) upBtn.disabled = true;
+      upBtn.addEventListener('click', function () { movePageSection(index, -1); });
+
+      var downBtn = document.createElement('button');
+      downBtn.type = 'button';
+      downBtn.className = 'admin-icon-btn';
+      downBtn.setAttribute('aria-label', 'Descendre');
+      downBtn.innerHTML = '<svg><use href="#icon-down"/></svg>';
+      if (index === pageSectionsCache.length - 1) downBtn.disabled = true;
+      downBtn.addEventListener('click', function () { movePageSection(index, 1); });
+
+      var editBtn = document.createElement('button');
+      editBtn.type = 'button';
+      editBtn.className = 'admin-icon-btn';
+      editBtn.setAttribute('aria-label', 'Modifier');
+      editBtn.innerHTML = '<svg><use href="#icon-edit"/></svg>';
+      editBtn.addEventListener('click', function () { fillPageSectionForm(s); });
+
+      var delBtn = document.createElement('button');
+      delBtn.type = 'button';
+      delBtn.className = 'admin-icon-btn danger';
+      delBtn.setAttribute('aria-label', 'Supprimer');
+      delBtn.innerHTML = '<svg><use href="#icon-trash"/></svg>';
+      delBtn.addEventListener('click', async function () {
+        if (!confirm('Supprimer ce bloc ?')) return;
+        await sb.from('page_sections').delete().eq('id', s.id);
+        if (editingPageSectionId === s.id) resetPageSectionForm();
+        renderPageSectionsList();
+      });
+
+      actions.appendChild(upBtn);
+      actions.appendChild(downBtn);
+      actions.appendChild(editBtn);
+      actions.appendChild(delBtn);
+      row.appendChild(actions);
+
+      list.appendChild(row);
+    });
+  }
+
+  document.getElementById('pageSectionForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var msg = document.getElementById('pageSectionMsg');
+    var btn = document.getElementById('pageSectionSubmitBtn');
+    msg.className = 'admin-msg';
+    msg.textContent = '';
+    btn.disabled = true;
+
+    try {
+      var type = document.getElementById('pageSectionType').value;
+      var imageUrl = null;
+      if (type !== 'texte') {
+        if (pageSectionImageFile) {
+          imageUrl = await uploadImage(pageSectionImageFile);
+        } else if (editingPageSectionId) {
+          var current = (await sb.from('page_sections').select('image_url').eq('id', editingPageSectionId).single()).data;
+          imageUrl = current ? current.image_url : null;
+        }
+      }
+
+      var payload = {
+        page: currentSectionsPage,
+        type: type,
+        heading: document.getElementById('pageSectionHeading').value.trim(),
+        body: document.getElementById('pageSectionBody').value.trim(),
+        image_url: imageUrl,
+        image_side: type === 'image_texte' ? document.getElementById('pageSectionImageSide').value : null,
+        button_text: type === 'texte' ? null : (document.getElementById('pageSectionButtonText').value.trim() || null),
+        button_url: type === 'texte' ? null : (document.getElementById('pageSectionButtonUrl').value.trim() || null)
+      };
+
+      var result;
+      if (editingPageSectionId) {
+        result = await sb.from('page_sections').update(payload).eq('id', editingPageSectionId);
+      } else {
+        payload.position = pageSectionsCache.length;
+        result = await sb.from('page_sections').insert(payload);
+      }
+      if (result.error) throw result.error;
+
+      msg.className = 'admin-msg ok';
+      msg.textContent = 'Enregistré.';
+      resetPageSectionForm();
+      closePageSectionModal();
+      renderPageSectionsList();
+    } catch (err) {
+      msg.className = 'admin-msg error';
+      msg.textContent = "Erreur : " + (err.message || 'impossible d\'enregistrer.');
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
     closeProductModal();
     closeCollectionModal();
+    closePageSectionModal();
   });
 
   // ---------- boot ----------
@@ -543,6 +839,7 @@
     if (!ok) return;
     await renderCollections();
     await renderProducts();
+    await renderPageSectionsList();
   })();
 })();
 </script>

@@ -372,7 +372,8 @@ header{
 .collage-main{width:56%;height:56%;top:20%;left:22%;z-index:5;}
 .collage-a{width:34%;height:34%;top:0;left:2%;z-index:2;transform:rotate(-6deg);}
 .collage-b{width:32%;height:32%;top:4%;right:0;z-index:3;transform:rotate(5deg);}
-.collage-c{width:34%;height:34%;bottom:0;left:33%;z-index:4;transform:rotate(3deg);}
+.collage-c{width:34%;height:34%;bottom:0;left:2%;z-index:4;transform:rotate(4deg);}
+.collage-d{width:32%;height:32%;bottom:4%;right:0;z-index:4;transform:rotate(-5deg);}
 
 /* ---------- Accessoires (accueil) ---------- */
 .accessoires-grid{
@@ -470,6 +471,34 @@ header{
   font-weight:300;
   padding:20px 0;
 }
+
+/* ---------- Dynamic sections (blocs gérés depuis le dashboard) ---------- */
+.dyn-section .section-head p{white-space:pre-line;}
+.dyn-image-text{display:flex;align-items:center;gap:64px;}
+.dyn-image-text.dyn-image-right{flex-direction:row-reverse;}
+.dyn-image{flex:1 1 0;min-width:0;}
+.dyn-image img{width:100%;border-radius:var(--radius);aspect-ratio:4/3;object-fit:cover;}
+.dyn-text{flex:1 1 0;min-width:0;}
+.dyn-text h2{font-size:clamp(26px,3.4vw,36px);font-weight:700;margin-bottom:16px;}
+.dyn-text p{font-size:14.5px;font-weight:300;color:var(--text-soft);line-height:1.75;white-space:pre-line;margin-bottom:24px;}
+@media (max-width:760px){
+  .dyn-image-text,.dyn-image-text.dyn-image-right{flex-direction:column;gap:32px;}
+}
+
+.dyn-bandeau{
+  position:relative;
+  background-size:cover;
+  background-position:center;
+  min-height:420px;
+  display:flex;
+  align-items:center;
+  padding:80px 0;
+}
+.dyn-bandeau-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(5,0,29,.55), rgba(5,0,29,.75));z-index:0;}
+.dyn-bandeau .container{position:relative;z-index:1;}
+.dyn-bandeau-content{max-width:560px;margin:0 auto;text-align:center;}
+.dyn-bandeau-content h2{font-size:clamp(28px,4vw,42px);font-weight:700;color:#fff;margin-bottom:16px;}
+.dyn-bandeau-content p{font-size:14.5px;font-weight:300;color:rgba(255,255,255,.85);line-height:1.75;white-space:pre-line;margin-bottom:28px;}
 
 /* ---------- Contact ---------- */
 #contact{overflow:hidden;}

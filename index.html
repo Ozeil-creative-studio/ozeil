@@ -98,6 +98,7 @@
       <div class="collage-item collage-b"><img id="bestsellerImgB" src="" alt=""></div>
       <div class="collage-item collage-main"><img id="bestsellerImg" src="" alt=""></div>
       <div class="collage-item collage-c"><img id="bestsellerImgC" src="" alt=""></div>
+      <div class="collage-item collage-d"><img id="bestsellerImgD" src="" alt=""></div>
     </div>
     <div class="feature-info">
       <h3 id="bestsellerTitle"></h3>
@@ -156,6 +157,7 @@
   </div>
 </section>
 
+<div id="dynamicSections"></div>
 
 <section class="section alt" id="contact">
   <svg class="contact-slide-mark mark" id="contactMark" viewBox="0 0 1182 1182"><use href="#ozeil-mark"/></svg>
@@ -304,7 +306,9 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="supabase-client.js"></script>
 <script src="main.js"></script>
+<script src="page-sections.js"></script>
 <script>
+  if (window.ozeilRenderPageSections) window.ozeilRenderPageSections('accueil');
   // fetch the two featured products (Nouveauté / Meilleur vendeur) from Supabase
   (function () {
     function formatPrice(n) {
@@ -319,7 +323,7 @@
       var img = document.getElementById(prefix + 'Img');
       img.src = product.image_url || '';
       img.alt = product.title || '';
-      ['ImgA', 'ImgB', 'ImgC'].forEach(function (suffix) {
+      ['ImgA', 'ImgB', 'ImgC', 'ImgD'].forEach(function (suffix) {
         var extra = document.getElementById(prefix + suffix);
         if (extra) { extra.src = product.image_url || ''; extra.alt = product.title || ''; }
       });

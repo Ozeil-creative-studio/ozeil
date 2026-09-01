@@ -73,6 +73,8 @@
   </div>
 </section>
 
+<div id="dynamicSections"></div>
+
 <footer>
   <div class="container">
     <div class="footer-top">
@@ -145,7 +147,9 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="supabase-client.js"></script>
 <script src="main.js"></script>
+<script src="page-sections.js"></script>
 <script>
+  if (window.ozeilRenderPageSections) window.ozeilRenderPageSections('boutique');
   (function () {
     function formatPrice(n) {
       return Number(n).toFixed(2).replace('.', ',') + ' $';
