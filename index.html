@@ -304,7 +304,10 @@
 
 <div class="modal-backdrop" id="modalBackdrop">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-media" id="modalMedia"><img id="modalImg" src="" alt=""></div>
+    <div class="modal-media" id="modalMedia">
+      <img id="modalImg" src="" alt="">
+      <div class="modal-thumbs" id="modalThumbs"></div>
+    </div>
     <div class="modal-info">
       <button class="modal-close" type="button" id="modalCloseBtn" aria-label="Fermer"><svg><use href="#icon-close"/></svg></button>
       <h3 id="modalTitle">Produit</h3>
@@ -335,9 +338,15 @@
       var img = document.getElementById(prefix + 'Img');
       img.src = product.image_url || '';
       img.alt = product.title || '';
-      ['ImgA', 'ImgB', 'ImgC', 'ImgD'].forEach(function (suffix) {
+      var gallery = product.gallery_urls || [];
+      // fill the collage's extra photo slots with real gallery photos when available,
+      // falling back to repeating the main photo if there aren't enough
+      ['ImgA', 'ImgB', 'ImgC', 'ImgD'].forEach(function (suffix, i) {
         var extra = document.getElementById(prefix + suffix);
-        if (extra) { extra.src = product.image_url || ''; extra.alt = product.title || ''; }
+        if (extra) {
+          extra.src = gallery[i] || product.image_url || '';
+          extra.alt = product.title || '';
+        }
       });
       document.getElementById(prefix + 'Title').textContent = product.title || '';
       var priceText = formatPrice(product.price);
@@ -347,6 +356,7 @@
       btn.dataset.price = priceText;
       btn.dataset.img = product.image_url || '';
       btn.dataset.desc = product.description || '';
+      btn.dataset.gallery = JSON.stringify(gallery);
     }
 
     function renderArrivals(products) {
@@ -377,6 +387,7 @@
         btn.dataset.price = priceText;
         btn.dataset.img = p.image_url || '';
         btn.dataset.desc = p.description || '';
+        btn.dataset.gallery = JSON.stringify(p.gallery_urls || []);
         btn.innerHTML = '<svg><use href="#icon-eye"/></svg> Voir plus de détail';
         art.appendChild(btn);
 

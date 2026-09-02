@@ -74,6 +74,31 @@
     var modalPrice = document.getElementById('modalPrice');
     var modalDesc = document.getElementById('modalDesc');
     var modalImg = document.getElementById('modalImg');
+    var modalThumbs = document.getElementById('modalThumbs');
+
+    function renderModalThumbs(mainImg, galleryJson) {
+      if (!modalThumbs) return;
+      modalThumbs.innerHTML = '';
+      var gallery = [];
+      try { gallery = galleryJson ? JSON.parse(galleryJson) : []; } catch (e) { gallery = []; }
+      var all = [mainImg].concat(gallery).filter(Boolean);
+      if (all.length <= 1) return;
+      all.forEach(function (url, i) {
+        var thumb = document.createElement('button');
+        thumb.type = 'button';
+        thumb.className = 'modal-thumb' + (i === 0 ? ' active' : '');
+        var img = document.createElement('img');
+        img.src = url;
+        img.alt = '';
+        thumb.appendChild(img);
+        thumb.addEventListener('click', function () {
+          modalImg.src = url;
+          modalThumbs.querySelectorAll('.modal-thumb').forEach(function (t) { t.classList.remove('active'); });
+          thumb.classList.add('active');
+        });
+        modalThumbs.appendChild(thumb);
+      });
+    }
 
     function openModal(btn) {
       modalTitle.textContent = btn.dataset.name;
@@ -81,6 +106,7 @@
       modalDesc.textContent = btn.dataset.desc;
       modalImg.src = btn.dataset.img;
       modalImg.alt = btn.dataset.name;
+      renderModalThumbs(btn.dataset.img, btn.dataset.gallery);
       backdrop.classList.add('open');
       document.body.style.overflow = 'hidden';
     }

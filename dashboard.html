@@ -131,6 +131,11 @@
         <input id="productImage" type="file" accept="image/*">
       </div>
       <div class="field">
+        <label>Photos supplémentaires (galerie)</label>
+        <div class="admin-gallery-preview" id="productGalleryPreview"></div>
+        <input id="productGalleryInput" type="file" accept="image/*" multiple>
+      </div>
+      <div class="field">
         <label for="productTitle">Titre</label>
         <input id="productTitle" type="text" required>
       </div>
@@ -203,6 +208,7 @@
   var editingProductId = null;
   var editingCollectionId = null;
   var productImageFile = null;
+  var productGalleryUrls = [];
   var collectionImageFile = null;
   var promoImageFile = null;
   var promoId = null;
@@ -255,19 +261,45 @@
     document.body.style.overflow = 'hidden';
   }
 
+  function renderProductGalleryPreview() {
+    var host = document.getElementById('productGalleryPreview');
+    host.innerHTML = '';
+    productGalleryUrls.forEach(function (url, i) {
+      var thumb = document.createElement('div');
+      thumb.className = 'admin-gallery-thumb';
+      var img = document.createElement('img');
+      img.src = url;
+      img.alt = '';
+      thumb.appendChild(img);
+      var removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.setAttribute('aria-label', 'Retirer cette photo');
+      removeBtn.textContent = '×';
+      removeBtn.addEventListener('click', function () {
+        productGalleryUrls.splice(i, 1);
+        renderProductGalleryPreview();
+      });
+      thumb.appendChild(removeBtn);
+      host.appendChild(thumb);
+    });
+  }
+
   function resetProductForm() {
     editingProductId = null;
     productImageFile = null;
+    productGalleryUrls = [];
     document.getElementById('productForm').reset();
     document.getElementById('productFormTitle').textContent = 'Ajouter un produit';
     document.getElementById('productSubmitBtn').textContent = 'Ajouter';
     document.getElementById('productThumbPreview').innerHTML = '<span>Aperçu de l\'image</span>';
     document.getElementById('productMsg').textContent = '';
+    renderProductGalleryPreview();
   }
 
   function fillProductForm(p) {
     editingProductId = p.id;
     productImageFile = null;
+    productGalleryUrls = (p.gallery_urls || []).slice();
     document.getElementById('productFormTitle').textContent = 'Modifier le produit';
     document.getElementById('productSubmitBtn').textContent = 'Enregistrer';
     document.getElementById('productTitle').value = p.title || '';
@@ -278,6 +310,7 @@
     document.getElementById('productFeatured').value = p.featured_slot || '';
     var preview = document.getElementById('productThumbPreview');
     preview.innerHTML = p.image_url ? '<img src="' + p.image_url + '" alt="">' : '<span>Aperçu de l\'image</span>';
+    renderProductGalleryPreview();
     openProductModal();
   }
 
@@ -299,6 +332,21 @@
       document.getElementById('productThumbPreview').innerHTML = '<img src="' + ev.target.result + '" alt="">';
     };
     reader.readAsDataURL(file);
+  });
+
+  document.getElementById('productGalleryInput').addEventListener('change', async function (e) {
+    var files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+    e.target.value = '';
+    for (var i = 0; i < files.length; i++) {
+      try {
+        var url = await uploadImage(files[i]);
+        productGalleryUrls.push(url);
+      } catch (err) {
+        // ignore a single failed upload, keep going with the rest
+      }
+    }
+    renderProductGalleryPreview();
   });
 
   async function renderProducts() {
@@ -385,7 +433,8 @@
         printify_url: document.getElementById('productPrintify').value.trim() || null,
         collection_id: document.getElementById('productCollection').value || null,
         featured_slot: featuredSlot,
-        image_url: imageUrl
+        image_url: imageUrl,
+        gallery_urls: productGalleryUrls
       };
 
       // only one product may hold a given featured slot at a time

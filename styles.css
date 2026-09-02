@@ -773,8 +773,31 @@ footer{background:var(--bg-elevated);border-top:1px solid var(--line);padding:70
   max-height:90vh;
 }
 .modal-backdrop.open .modal{transform:translateY(0);}
-.modal-media{aspect-ratio:1/1;background:#eeece6;}
+.modal-media{aspect-ratio:1/1;background:#eeece6;position:relative;}
 .modal-media img{width:100%;height:100%;object-fit:cover;}
+.modal-thumbs{
+  position:absolute;
+  left:0;right:0;bottom:0;
+  display:flex;
+  gap:8px;
+  padding:12px;
+  background:linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,0));
+}
+.modal-thumb{
+  width:44px;height:44px;
+  border-radius:8px;
+  overflow:hidden;
+  border:2px solid transparent;
+  padding:0;
+  cursor:pointer;
+  flex-shrink:0;
+  background:none;
+  opacity:.7;
+  transition:opacity .2s ease, border-color .2s ease;
+}
+.modal-thumb img{width:100%;height:100%;object-fit:cover;}
+.modal-thumb:hover{opacity:1;}
+.modal-thumb.active{opacity:1;border-color:#fff;}
 .modal-info{padding:40px;position:relative;display:flex;flex-direction:column;}
 .modal-close{
   position:absolute;top:16px;right:16px;
@@ -901,6 +924,25 @@ footer{background:var(--bg-elevated);border-top:1px solid var(--line);padding:70
 .admin-thumb-preview{width:100%;aspect-ratio:1/1;border-radius:var(--radius-sm);overflow:hidden;background:var(--bg-elevated-2);margin-bottom:14px;display:flex;align-items:center;justify-content:center;}
 .admin-thumb-preview img{width:100%;height:100%;object-fit:cover;}
 .admin-thumb-preview span{font-size:11px;color:var(--text-faint);}
+
+.admin-gallery-preview{display:flex;flex-wrap:wrap;gap:8px;}
+.admin-gallery-preview:not(:empty){margin-bottom:10px;}
+.admin-gallery-thumb{position:relative;width:56px;height:56px;border-radius:8px;overflow:hidden;background:var(--bg-elevated-2);flex-shrink:0;}
+.admin-gallery-thumb img{width:100%;height:100%;object-fit:cover;}
+.admin-gallery-thumb button{
+  position:absolute;top:2px;right:2px;
+  width:18px;height:18px;
+  border-radius:50%;
+  background:rgba(0,0,0,.7);
+  color:#fff;
+  border:none;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  font-size:12px;
+  line-height:1;
+  padding:0;
+}
+.admin-gallery-thumb button:hover{background:#c0392b;}
 
 .admin-toggle{display:flex;align-items:center;gap:10px;}
 .admin-toggle label{margin:0;font-size:13.5px;text-transform:none;letter-spacing:0;color:var(--text-soft);}
