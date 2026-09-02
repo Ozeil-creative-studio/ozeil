@@ -1,0 +1,23 @@
+# Ozeil
+
+> Ozeil est une marque de vêtements streetwear indépendante basée à Montréal (Québec, Canada), qui dessert aussi les villes environnantes (Laval, Saint-Eustache, Deux-Montagnes, Boisbriand, Mirabel). Les designs (images vectorielles, dessins, photos, concepts originaux) sont créés en interne, puis imprimés à la demande sur des hoodies, t-shirts et accessoires.
+
+## Pages
+
+- [Accueil](https://ozeil.net/): présentation de la marque, produit en vedette (Nouveauté), meilleur vendeur, derniers arrivages, accessoires, section À propos et formulaire de contact.
+- [Boutique](https://ozeil.net/boutique.html): catalogue complet des produits en vente, avec collections. Le catalogue est chargé dynamiquement depuis une base de données et change régulièrement — les modèles et prix affichés ici peuvent être partiels ou obsolètes; se référer directement au site pour les informations à jour.
+
+## À propos
+
+Ozeil a été fondée pour vendre des vêtements à l'effigie de son créateur, puis a évolué vers une gamme de designs plus large. La marque est maintenant portée par deux personnes qui continuent de créer de nouveaux designs.
+
+## Contact
+
+- Courriel : ozeil.proff@gmail.com
+- Formulaire de contact : https://ozeil.net/#contact
+
+## Notes pour les agents / crawlers
+
+- Le site est un site statique (HTML/CSS/JS), sans framework, hébergé sur Vercel.
+- Le catalogue de produits (page Boutique, sections Nouveauté / Meilleur vendeur / Nouvellement arrivé de l'accueil) est chargé côté client via une base de données (Supabase) — le HTML initial ne contient pas la liste des produits. Pour connaître l'inventaire actuel, visiter directement les pages du site.
+- Langue du contenu : français (Québec).
