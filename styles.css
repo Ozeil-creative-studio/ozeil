@@ -154,18 +154,31 @@ header{
   background:var(--bg);
 }
 
-.hero-giant-mark{
+.hero-mark-wrap{
   position:absolute;
   left:50%;
   bottom:-40%;
   width:min(820px,105vw);
   max-width:none;
-  transform:translate(-50%,0);
-  color:#ffffff;
-  filter:drop-shadow(0 0 90px rgba(220,178,121,.12));
+  transform:translateX(-50%);
   pointer-events:none;
   z-index:1;
+  animation:heroMarkFloat 6s ease-in-out infinite;
+}
+.hero-giant-mark{
+  display:block;
+  width:100%;
+  height:auto;
+  color:#ffffff;
+  filter:drop-shadow(0 0 90px rgba(220,178,121,.12));
   will-change:transform;
+}
+@keyframes heroMarkFloat{
+  0%,100%{translate:0 0;}
+  50%{translate:0 -18px;}
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-mark-wrap{animation:none;}
 }
 
 .hero-wordmark{

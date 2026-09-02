@@ -16,7 +16,7 @@
 
     if (heroMark) {
       var offset = Math.min(window.scrollY * 0.28, 260);
-      heroMark.style.transform = 'translate(-50%,0) translateY(-' + offset + 'px)';
+      heroMark.style.transform = 'translateY(-' + offset + 'px)';
     }
 
     if (contactMark && contactSection) {
