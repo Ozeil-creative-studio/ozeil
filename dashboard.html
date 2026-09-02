@@ -159,12 +159,12 @@
         </select>
       </div>
       <div class="field">
-        <label for="productFeatured">Mis en vedette (accueil)</label>
+        <label for="productFeatured">Meilleur vendeur (accueil)</label>
         <select id="productFeatured">
           <option value="">Aucun</option>
-          <option value="nouveaute">Nouveauté</option>
           <option value="meilleur_vendeur">Meilleur vendeur</option>
         </select>
+        <p class="empty-note" style="text-align:left;padding:6px 0 0;">La section "Nouveauté" de l'accueil affiche automatiquement le dernier produit ajouté — rien à choisir ici.</p>
       </div>
 
       <button class="btn btn-primary" type="submit" id="productSubmitBtn">Ajouter</button>
@@ -351,7 +351,7 @@
   });
 
   async function renderProducts() {
-    var res = await sb.from('products').select('*').order('created_at', { ascending: true });
+    var res = await sb.from('products').select('*').order('created_at', { ascending: false });
     var list = document.getElementById('productsList');
     var countEl = document.getElementById('productsCount');
     list.innerHTML = '';
@@ -376,7 +376,7 @@
       var h4 = document.createElement('h4');
       h4.textContent = p.title;
       var span = document.createElement('span');
-      var badge = p.featured_slot === 'nouveaute' ? ' · Nouveauté' : p.featured_slot === 'meilleur_vendeur' ? ' · Meilleur vendeur' : '';
+      var badge = p.featured_slot === 'meilleur_vendeur' ? ' · Meilleur vendeur' : '';
       span.textContent = formatPrice(p.price) + badge;
       info.appendChild(h4);
       info.appendChild(span);

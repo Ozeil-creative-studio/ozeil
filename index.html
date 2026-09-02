@@ -494,16 +494,14 @@
       if (res.error || !res.data) return;
       var all = res.data;
 
-      var nouveaute = all.find(function (p) { return p.featured_slot === 'nouveaute'; });
+      // "Nouveauté" = the single most recently added product — fully automatic, no manual pick.
+      var nouveaute = all[0];
       var bestseller = all.find(function (p) { return p.featured_slot === 'meilleur_vendeur'; });
       fillFeatured('nouveaute', 'nouveaute', nouveaute);
       fillFeatured('bestseller', 'meilleur-vendeur', bestseller);
 
-      // "Nouvellement arrivé" = the 3 most recent products, excluding whichever one is
-      // already shown as "Nouveauté" above — purely date-driven otherwise, no manual selection.
-      var arrivals = all.filter(function (p) {
-        return !nouveaute || p.id !== nouveaute.id;
-      }).slice(0, 3);
+      // "Nouvellement arrivé" = the next 3 most recent products after the one shown as "Nouveauté".
+      var arrivals = all.slice(1, 4);
       renderArrivals(arrivals);
 
       if (window.ozeilWireModalTriggers) window.ozeilWireModalTriggers();
