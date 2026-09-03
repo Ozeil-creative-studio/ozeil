@@ -75,6 +75,7 @@
     var modalDesc = document.getElementById('modalDesc');
     var modalImg = document.getElementById('modalImg');
     var modalThumbs = document.getElementById('modalThumbs');
+    var modalBuyBtn = document.getElementById('modalBuyBtn');
 
     function renderModalThumbs(mainImg, galleryJson) {
       if (!modalThumbs) return;
@@ -107,6 +108,19 @@
       modalImg.src = btn.dataset.img;
       modalImg.alt = btn.dataset.name;
       renderModalThumbs(btn.dataset.img, btn.dataset.gallery);
+      if (modalBuyBtn) {
+        var printifyUrl = btn.dataset.printify || '';
+        if (printifyUrl) {
+          modalBuyBtn.href = printifyUrl;
+          modalBuyBtn.target = '_blank';
+          modalBuyBtn.rel = 'noopener';
+          modalBuyBtn.removeAttribute('disabled');
+        } else {
+          modalBuyBtn.href = '#';
+          modalBuyBtn.removeAttribute('target');
+          modalBuyBtn.setAttribute('disabled', '');
+        }
+      }
       backdrop.classList.add('open');
       document.body.style.overflow = 'hidden';
     }

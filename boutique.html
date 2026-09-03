@@ -30,7 +30,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96.png">
+<link rel="apple-touch-icon" href="favicon-180.png">
 
 <script type="application/ld+json">
 {
@@ -43,7 +46,15 @@
 }
 </script>
 </head>
-<body>
+<body class="is-loading">
+
+<div id="loadingOverlay">
+  <div class="loading-lottie-crop">
+    <div id="loadingLottie"></div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie.min.js"></script>
+<script src="loading-screen.js"></script>
 
 <!-- reusable icon/logo symbols -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -136,8 +147,8 @@
         <div class="footer-col">
           <h5>Légal</h5>
           <ul>
-            <li><a href="#">Politique de confidentialité</a></li>
-            <li><a href="#">Politique de confidentialité de Printify</a></li>
+            <li><a href="politique-de-confidentialite.html">Politique de confidentialité</a></li>
+            <li><a href="politique-printify.html">Politique de confidentialité de Printify</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -257,13 +268,24 @@
       return card;
     }
 
-    function buildCollectionCard(collection) {
+    function buildCollectionCard(collection, map) {
       var card = el('div', 'collection-card');
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
       var img = document.createElement('img');
       img.src = collection.image_url || '';
       img.alt = collection.title || '';
       card.appendChild(img);
       card.appendChild(el('div', 'label', collection.title || ''));
+      card.addEventListener('click', function () {
+        var wasActive = card.classList.contains('active');
+        document.querySelectorAll('.collection-card').forEach(function (c) { c.classList.remove('active'); });
+        activeCollection = wasActive ? '' : collection.id;
+        if (!wasActive) card.classList.add('active');
+        applyFilters(map);
+        var produitsSection = document.getElementById('produits');
+        if (produitsSection) produitsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
       return card;
     }
 
@@ -275,13 +297,14 @@
       var map = {};
       res.data.forEach(function (c) { map[c.id] = c.title; });
       if (grid && res.data.length > 0) {
-        res.data.forEach(function (c) { grid.appendChild(buildCollectionCard(c)); });
+        res.data.forEach(function (c) { grid.appendChild(buildCollectionCard(c, map)); });
       }
       return map;
     }
 
     var allProducts = [];
     var activeCategory = '';
+    var activeCollection = '';
 
     function applyFilters(collectionsMap) {
       var grid = document.getElementById('productsGrid');
@@ -290,7 +313,9 @@
 
       var sortValue = document.getElementById('sortSelect').value;
       var list = allProducts.filter(function (p) {
-        return !activeCategory || p.category === activeCategory;
+        var categoryMatch = !activeCategory || p.category === activeCategory;
+        var collectionMatch = !activeCollection || p.collection_id === activeCollection;
+        return categoryMatch && collectionMatch;
       });
       if (sortValue === 'price_asc') {
         list = list.slice().sort(function (a, b) { return a.price - b.price; });
