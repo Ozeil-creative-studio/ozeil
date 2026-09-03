@@ -102,6 +102,22 @@
 
 <section class="section alt tight" id="produits">
   <div class="container">
+    <div class="shop-filters">
+      <div class="shop-filter-pills" id="categoryFilters">
+        <button class="shop-filter-pill active" type="button" data-category="">Tous</button>
+        <button class="shop-filter-pill" type="button" data-category="hoodie">Hoodie</button>
+        <button class="shop-filter-pill" type="button" data-category="tshirt">T-shirt</button>
+        <button class="shop-filter-pill" type="button" data-category="manche_longue">Manche longue</button>
+        <button class="shop-filter-pill" type="button" data-category="camisole">Camisoles</button>
+        <button class="shop-filter-pill" type="button" data-category="maillot">Maillot</button>
+        <button class="shop-filter-pill" type="button" data-category="accessoire">Accessoires</button>
+      </div>
+      <select class="shop-sort-select" id="sortSelect">
+        <option value="">Trier par</option>
+        <option value="price_asc">Prix : plus bas au plus élevé</option>
+        <option value="price_desc">Prix : plus élevé au plus bas</option>
+      </select>
+    </div>
     <div class="shop-grid" id="productsGrid"></div>
     <p class="empty-note" id="productsEmpty" style="display:none;">Aucun produit pour l'instant.</p>
   </div>
@@ -264,16 +280,56 @@
       return map;
     }
 
+    var allProducts = [];
+    var activeCategory = '';
+
+    function applyFilters(collectionsMap) {
+      var grid = document.getElementById('productsGrid');
+      var emptyNote = document.getElementById('productsEmpty');
+      if (!grid) return;
+
+      var sortValue = document.getElementById('sortSelect').value;
+      var list = allProducts.filter(function (p) {
+        return !activeCategory || p.category === activeCategory;
+      });
+      if (sortValue === 'price_asc') {
+        list = list.slice().sort(function (a, b) { return a.price - b.price; });
+      } else if (sortValue === 'price_desc') {
+        list = list.slice().sort(function (a, b) { return b.price - a.price; });
+      }
+
+      grid.innerHTML = '';
+      if (list.length === 0) {
+        if (emptyNote) emptyNote.style.display = 'block';
+        return;
+      }
+      if (emptyNote) emptyNote.style.display = 'none';
+      list.forEach(function (p) { grid.appendChild(buildProductCard(p, collectionsMap)); });
+    }
+
     async function loadProducts(collectionsMap) {
       var grid = document.getElementById('productsGrid');
       var emptyNote = document.getElementById('productsEmpty');
       if (!window.ozeilSupabase || !grid) return;
-      var res = await window.ozeilSupabase.from('products').select('*').order('created_at', { ascending: true });
+      var res = await window.ozeilSupabase.from('products').select('*').order('created_at', { ascending: false });
       if (res.error || !res.data || res.data.length === 0) {
         if (emptyNote) emptyNote.style.display = 'block';
         return;
       }
-      res.data.forEach(function (p) { grid.appendChild(buildProductCard(p, collectionsMap)); });
+      allProducts = res.data;
+      applyFilters(collectionsMap);
+
+      document.querySelectorAll('#categoryFilters .shop-filter-pill').forEach(function (pill) {
+        pill.addEventListener('click', function () {
+          document.querySelectorAll('#categoryFilters .shop-filter-pill').forEach(function (p) { p.classList.remove('active'); });
+          pill.classList.add('active');
+          activeCategory = pill.dataset.category || '';
+          applyFilters(collectionsMap);
+        });
+      });
+      document.getElementById('sortSelect').addEventListener('change', function () {
+        applyFilters(collectionsMap);
+      });
     }
 
     loadCollections().then(function (collectionsMap) { loadProducts(collectionsMap); });

@@ -444,6 +444,44 @@ header{
   .arrival-main .arrival-art{aspect-ratio:1/1;}
 }
 
+/* ---------- Shop filters (boutique) ---------- */
+.shop-filters{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:32px;
+}
+.shop-filter-pills{display:flex;flex-wrap:wrap;gap:10px;}
+.shop-filter-pill{
+  padding:9px 20px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:transparent;
+  color:var(--text-soft);
+  font-family:inherit;
+  font-size:12.5px;
+  font-weight:600;
+  letter-spacing:.02em;
+  cursor:pointer;
+  transition:border-color .2s ease, color .2s ease, background .2s ease;
+}
+.shop-filter-pill:hover{border-color:var(--gold-soft);color:var(--text);}
+.shop-filter-pill.active{background:var(--text);color:var(--bg);border-color:var(--text);}
+.shop-sort-select{
+  padding:10px 16px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:var(--surface);
+  color:var(--text);
+  font-family:inherit;
+  font-size:12.5px;
+  font-weight:600;
+  cursor:pointer;
+}
+.shop-sort-select:focus{outline:none;border-color:var(--gold-soft);}
+
 /* ---------- Product grid (boutique + collections) ---------- */
 .shop-grid{
   display:grid;
