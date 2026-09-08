@@ -78,41 +78,60 @@
     </div>
     <p class="empty-note" style="text-align:left;padding:0 0 20px;">Affiche une annonce ponctuelle (nouveau produit, promo, événement) sur le site. Active-la seulement quand tu as quelque chose à annoncer.</p>
 
-    <form class="admin-form" id="promoForm" style="max-width:560px;">
-      <div class="field admin-toggle">
-        <input id="promoActive" type="checkbox">
-        <label for="promoActive">Annonce active</label>
-      </div>
+    <form class="admin-form promo-form" id="promoForm">
+      <div class="promo-form-toolbar">
+        <label class="admin-switch">
+          <input id="promoActive" type="checkbox">
+          <span class="admin-switch-track"></span>
+          <span class="admin-switch-label">Annonce active</span>
+        </label>
 
-      <div class="field">
-        <label>Emplacement</label>
-        <div class="admin-radio-group">
-          <label><input type="radio" name="promoPlacement" value="bande" checked> Bande au-dessus du menu</label>
-          <label><input type="radio" name="promoPlacement" value="section"> Section sous l'accueil</label>
-          <label><input type="radio" name="promoPlacement" value="les_deux"> Les deux</label>
+        <div class="field" style="margin-bottom:0;">
+          <label>Emplacement</label>
+          <div class="admin-segmented">
+            <label class="admin-segmented-option">
+              <input type="radio" name="promoPlacement" value="bande" checked>
+              <span>Bande au-dessus du menu</span>
+            </label>
+            <label class="admin-segmented-option">
+              <input type="radio" name="promoPlacement" value="section">
+              <span>Section sous l'accueil</span>
+            </label>
+            <label class="admin-segmented-option">
+              <input type="radio" name="promoPlacement" value="les_deux">
+              <span>Les deux</span>
+            </label>
+          </div>
         </div>
       </div>
 
-      <div class="admin-thumb-preview" id="promoThumbPreview"><span>Aperçu de l'image</span></div>
-      <div class="field">
-        <label for="promoImage">Image</label>
-        <input id="promoImage" type="file" accept="image/*">
-      </div>
-      <div class="field">
-        <label for="promoHeading">Titre</label>
-        <input id="promoHeading" type="text">
-      </div>
-      <div class="field">
-        <label for="promoBody">Description</label>
-        <textarea id="promoBody" rows="3"></textarea>
-      </div>
-      <div class="field">
-        <label for="promoButtonText">Texte du bouton (optionnel)</label>
-        <input id="promoButtonText" type="text">
-      </div>
-      <div class="field">
-        <label for="promoButtonUrl">Lien du bouton</label>
-        <input id="promoButtonUrl" type="text" placeholder="https:// ou #contact ou boutique.html">
+      <div class="promo-form-grid">
+        <div class="promo-form-media">
+          <div class="admin-thumb-preview" id="promoThumbPreview"><span>Aperçu de l'image</span></div>
+          <div class="field">
+            <label for="promoImage">Image</label>
+            <input id="promoImage" type="file" accept="image/*">
+          </div>
+        </div>
+
+        <div class="promo-form-fields">
+          <div class="field">
+            <label for="promoHeading">Titre</label>
+            <input id="promoHeading" type="text">
+          </div>
+          <div class="field">
+            <label for="promoBody">Description</label>
+            <textarea id="promoBody" rows="4"></textarea>
+          </div>
+          <div class="field">
+            <label for="promoButtonText">Texte du bouton (optionnel)</label>
+            <input id="promoButtonText" type="text">
+          </div>
+          <div class="field">
+            <label for="promoButtonUrl">Lien du bouton</label>
+            <input id="promoButtonUrl" type="text" placeholder="https:// ou #contact ou boutique.html">
+          </div>
+        </div>
       </div>
 
       <button class="btn btn-primary" type="submit" id="promoSubmitBtn">Enregistrer</button>
