@@ -9,6 +9,9 @@
 <meta name="description" content="Découvrez tous les vêtements Ozeil : hoodies, t-shirts et accessoires streetwear, designs vectoriels originaux. Marque indépendante basée à Montréal.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://ozeil.net/boutique.html">
+<link rel="alternate" hreflang="fr-ca" href="https://ozeil.net/boutique.html">
+<link rel="alternate" hreflang="en" href="https://ozeil.net/en/boutique.html">
+<link rel="alternate" hreflang="x-default" href="https://ozeil.net/boutique.html">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ozeil">
@@ -88,9 +91,12 @@
       <a href="boutique.html" class="nav-link current">Boutique</a>
     </div>
 
-    <button class="nav-icon-btn" type="button" aria-label="Panier (bientôt disponible)" aria-disabled="true">
-      <svg><use href="#icon-bag"/></svg>
-    </button>
+    <div class="nav-end">
+      <a href="/en/boutique.html" class="nav-lang-link" hreflang="en">EN</a>
+      <button class="nav-icon-btn" type="button" aria-label="Panier (bientôt disponible)" aria-disabled="true">
+        <svg><use href="#icon-bag"/></svg>
+      </button>
+    </div>
   </nav>
 </header>
 
@@ -223,6 +229,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="i18n.js"></script>
 <script src="supabase-client.js"></script>
 <script src="main.js"></script>
 <script src="promo.js"></script>
@@ -241,17 +248,18 @@
     }
 
     function buildProductCard(product, collectionsMap) {
+      var title = window.ozeilText(product.title, product.title_en);
       var card = el('div', 'shop-card');
 
       var photo = el('div', 'shop-card-photo');
       var img = document.createElement('img');
       img.src = product.image_url || '';
-      img.alt = product.title || '';
+      img.alt = title;
       photo.appendChild(img);
       card.appendChild(photo);
 
       var body = el('div', 'shop-card-body');
-      body.appendChild(el('h4', null, product.title || ''));
+      body.appendChild(el('h4', null, title));
       var collectionTitle = product.collection_id ? collectionsMap[product.collection_id] : null;
       if (collectionTitle) body.appendChild(el('div', 'shop-card-collection', collectionTitle));
       body.appendChild(el('div', 'shop-card-price', formatPrice(product.price)));
@@ -261,7 +269,7 @@
       buy.className = 'shop-card-buy' + (href ? '' : ' is-disabled');
       buy.href = href || '#';
       if (href) { buy.target = '_blank'; buy.rel = 'noopener'; }
-      buy.innerHTML = '<svg><use href="#icon-bag"/></svg> Commander';
+      buy.innerHTML = '<svg><use href="#icon-bag"/></svg> ' + window.ozeilText('Commander', 'Order now');
       body.appendChild(buy);
 
       card.appendChild(body);
@@ -269,14 +277,15 @@
     }
 
     function buildCollectionCard(collection, map) {
+      var title = window.ozeilText(collection.title, collection.title_en);
       var card = el('div', 'collection-card');
       card.setAttribute('role', 'button');
       card.setAttribute('tabindex', '0');
       var img = document.createElement('img');
       img.src = collection.image_url || '';
-      img.alt = collection.title || '';
+      img.alt = title;
       card.appendChild(img);
-      card.appendChild(el('div', 'label', collection.title || ''));
+      card.appendChild(el('div', 'label', title));
       card.addEventListener('click', function () {
         var wasActive = card.classList.contains('active');
         document.querySelectorAll('.collection-card').forEach(function (c) { c.classList.remove('active'); });
@@ -295,7 +304,7 @@
       var res = await window.ozeilSupabase.from('collections').select('*').order('created_at', { ascending: true });
       if (res.error || !res.data) return {};
       var map = {};
-      res.data.forEach(function (c) { map[c.id] = c.title; });
+      res.data.forEach(function (c) { map[c.id] = window.ozeilText(c.title, c.title_en); });
       if (grid && res.data.length > 0) {
         res.data.forEach(function (c) { grid.appendChild(buildCollectionCard(c, map)); });
       }

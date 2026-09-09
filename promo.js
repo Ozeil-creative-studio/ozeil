@@ -13,23 +13,26 @@
 
     var text = document.createElement('div');
     text.className = 'promo-bar-text';
-    if (p.heading) {
+    var heading = window.ozeilText(p.heading, p.heading_en);
+    var body = window.ozeilText(p.body, p.body_en);
+    var buttonText = window.ozeilText(p.button_text, p.button_text_en);
+    if (heading) {
       var strong = document.createElement('strong');
-      strong.textContent = p.heading;
+      strong.textContent = heading;
       text.appendChild(strong);
     }
-    if (p.body) {
+    if (body) {
       var span = document.createElement('span');
-      span.textContent = p.body;
+      span.textContent = body;
       text.appendChild(span);
     }
     bar.appendChild(text);
 
-    if (p.button_text && p.button_url) {
+    if (buttonText && p.button_url) {
       var a = document.createElement('a');
       a.className = 'promo-bar-btn';
       a.href = p.button_url;
-      a.textContent = p.button_text;
+      a.textContent = buttonText;
       bar.appendChild(a);
     }
     return bar;
@@ -47,21 +50,24 @@
     container.className = 'container';
     var content = document.createElement('div');
     content.className = 'promo-section-content';
-    if (p.heading) {
+    var heading = window.ozeilText(p.heading, p.heading_en);
+    var body = window.ozeilText(p.body, p.body_en);
+    var buttonText = window.ozeilText(p.button_text, p.button_text_en);
+    if (heading) {
       var h2 = document.createElement('h2');
-      h2.textContent = p.heading;
+      h2.textContent = heading;
       content.appendChild(h2);
     }
-    if (p.body) {
+    if (body) {
       var pEl = document.createElement('p');
-      pEl.textContent = p.body;
+      pEl.textContent = body;
       content.appendChild(pEl);
     }
-    if (p.button_text && p.button_url) {
+    if (buttonText && p.button_url) {
       var a = document.createElement('a');
       a.className = 'btn btn-primary';
       a.href = p.button_url;
-      a.textContent = p.button_text;
+      a.textContent = buttonText;
       content.appendChild(a);
     }
     container.appendChild(content);

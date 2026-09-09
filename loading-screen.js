@@ -11,7 +11,7 @@
       renderer: 'svg',
       loop: true,
       autoplay: true,
-      path: 'loading-animation.json'
+      path: '/loading-animation.json'
     });
   }
 

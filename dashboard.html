@@ -120,12 +120,24 @@
             <input id="promoHeading" type="text">
           </div>
           <div class="field">
+            <label for="promoHeadingEn">Titre (anglais, optionnel)</label>
+            <input id="promoHeadingEn" type="text" placeholder="Laisser vide pour réutiliser le titre français">
+          </div>
+          <div class="field">
             <label for="promoBody">Description</label>
             <textarea id="promoBody" rows="4"></textarea>
           </div>
           <div class="field">
+            <label for="promoBodyEn">Description (anglaise, optionnelle)</label>
+            <textarea id="promoBodyEn" rows="4" placeholder="Laisser vide pour réutiliser la description française"></textarea>
+          </div>
+          <div class="field">
             <label for="promoButtonText">Texte du bouton (optionnel)</label>
             <input id="promoButtonText" type="text">
+          </div>
+          <div class="field">
+            <label for="promoButtonTextEn">Texte du bouton (anglais, optionnel)</label>
+            <input id="promoButtonTextEn" type="text">
           </div>
           <div class="field">
             <label for="promoButtonUrl">Lien du bouton</label>
@@ -163,12 +175,20 @@
         <input id="productTitle" type="text" required>
       </div>
       <div class="field">
+        <label for="productTitleEn">Titre (anglais, optionnel)</label>
+        <input id="productTitleEn" type="text" placeholder="Laisser vide pour réutiliser le titre français">
+      </div>
+      <div class="field">
         <label for="productPrice">Prix ($)</label>
         <input id="productPrice" type="number" step="0.01" min="0" required>
       </div>
       <div class="field">
         <label for="productDesc">Description</label>
         <textarea id="productDesc" rows="3"></textarea>
+      </div>
+      <div class="field">
+        <label for="productDescEn">Description (anglaise, optionnelle)</label>
+        <textarea id="productDescEn" rows="3" placeholder="Laisser vide pour réutiliser la description française"></textarea>
       </div>
       <div class="field">
         <label for="productPrintify">Lien Printify</label>
@@ -223,6 +243,10 @@
       <div class="field">
         <label for="collectionTitle">Titre</label>
         <input id="collectionTitle" type="text" required>
+      </div>
+      <div class="field">
+        <label for="collectionTitleEn">Titre (anglais, optionnel)</label>
+        <input id="collectionTitleEn" type="text" placeholder="Laisser vide pour réutiliser le titre français">
       </div>
 
       <button class="btn btn-primary" type="submit" id="collectionSubmitBtn">Ajouter</button>
@@ -347,8 +371,10 @@
     document.getElementById('productFormTitle').textContent = 'Modifier le produit';
     document.getElementById('productSubmitBtn').textContent = 'Enregistrer';
     document.getElementById('productTitle').value = p.title || '';
+    document.getElementById('productTitleEn').value = p.title_en || '';
     document.getElementById('productPrice').value = p.price || '';
     document.getElementById('productDesc').value = p.description || '';
+    document.getElementById('productDescEn').value = p.description_en || '';
     document.getElementById('productPrintify').value = p.printify_url || '';
     document.getElementById('productCategory').value = p.category || '';
     document.getElementById('productCollection').value = p.collection_id || '';
@@ -474,8 +500,10 @@
       var featuredSlot = document.getElementById('productFeatured').value || null;
       var payload = {
         title: document.getElementById('productTitle').value.trim(),
+        title_en: document.getElementById('productTitleEn').value.trim() || null,
         price: parseFloat(document.getElementById('productPrice').value),
         description: document.getElementById('productDesc').value.trim(),
+        description_en: document.getElementById('productDescEn').value.trim() || null,
         printify_url: document.getElementById('productPrintify').value.trim() || null,
         category: document.getElementById('productCategory').value || null,
         collection_id: document.getElementById('productCollection').value || null,
@@ -541,6 +569,7 @@
     document.getElementById('collectionFormTitle').textContent = 'Modifier la collection';
     document.getElementById('collectionSubmitBtn').textContent = 'Enregistrer';
     document.getElementById('collectionTitle').value = c.title || '';
+    document.getElementById('collectionTitleEn').value = c.title_en || '';
     var preview = document.getElementById('collectionThumbPreview');
     preview.innerHTML = c.image_url ? '<img src="' + c.image_url + '" alt="">' : '<span>Aperçu de l\'image</span>';
     openCollectionModal();
@@ -654,6 +683,7 @@
 
       var payload = {
         title: document.getElementById('collectionTitle').value.trim(),
+        title_en: document.getElementById('collectionTitleEn').value.trim() || null,
         image_url: imageUrl
       };
 
@@ -693,8 +723,11 @@
     var placement = p.placement || 'bande';
     document.querySelectorAll('input[name="promoPlacement"]').forEach(function (r) { r.checked = r.value === placement; });
     document.getElementById('promoHeading').value = p.heading || '';
+    document.getElementById('promoHeadingEn').value = p.heading_en || '';
     document.getElementById('promoBody').value = p.body || '';
+    document.getElementById('promoBodyEn').value = p.body_en || '';
     document.getElementById('promoButtonText').value = p.button_text || '';
+    document.getElementById('promoButtonTextEn').value = p.button_text_en || '';
     document.getElementById('promoButtonUrl').value = p.button_url || '';
     var preview = document.getElementById('promoThumbPreview');
     preview.innerHTML = p.image_url ? '<img src="' + p.image_url + '" alt="">' : '<span>Aperçu de l\'image</span>';
@@ -734,9 +767,12 @@
         active: document.getElementById('promoActive').checked,
         placement: placementInput ? placementInput.value : 'bande',
         heading: document.getElementById('promoHeading').value.trim(),
+        heading_en: document.getElementById('promoHeadingEn').value.trim() || null,
         body: document.getElementById('promoBody').value.trim(),
+        body_en: document.getElementById('promoBodyEn').value.trim() || null,
         image_url: imageUrl,
         button_text: document.getElementById('promoButtonText').value.trim() || null,
+        button_text_en: document.getElementById('promoButtonTextEn').value.trim() || null,
         button_url: document.getElementById('promoButtonUrl').value.trim() || null
       };
 

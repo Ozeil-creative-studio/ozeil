@@ -9,6 +9,9 @@
 <meta name="description" content="Politique de confidentialité d'Ozeil : quelles données nous collectons, comment elles sont utilisées et comment nous contacter.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://ozeil.net/politique-de-confidentialite.html">
+<link rel="alternate" hreflang="fr-ca" href="https://ozeil.net/politique-de-confidentialite.html">
+<link rel="alternate" hreflang="en" href="https://ozeil.net/en/privacy-policy.html">
+<link rel="alternate" hreflang="x-default" href="https://ozeil.net/politique-de-confidentialite.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -52,9 +55,12 @@
       <a href="boutique.html" class="nav-link">Boutique</a>
     </div>
 
-    <button class="nav-icon-btn" type="button" aria-label="Panier (bientôt disponible)" aria-disabled="true">
-      <svg><use href="#icon-bag"/></svg>
-    </button>
+    <div class="nav-end">
+      <a href="/en/privacy-policy.html" class="nav-lang-link" hreflang="en">EN</a>
+      <button class="nav-icon-btn" type="button" aria-label="Panier (bientôt disponible)" aria-disabled="true">
+        <svg><use href="#icon-bag"/></svg>
+      </button>
+    </div>
   </nav>
 </header>
 
@@ -178,6 +184,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="i18n.js"></script>
 <script src="supabase-client.js"></script>
 <script src="promo.js"></script>
 <script>

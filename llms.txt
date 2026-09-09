@@ -7,6 +7,10 @@
 - [Accueil](https://ozeil.net/): présentation de la marque, produit en vedette (Nouveauté), meilleur vendeur, derniers arrivages, accessoires, section À propos et formulaire de contact.
 - [Boutique](https://ozeil.net/boutique.html): catalogue complet des produits en vente, avec collections. Le catalogue est chargé dynamiquement depuis une base de données et change régulièrement — les modèles et prix affichés ici peuvent être partiels ou obsolètes; se référer directement au site pour les informations à jour.
 
+Une version anglaise du site existe sous le préfixe `/en/` (contenu identique, traduit) :
+- [Home (EN)](https://ozeil.net/en/index.html)
+- [Shop (EN)](https://ozeil.net/en/boutique.html)
+
 ## À propos
 
 Ozeil a été fondée pour vendre des vêtements à l'effigie de son créateur, puis a évolué vers une gamme de designs plus large. La marque est maintenant portée par deux personnes qui continuent de créer de nouveaux designs.
@@ -23,4 +27,4 @@ Ozeil a été fondée pour vendre des vêtements à l'effigie de son créateur, 
 
 - Le site est un site statique (HTML/CSS/JS), sans framework, hébergé sur Vercel.
 - Le catalogue de produits (page Boutique, sections Nouveauté / Meilleur vendeur / Nouvellement arrivé de l'accueil) est chargé côté client via une base de données (Supabase) — le HTML initial ne contient pas la liste des produits. Pour connaître l'inventaire actuel, visiter directement les pages du site.
-- Langue du contenu : français (Québec).
+- Langue du contenu : français (Québec), avec une version anglaise complète sous `/en/` (pages distinctes, pas une traduction dynamique côté client).
