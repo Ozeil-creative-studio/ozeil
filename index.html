@@ -378,6 +378,7 @@
       <h3 id="modalTitle">Produit</h3>
       <div class="price" id="modalPrice">0,00 $</div>
       <p class="desc" id="modalDesc"></p>
+      <select class="shop-card-variant-select" id="modalVariantSelect" style="display:none;"></select>
       <a class="btn btn-primary" id="modalBuyBtn" href="#">
         <svg><use href="#icon-bag"/></svg> Commander
       </a>
@@ -428,6 +429,7 @@
       btn.dataset.desc = description;
       btn.dataset.gallery = JSON.stringify(gallery);
       btn.dataset.printify = product.printify_url || '';
+      btn.dataset.variants = JSON.stringify(product.variants || []);
     }
 
     function renderArrivals(products) {
@@ -461,6 +463,7 @@
         btn.dataset.desc = window.ozeilText(p.description, p.description_en);
         btn.dataset.gallery = JSON.stringify(p.gallery_urls || []);
         btn.dataset.printify = p.printify_url || '';
+        btn.dataset.variants = JSON.stringify(p.variants || []);
         btn.innerHTML = '<svg><use href="#icon-eye"/></svg> ' + window.ozeilText('Voir plus de détail', 'View details');
         art.appendChild(btn);
 
@@ -508,6 +511,7 @@
         btn.dataset.desc = window.ozeilText(p.description, p.description_en);
         btn.dataset.gallery = JSON.stringify(p.gallery_urls || []);
         btn.dataset.printify = p.printify_url || '';
+        btn.dataset.variants = JSON.stringify(p.variants || []);
         btn.innerHTML = '<svg><use href="#icon-eye"/></svg> ' + window.ozeilText('Voir plus de détail', 'View details');
         art.appendChild(btn);
 

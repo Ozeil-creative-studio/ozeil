@@ -564,6 +564,25 @@ header{
 .shop-card-buy svg{width:15px;height:15px;}
 .shop-card-buy:hover{opacity:.82;}
 .shop-card-buy.is-disabled{opacity:.35;pointer-events:none;}
+.shop-card-variant-select{
+  padding:9px 12px;
+  border-radius:10px;
+  border:1px solid #e4e3ea;
+  background:#f7f7fb;
+  color:#0c0c14;
+  font-family:inherit;
+  font-size:12.5px;
+  font-weight:600;
+  cursor:pointer;
+  margin-bottom:10px;
+}
+.shop-card-variant-select:focus{outline:none;border-color:var(--gold-soft);}
+.modal-info .shop-card-variant-select{
+  background:var(--surface);
+  border-color:var(--line);
+  color:var(--text);
+  margin-bottom:16px;
+}
 
 .collections-grid{
   display:grid;
@@ -1051,6 +1070,11 @@ footer{background:var(--bg-elevated);border-top:1px solid var(--line);padding:70
   padding:0;
 }
 .admin-gallery-thumb button:hover{background:#c0392b;}
+
+.admin-variant-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;padding:12px;background:var(--bg-elevated-2);border-radius:10px;}
+.admin-variant-row-fields{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.admin-variant-row-fields input:nth-child(4){grid-column:1/-1;}
+.admin-variant-row .admin-icon-btn{flex-shrink:0;margin-top:2px;}
 
 .admin-toggle{display:flex;align-items:center;gap:10px;}
 .admin-toggle label{margin:0;font-size:13.5px;text-transform:none;letter-spacing:0;color:var(--text-soft);}

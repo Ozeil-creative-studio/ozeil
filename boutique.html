@@ -262,14 +262,38 @@
       body.appendChild(el('h4', null, title));
       var collectionTitle = product.collection_id ? collectionsMap[product.collection_id] : null;
       if (collectionTitle) body.appendChild(el('div', 'shop-card-collection', collectionTitle));
-      body.appendChild(el('div', 'shop-card-price', formatPrice(product.price)));
+
+      var priceEl = el('div', 'shop-card-price', formatPrice(product.price));
+      body.appendChild(priceEl);
 
       var buy = document.createElement('a');
-      var href = product.printify_url || '';
-      buy.className = 'shop-card-buy' + (href ? '' : ' is-disabled');
-      buy.href = href || '#';
-      if (href) { buy.target = '_blank'; buy.rel = 'noopener'; }
       buy.innerHTML = '<svg><use href="#icon-bag"/></svg> ' + window.ozeilText('Commander', 'Order now');
+
+      function applyVariant(v) {
+        var href = (v && v.printify_url) || product.printify_url || '';
+        buy.className = 'shop-card-buy' + (href ? '' : ' is-disabled');
+        buy.href = href || '#';
+        if (href) { buy.target = '_blank'; buy.rel = 'noopener'; } else { buy.removeAttribute('target'); }
+        priceEl.textContent = formatPrice((v && v.price != null) ? v.price : product.price);
+      }
+
+      var variants = product.variants || [];
+      if (variants.length > 0) {
+        var select = document.createElement('select');
+        select.className = 'shop-card-variant-select';
+        variants.forEach(function (v, i) {
+          var opt = document.createElement('option');
+          opt.value = i;
+          opt.textContent = window.ozeilText(v.label, v.label_en);
+          select.appendChild(opt);
+        });
+        select.addEventListener('change', function () { applyVariant(variants[select.value]); });
+        body.appendChild(select);
+        applyVariant(variants[0]);
+      } else {
+        applyVariant(null);
+      }
+
       body.appendChild(buy);
 
       card.appendChild(body);

@@ -76,6 +76,25 @@
     var modalImg = document.getElementById('modalImg');
     var modalThumbs = document.getElementById('modalThumbs');
     var modalBuyBtn = document.getElementById('modalBuyBtn');
+    var modalVariantSelect = document.getElementById('modalVariantSelect');
+
+    function formatModalPrice(n) {
+      return Number(n).toFixed(2).replace('.', ',') + ' $';
+    }
+
+    function applyModalBuy(href) {
+      if (!modalBuyBtn) return;
+      if (href) {
+        modalBuyBtn.href = href;
+        modalBuyBtn.target = '_blank';
+        modalBuyBtn.rel = 'noopener';
+        modalBuyBtn.removeAttribute('disabled');
+      } else {
+        modalBuyBtn.href = '#';
+        modalBuyBtn.removeAttribute('target');
+        modalBuyBtn.setAttribute('disabled', '');
+      }
+    }
 
     function renderModalThumbs(mainImg, galleryJson) {
       if (!modalThumbs) return;
@@ -103,24 +122,45 @@
 
     function openModal(btn) {
       modalTitle.textContent = btn.dataset.name;
-      modalPrice.textContent = btn.dataset.price;
       modalDesc.textContent = btn.dataset.desc;
       modalImg.src = btn.dataset.img;
       modalImg.alt = btn.dataset.name;
       renderModalThumbs(btn.dataset.img, btn.dataset.gallery);
-      if (modalBuyBtn) {
-        var printifyUrl = btn.dataset.printify || '';
-        if (printifyUrl) {
-          modalBuyBtn.href = printifyUrl;
-          modalBuyBtn.target = '_blank';
-          modalBuyBtn.rel = 'noopener';
-          modalBuyBtn.removeAttribute('disabled');
+
+      var basePrice = btn.dataset.price;
+      var baseHref = btn.dataset.printify || '';
+      var variants = [];
+      try { variants = btn.dataset.variants ? JSON.parse(btn.dataset.variants) : []; } catch (e) { variants = []; }
+
+      if (modalVariantSelect) {
+        modalVariantSelect.innerHTML = '';
+        if (variants.length > 0) {
+          variants.forEach(function (v, i) {
+            var opt = document.createElement('option');
+            opt.value = i;
+            opt.textContent = window.ozeilText(v.label, v.label_en);
+            modalVariantSelect.appendChild(opt);
+          });
+          modalVariantSelect.style.display = '';
+          modalVariantSelect.value = 0;
+          modalVariantSelect.onchange = function () {
+            var v = variants[modalVariantSelect.value];
+            modalPrice.textContent = (v && v.price != null) ? formatModalPrice(v.price) : basePrice;
+            applyModalBuy((v && v.printify_url) || baseHref);
+          };
+          var first = variants[0];
+          modalPrice.textContent = (first.price != null) ? formatModalPrice(first.price) : basePrice;
+          applyModalBuy(first.printify_url || baseHref);
         } else {
-          modalBuyBtn.href = '#';
-          modalBuyBtn.removeAttribute('target');
-          modalBuyBtn.setAttribute('disabled', '');
+          modalVariantSelect.style.display = 'none';
+          modalPrice.textContent = basePrice;
+          applyModalBuy(baseHref);
         }
+      } else {
+        modalPrice.textContent = basePrice;
+        applyModalBuy(baseHref);
       }
+
       backdrop.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
