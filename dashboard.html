@@ -37,7 +37,7 @@
     <span>Dashboard Ozeil</span>
   </div>
   <div style="display:flex;align-items:center;gap:12px;">
-    <a href="index.html" class="nav-link" style="font-size:14px;">Voir le site</a>
+    <a href="/" class="nav-link" style="font-size:14px;">Voir le site</a>
     <button class="btn btn-ghost" type="button" id="logoutBtn" style="padding:10px 20px;">Se déconnecter</button>
   </div>
 </header>
@@ -142,7 +142,7 @@
           </div>
           <div class="field">
             <label for="promoButtonUrl">Lien du bouton</label>
-            <input id="promoButtonUrl" type="text" placeholder="https:// ou #contact ou boutique.html">
+            <input id="promoButtonUrl" type="text" placeholder="https:// ou #contact ou /boutique">
           </div>
         </div>
       </div>
@@ -316,12 +316,12 @@
   // ---------- auth guard ----------
   async function requireSession() {
     var session = (await sb.auth.getSession()).data.session;
-    if (!session) { window.location.href = 'login.html'; return false; }
+    if (!session) { window.location.href = '/login'; return false; }
     return true;
   }
   document.getElementById('logoutBtn').addEventListener('click', async function () {
     await sb.auth.signOut();
-    window.location.href = 'login.html';
+    window.location.href = '/login';
   });
 
   // ---------- tabs ----------

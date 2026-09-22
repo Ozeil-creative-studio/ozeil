@@ -5,15 +5,15 @@
 ## Pages
 
 - [Accueil](https://ozeil.net/): présentation de la marque, produit en vedette (Nouveauté), meilleur vendeur, derniers arrivages, accessoires, section À propos et formulaire de contact.
-- [Boutique](https://ozeil.net/boutique.html): catalogue complet des produits en vente, avec collections. Le catalogue est chargé dynamiquement depuis une base de données et change régulièrement — les modèles et prix affichés ici peuvent être partiels ou obsolètes; se référer directement au site pour les informations à jour.
-- [The Switch](https://ozeil.net/the-switch.html): projet participatif — un hoodie Ozeil offert à un inconnu, qui se prend en photo avec puis le passe à quelqu'un d'autre. Mur de photos du parcours du hoodie, alimenté par le public (photos approuvées avant publication).
-  - [Le Voyage](https://ozeil.net/the-switch-voyage.html): le mur de photos du parcours du hoodie.
-  - [J'ai le hoodie](https://ozeil.net/the-switch-hoodie.html): instructions pour la personne qui a reçu le hoodie et formulaire d'envoi de photo.
+- [Boutique](https://ozeil.net/boutique): catalogue complet des produits en vente, avec collections. Le catalogue est chargé dynamiquement depuis une base de données et change régulièrement — les modèles et prix affichés ici peuvent être partiels ou obsolètes; se référer directement au site pour les informations à jour.
+- [The Switch](https://ozeil.net/the-switch): projet participatif — un hoodie Ozeil offert à un inconnu, qui se prend en photo avec puis le passe à quelqu'un d'autre. Mur de photos du parcours du hoodie, alimenté par le public (photos approuvées avant publication).
+  - [Le Voyage](https://ozeil.net/the-switch-voyage): le mur de photos du parcours du hoodie.
+  - [J'ai le hoodie](https://ozeil.net/the-switch-hoodie): instructions pour la personne qui a reçu le hoodie et formulaire d'envoi de photo.
 
 Une version anglaise du site existe sous le préfixe `/en/` (contenu identique, traduit) :
-- [Home (EN)](https://ozeil.net/en/index.html)
-- [Shop (EN)](https://ozeil.net/en/boutique.html)
-- [The Switch (EN)](https://ozeil.net/en/the-switch.html)
+- [Home (EN)](https://ozeil.net/en)
+- [Shop (EN)](https://ozeil.net/en/boutique)
+- [The Switch (EN)](https://ozeil.net/en/the-switch)
 
 ## À propos
 

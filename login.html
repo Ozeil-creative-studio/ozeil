@@ -59,7 +59,7 @@
     }
     var session = (await window.ozeilSupabase.auth.getSession()).data.session;
     if (session) {
-      window.location.href = 'dashboard.html';
+      window.location.href = '/dashboard';
       return;
     }
 
@@ -81,7 +81,7 @@
         btn.textContent = 'Se connecter';
         return;
       }
-      window.location.href = 'dashboard.html';
+      window.location.href = '/dashboard';
     });
   })();
 </script>
