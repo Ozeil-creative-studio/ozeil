@@ -1204,6 +1204,8 @@ footer{background:var(--bg-elevated);border-top:1px solid var(--line);padding:70
 .journey-msg.ok{color:#7be0a4;}
 .journey-msg.error{color:#ff8a80;}
 .journey-form .btn{align-self:flex-start;}
+.journey-note{font-size:12.5px;line-height:1.6;color:var(--text-faint);margin-top:-2px;}
+.section-head .journey-note{max-width:560px;margin:10px auto 0;}
 @media (max-width:720px){
   .journey-item{padding-left:52px;}
   .journey-badge{width:34px;height:34px;font-size:12px;}
@@ -1480,7 +1482,7 @@ body.switch-ready .switch-scroll{animation:swFadeIn .6s ease 1.5s forwards, swBo
 .switch-social-link:hover{transform:translateY(-3px) scale(1.04);background:#fff;color:var(--sw-blue);box-shadow:0 10px 30px rgba(0,0,0,.35);}
 
 .page-switch #etapes{padding-bottom:70px;}
-.switch-cta{padding:0 0 70px;background:var(--sw-deep);}
+.switch-cta{padding:0 0 70px;background:var(--sw-deep);position:relative;z-index:2;}
 .switch-cta .container{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;}
 .switch-cta-btn{
   position:relative;

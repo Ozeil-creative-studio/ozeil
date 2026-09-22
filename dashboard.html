@@ -155,7 +155,7 @@
   <section class="admin-section" id="journeySection">
     <div class="admin-section-head">
       <h2>The Switch</h2>
-      <div class="right"><span id="journeyCount"></span></div>
+      <div class="right"><input id="journeySearch" type="search" placeholder="Rechercher par nom, lieu ou contact" style="min-width:280px;"><span id="journeyCount"></span></div>
     </div>
     <p class="empty-note" style="text-align:left;padding:0 0 20px;">Photos envoyées par le public. Rien n'apparaît sur le mur avant que tu l'approuves. Les photos en attente sont en haut.</p>
     <div class="admin-list" id="journeyList"></div>
@@ -911,21 +911,35 @@
     return i === -1 ? null : decodeURIComponent(url.slice(i + marker.length));
   }
 
+  var journeyEntries = [];
+
   async function renderJourney() {
+    var list = document.getElementById('journeyList');
+    var res = await sb.from('journey_entries').select('*').order('created_at', { ascending: false });
+    if (res.error) { list.innerHTML = '<p class="empty-note">Erreur de chargement (les migrations 009 et 010 sont-elles exécutées ?).</p>'; return; }
+    journeyEntries = res.data || [];
+    drawJourney();
+  }
+
+  function drawJourney() {
     var list = document.getElementById('journeyList');
     var countEl = document.getElementById('journeyCount');
     var badge = document.getElementById('journeyPendingBadge');
-    var res = await sb.from('journey_entries').select('*').order('created_at', { ascending: false });
+    var q = (document.getElementById('journeySearch').value || '').trim().toLowerCase();
+    var entries = journeyEntries.filter(function (e) {
+      if (!q) return true;
+      return [e.name, e.address, e.contact, e.message].some(function (v) { return v && v.toLowerCase().indexOf(q) !== -1; });
+    });
     list.innerHTML = '';
-    if (res.error) { list.innerHTML = '<p class="empty-note">Erreur de chargement (la migration 009 est-elle exécutée ?).</p>'; return; }
-    var entries = res.data || [];
     var pending = entries.filter(function (e) { return e.status === 'pending'; });
     var approved = entries.filter(function (e) { return e.status === 'approved'; });
-    countEl.textContent = pending.length + ' en attente · ' + approved.length + ' approuvée' + (approved.length > 1 ? 's' : '');
-    badge.textContent = pending.length;
-    badge.style.display = pending.length ? 'inline-block' : 'none';
+    var totalPending = journeyEntries.filter(function (e) { return e.status === 'pending'; }).length;
+    countEl.textContent = (q ? entries.length + ' résultat' + (entries.length > 1 ? 's' : '') + ' · ' : '') +
+      totalPending + ' en attente · ' + approved.length + ' approuvée' + (approved.length > 1 ? 's' : '');
+    badge.textContent = totalPending;
+    badge.style.display = totalPending ? 'inline-block' : 'none';
     if (entries.length === 0) {
-      list.innerHTML = '<p class="empty-note">Aucune photo pour l\'instant.</p>';
+      list.innerHTML = '<p class="empty-note">' + (q ? 'Aucun résultat.' : 'Aucune photo pour l\'instant.') + '</p>';
       return;
     }
     pending.concat(approved).forEach(function (e) {
@@ -945,13 +959,16 @@
       var info = document.createElement('div');
       info.className = 'info';
       var h4 = document.createElement('h4');
-      h4.textContent = e.name + (e.city ? ' — ' + e.city : '');
+      h4.textContent = e.name + (e.address ? ' — ' + e.address : '');
       var span = document.createElement('span');
       var st = document.createElement('span');
       st.className = 'admin-badge ' + e.status;
       st.textContent = e.status === 'approved' ? 'Approuvée' : 'En attente';
       span.appendChild(st);
-      span.appendChild(document.createTextNode(new Date(e.created_at).toLocaleDateString('fr-CA') + (e.message ? ' · ' + e.message : '')));
+      span.appendChild(document.createTextNode(
+        new Date(e.created_at).toLocaleString('fr-CA', { dateStyle: 'medium', timeStyle: 'short' }) +
+        (e.contact ? ' · ' + e.contact : '') +
+        (e.message ? ' · ' + e.message : '')));
       info.appendChild(h4);
       info.appendChild(span);
       row.appendChild(info);
@@ -986,6 +1003,8 @@
       list.appendChild(row);
     });
   }
+
+  document.getElementById('journeySearch').addEventListener('input', drawJourney);
 
   // ---------- boot ----------
   (async function () {

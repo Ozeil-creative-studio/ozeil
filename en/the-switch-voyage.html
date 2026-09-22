@@ -263,7 +263,7 @@
 
       var body = el('div', 'journey-card-body');
       var date = new Date(entry.created_at).toLocaleDateString(T.locale, { year: 'numeric', month: 'long', day: 'numeric' });
-      body.appendChild(el('div', 'journey-meta', (entry.city ? entry.city + ' · ' : '') + date));
+      body.appendChild(el('div', 'journey-meta', (entry.address ? entry.address + ' · ' : '') + date));
       body.appendChild(el('h4', null, entry.name));
       if (entry.message) body.appendChild(el('p', null, entry.message));
       card.appendChild(body);
@@ -277,7 +277,7 @@
       var empty = document.getElementById('journeyEmpty');
       if (!sb || !host) return;
       var res = await sb.from('journey_entries')
-        .select('id,photo_url,name,city,message,created_at')
+        .select('id,photo_url,name,address,message,created_at')
         .eq('status', 'approved')
         .order('created_at', { ascending: true });
       if (res.error || !res.data || res.data.length === 0) {

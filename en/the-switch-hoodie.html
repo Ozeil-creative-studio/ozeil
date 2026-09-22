@@ -138,6 +138,7 @@
     <div class="section-head" data-reveal>
       <h2>Send your photo</h2>
       <p>You don't have to appear in the photo. It will be reviewed before being published on the wall.</p>
+      <p class="journey-note">The photo name is how we find it: keep it if you ever want to ask us to remove the photo. The address is used to place the hoodie on the journey map.</p>
     </div>
     <form class="journey-form" id="journeyForm" novalidate data-reveal>
       <div class="field">
@@ -147,13 +148,18 @@
       </div>
       <div class="form-row">
         <div class="field">
-          <label for="journeyName">First name or nickname</label>
-          <input id="journeyName" type="text" maxlength="60" autocomplete="given-name">
+          <label for="journeyName">Photo name</label>
+          <input id="journeyName" type="text" maxlength="60" placeholder="e.g. The hoodie at the park">
         </div>
         <div class="field">
-          <label for="journeyCity">City (optional)</label>
-          <input id="journeyCity" type="text" maxlength="80">
+          <label for="journeyAddress">Address or place</label>
+          <input id="journeyAddress" type="text" maxlength="160" autocomplete="street-address" placeholder="e.g. 12 Main St, Laval">
         </div>
+      </div>
+      <div class="field">
+        <label for="journeyContact">Contact</label>
+        <input id="journeyContact" type="text" maxlength="120" placeholder="email or @handle on Instagram / TikTok">
+        <p class="journey-note">Never published. Only used if we need to reach you.</p>
       </div>
       <div class="field">
         <label for="journeyMessage">A short note (optional)</label>
@@ -165,7 +171,7 @@
       </div>
       <div class="field journey-consent">
         <input id="journeyConsent" type="checkbox">
-        <label for="journeyConsent">I agree to have my photo and first name (or nickname) published on ozeil.net. Nobody under 14 should appear in the photo without a parent's consent.</label>
+        <label for="journeyConsent">I agree to have my photo and the name I give it published on ozeil.net. Nobody under 14 should appear in the photo without a parent's consent.</label>
       </div>
       <button class="btn btn-primary" type="submit" id="journeySubmit">Send my photo</button>
       <p class="journey-msg" id="journeyMsg" role="status"></p>
@@ -283,7 +289,7 @@
 <script>
   if (window.ozeilRenderPromo) window.ozeilRenderPromo();
   (function () {
-    var T = {"locale":"en-CA","ok":"Thank you! Your photo was sent. It will appear on the wall after review.","errPhoto":"Please add a photo (JPG, PNG or WebP).","errName":"Please enter your first name or nickname.","errConsent":"Please tick the box to agree to publication.","errGeneric":"Oops, sending failed. Please try again in a moment.","sending":"Sending…","holder":"Holder","from":"in"};
+    var T = {"locale":"en-CA","ok":"Thank you! Your photo was sent. It will appear on the wall after review.","errPhoto":"Please add a photo (JPG, PNG or WebP).","errName":"Please give your photo a name.","errConsent":"Please tick the box to agree to publication.","errGeneric":"Oops, sending failed. Please try again in a moment.","sending":"Sending…","holder":"Holder","from":"in"};
     var sb = window.ozeilSupabase;
 
     function el(tag, cls, text) {
@@ -334,7 +340,8 @@
       if (document.getElementById('journeyWebsite').value) return;
       var file = fileInput.files[0];
       var name = document.getElementById('journeyName').value.trim();
-      var city = document.getElementById('journeyCity').value.trim();
+      var address = document.getElementById('journeyAddress').value.trim();
+      var contact = document.getElementById('journeyContact').value.trim();
       var message = document.getElementById('journeyMessage').value.trim();
 
       if (!file || !/^image\//.test(file.type)) return show(T.errPhoto, 'error');
@@ -351,7 +358,7 @@
         var up = await sb.storage.from('journey-photos').upload(path, blob, { contentType: blob.type, upsert: false });
         if (up.error) throw up.error;
         var url = sb.storage.from('journey-photos').getPublicUrl(path).data.publicUrl;
-        var ins = await sb.from('journey_entries').insert({ photo_url: url, name: name, city: city || null, message: message || null });
+        var ins = await sb.from('journey_entries').insert({ photo_url: url, name: name, address: address || null, contact: contact || null, message: message || null });
         if (ins.error) throw ins.error;
         form.reset();
         preview.style.display = 'none';
