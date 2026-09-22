@@ -1321,7 +1321,7 @@ body.switch-ready .switch-flash{animation:swFlash .9s ease-out .3s forwards;}
 
 .switch-logo-wrap{
   position:relative;
-  width:min(88vw,1080px,calc((100svh - var(--sw-hero-top, 74px) - 190px) * 1.725));
+  width:min(88vw,1080px,max(46vw,calc((100svh - var(--sw-hero-top, 74px) - 190px) * 1.725)));
   opacity:0;
 }
 body.switch-ready .switch-logo-wrap{animation:swLogoIn 1.1s cubic-bezier(.2,1.4,.4,1) .45s forwards;}
