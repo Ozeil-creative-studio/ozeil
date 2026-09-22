@@ -1479,7 +1479,8 @@ body.switch-ready .switch-scroll{animation:swFadeIn .6s ease 1.5s forwards, swBo
 .switch-social-link svg{width:20px;height:20px;}
 .switch-social-link:hover{transform:translateY(-3px) scale(1.04);background:#fff;color:var(--sw-blue);box-shadow:0 10px 30px rgba(0,0,0,.35);}
 
-.switch-cta{padding:70px 0;background:var(--sw-deep);}
+.page-switch #etapes{padding-bottom:70px;}
+.switch-cta{padding:0 0 70px;background:var(--sw-deep);}
 .switch-cta .container{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;}
 .switch-cta-btn{
   position:relative;
