@@ -1483,6 +1483,8 @@ body.switch-ready .switch-scroll{animation:swFadeIn .6s ease 1.5s forwards, swBo
 
 .page-switch #etapes{padding-bottom:70px;}
 .switch-cta{padding:0 0 70px;background:var(--sw-deep);position:relative;z-index:2;}
+/* quand la section au-dessus a un autre fond, les boutons ont besoin d'air en haut */
+.section.alt + .switch-cta{padding-top:70px;}
 .switch-cta .container{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;}
 .switch-cta-btn{
   position:relative;
