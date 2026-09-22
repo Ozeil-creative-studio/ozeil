@@ -913,6 +913,20 @@
 
   var journeyEntries = [];
 
+  // address -> coordinates (OpenStreetMap / Nominatim, no API key).
+  // Rounded to ~1 km so an exact street address never becomes a public pin.
+  async function geocodeAddress(address) {
+    var url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(address);
+    var res = await fetch(url, { headers: { 'Accept-Language': 'fr' } });
+    if (!res.ok) throw new Error('geocode failed');
+    var data = await res.json();
+    if (!data.length) return null;
+    return {
+      lat: Math.round(parseFloat(data[0].lat) * 100) / 100,
+      lng: Math.round(parseFloat(data[0].lon) * 100) / 100
+    };
+  }
+
   async function renderJourney() {
     var list = document.getElementById('journeyList');
     var res = await sb.from('journey_entries').select('*').order('created_at', { ascending: false });
@@ -968,6 +982,7 @@
       span.appendChild(document.createTextNode(
         new Date(e.created_at).toLocaleString('fr-CA', { dateStyle: 'medium', timeStyle: 'short' }) +
         (e.contact ? ' · ' + e.contact : '') +
+        (e.address ? (e.lat != null ? ' · 📍 sur la carte' : ' · ⚠️ pas de pin') : '') +
         (e.message ? ' · ' + e.message : '')));
       info.appendChild(h4);
       info.appendChild(span);
@@ -981,7 +996,23 @@
       toggle.textContent = e.status === 'pending' ? 'Approuver' : 'Retirer du mur';
       toggle.addEventListener('click', async function () {
         toggle.disabled = true;
-        await sb.from('journey_entries').update({ status: e.status === 'pending' ? 'approved' : 'pending' }).eq('id', e.id);
+        var approving = e.status === 'pending';
+        var payload = { status: approving ? 'approved' : 'pending' };
+        if (approving && e.address && e.lat == null) {
+          toggle.textContent = 'Localisation…';
+          try {
+            var point = await geocodeAddress(e.address);
+            if (point) {
+              payload.lat = point.lat;
+              payload.lng = point.lng;
+            } else {
+              alert('Adresse introuvable sur la carte : "' + e.address + '".\nLa photo est approuvée, mais elle n\'aura pas de pin.');
+            }
+          } catch (err) {
+            alert('La localisation a échoué (service indisponible).\nLa photo est approuvée, mais elle n\'aura pas de pin.');
+          }
+        }
+        await sb.from('journey_entries').update(payload).eq('id', e.id);
         renderJourney();
       });
       var del = document.createElement('button');

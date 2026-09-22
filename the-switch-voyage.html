@@ -32,6 +32,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="stylesheet" href="styles.css">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -120,6 +121,19 @@
   </a>
   <h1>Le Voyage</h1>
   <p>Chaque photo est un nouveau chapitre du parcours du hoodie, de main en main.</p>
+</section>
+
+<section class="section tight" id="carte">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <h2>La carte du voyage</h2>
+      <p>Chaque pin est un endroit où le hoodie est passé.</p>
+    </div>
+    <div class="journey-map-wrap" data-reveal>
+      <div id="journeyMap"></div>
+      <p class="empty-note" id="journeyMapEmpty">Les premiers lieux apparaîtront ici.</p>
+    </div>
+  </div>
 </section>
 
 <section class="section alt tight" id="mur">
@@ -230,6 +244,7 @@
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="i18n.js"></script>
 <script src="supabase-client.js"></script>
@@ -272,12 +287,46 @@
       return item;
     }
 
+    function buildMap(entries) {
+      var host = document.getElementById('journeyMap');
+      var empty = document.getElementById('journeyMapEmpty');
+      var located = entries.filter(function (e) { return e.lat != null && e.lng != null; });
+      if (!host || !window.L || located.length === 0) return;
+      if (empty) empty.style.display = 'none';
+      host.style.display = 'block';
+
+      var map = L.map(host, { scrollWheelZoom: false, attributionControl: true });
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap',
+        maxZoom: 18
+      }).addTo(map);
+
+      var points = located.map(function (e) { return [e.lat, e.lng]; });
+      located.forEach(function (e, i) {
+        var n = entries.indexOf(e) + 1;
+        var icon = L.divIcon({
+          className: 'journey-pin',
+          html: '<span>#' + n + '</span>',
+          iconSize: [30, 30],
+          iconAnchor: [15, 15]
+        });
+        var date = new Date(e.created_at).toLocaleDateString(T.locale, { year: 'numeric', month: 'long', day: 'numeric' });
+        L.marker([e.lat, e.lng], { icon: icon })
+          .addTo(map)
+          .bindPopup('<img src="' + e.photo_url + '" alt="" class="journey-pin-photo"><strong>' + e.name + '</strong><br>' + date);
+      });
+      if (points.length > 1) {
+        L.polyline(points, { color: '#00d0ff', weight: 2, opacity: .7, dashArray: '6 8' }).addTo(map);
+      }
+      map.fitBounds(L.latLngBounds(points).pad(0.35), { maxZoom: 9 });
+    }
+
     async function loadEntries() {
       var host = document.getElementById('journeyTimeline');
       var empty = document.getElementById('journeyEmpty');
       if (!sb || !host) return;
       var res = await sb.from('journey_entries')
-        .select('id,photo_url,name,address,message,created_at')
+        .select('id,photo_url,name,address,message,created_at,lat,lng')
         .eq('status', 'approved')
         .order('created_at', { ascending: true });
       if (res.error || !res.data || res.data.length === 0) {
@@ -289,6 +338,7 @@
         host.appendChild(item);
         if (window.ozeilSwitchReveal) window.ozeilSwitchReveal(item);
       });
+      buildMap(res.data);
     }
 
     loadEntries();

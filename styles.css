@@ -1530,3 +1530,31 @@ body.switch-ready .switch-hero-sm h1{animation:swTitleIn .9s cubic-bezier(.2,1.4
 }
 .journey-steps.four{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));max-width:1040px;}
 .switch-hero-sm > *:not(.switch-beams):not(.switch-sparks){position:relative;z-index:1;}
+
+/* ----- The Switch: journey map ----- */
+.journey-map-wrap{max-width:900px;margin:0 auto;}
+#journeyMap{
+  display:none;
+  height:min(60vh,460px);
+  border-radius:var(--radius);
+  border:1px solid rgba(90,120,255,.45);
+  box-shadow:0 0 40px rgba(42,0,255,.35);
+  background:#0a0540;
+  z-index:0;
+}
+.leaflet-tile{filter:invert(1) hue-rotate(185deg) brightness(.75) contrast(.95) saturate(.5);}
+.journey-pin{background:none;border:none;}
+.journey-pin span{
+  display:flex;align-items:center;justify-content:center;
+  width:30px;height:30px;border-radius:50%;
+  background:var(--sw-blue);color:#fff;
+  font-size:12px;font-weight:700;
+  border:2px solid var(--sw-cyan);
+  box-shadow:0 0 14px rgba(42,0,255,.9);
+}
+.journey-pin-photo{width:100%;border-radius:10px;margin-bottom:8px;}
+.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#0a0540;color:var(--text);border:1px solid rgba(90,120,255,.45);}
+.leaflet-popup-content{margin:12px 14px;font-family:inherit;font-size:13px;line-height:1.5;width:180px!important;}
+.leaflet-container a.leaflet-popup-close-button{color:var(--text-soft);}
+.leaflet-control-attribution{background:rgba(2,0,20,.7)!important;color:var(--text-faint)!important;}
+.leaflet-control-attribution a{color:var(--text-soft)!important;}
