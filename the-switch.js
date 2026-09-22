@@ -80,15 +80,15 @@
     return;
   }
 
-  // 16:9 composition: fill landscape screens (cropping edges), fit it whole on portrait phones.
+  // portrait screens get the vertical cut of the animation; both fill the screen
   var portrait = window.innerHeight > window.innerWidth;
   var anim = lottie.loadAnimation({
     container: document.getElementById('switchIntroAnim'),
     renderer: 'svg',
     loop: false,
     autoplay: true,
-    path: '/the-switch-intro.json?v=2',
-    rendererSettings: { preserveAspectRatio: portrait ? 'xMidYMid meet' : 'xMidYMid slice' }
+    path: portrait ? '/the-switch-intro-mobile.json?v=1' : '/the-switch-intro.json?v=2',
+    rendererSettings: { preserveAspectRatio: 'xMidYMid slice' }
   });
   // the page is revealed behind the panel while it slides away
   anim.addEventListener('enterFrame', function () {
