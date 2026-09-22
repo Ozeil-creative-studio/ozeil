@@ -50,9 +50,14 @@
 
   // ---------- intro ----------
   var intro = document.getElementById('switchIntro');
+  var started = false;
   var finished = false;
+  // frame where the black panel starts sliding off to the left
+  var REVEAL_FRAME = 225;
 
   function startPage() {
+    if (started) return;
+    started = true;
     body.classList.remove('switch-intro-on');
     body.classList.add('switch-ready');
     document.querySelectorAll('[data-reveal]').forEach(reveal);
@@ -61,9 +66,9 @@
   function finishIntro(anim) {
     if (finished) return;
     finished = true;
-    if (!intro) { startPage(); return; }
-    intro.classList.add('done');
     startPage();
+    if (!intro) return;
+    intro.classList.add('done');
     setTimeout(function () {
       if (anim) anim.destroy();
       intro.remove();
@@ -82,8 +87,15 @@
     renderer: 'svg',
     loop: false,
     autoplay: true,
-    path: '/the-switch-intro.json',
+    path: '/the-switch-intro.json?v=2',
     rendererSettings: { preserveAspectRatio: portrait ? 'xMidYMid meet' : 'xMidYMid slice' }
+  });
+  // the page is revealed behind the panel while it slides away
+  anim.addEventListener('enterFrame', function () {
+    if (!started && anim.currentFrame >= REVEAL_FRAME) {
+      intro.classList.add('reveal');
+      startPage();
+    }
   });
   anim.addEventListener('complete', function () { finishIntro(anim); });
   anim.addEventListener('data_failed', function () { finishIntro(anim); });

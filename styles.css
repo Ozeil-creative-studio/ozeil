@@ -1235,9 +1235,11 @@ footer{background:var(--bg-elevated);border-top:1px solid var(--line);padding:70
   position:fixed;inset:0;z-index:10000;
   background:#000;
   display:flex;align-items:center;justify-content:center;
-  transition:opacity .45s ease;
+  transition:opacity .45s ease, background-color .35s ease;
 }
 #switchIntro.done{opacity:0;pointer-events:none;}
+#switchIntro.reveal{background-color:transparent;pointer-events:none;}
+#switchIntro.reveal .switch-intro-skip{opacity:0;}
 #switchIntroAnim{width:100%;height:100%;}
 .switch-intro-skip{
   position:absolute;right:22px;bottom:22px;
@@ -1258,7 +1260,7 @@ body.switch-intro-on{overflow:hidden;}
   background:radial-gradient(circle at 50% 45%, #fff 0%, #b9c4ff 35%, rgba(42,0,255,0) 75%);
   opacity:0;
 }
-body.switch-ready .switch-flash{animation:swFlash .9s ease-out forwards;}
+body.switch-ready .switch-flash{animation:swFlash .9s ease-out .3s forwards;}
 @keyframes swFlash{
   0%{opacity:0;}
   12%{opacity:1;}
@@ -1333,7 +1335,7 @@ body.switch-ready .switch-flash{animation:swFlash .9s ease-out forwards;}
   width:min(88vw,1080px,calc((100svh - var(--sw-hero-top, 74px) - 190px) * 1.725));
   opacity:0;
 }
-body.switch-ready .switch-logo-wrap{animation:swLogoIn 1.1s cubic-bezier(.2,1.4,.4,1) .15s forwards;}
+body.switch-ready .switch-logo-wrap{animation:swLogoIn 1.1s cubic-bezier(.2,1.4,.4,1) .45s forwards;}
 @keyframes swLogoIn{
   0%{opacity:0;transform:scale(1.9) rotate(-4deg);filter:blur(18px) brightness(3);}
   55%{opacity:1;filter:blur(0) brightness(1.6);}
@@ -1342,7 +1344,7 @@ body.switch-ready .switch-logo-wrap{animation:swLogoIn 1.1s cubic-bezier(.2,1.4,
 .switch-logo{
   width:100%;height:auto;
   filter:drop-shadow(0 0 22px rgba(42,0,255,.9)) drop-shadow(0 0 60px rgba(0,208,255,.35));
-  animation:swFloat 5s ease-in-out 1.3s infinite, swGlow 2.6s ease-in-out 1.3s infinite;
+  animation:swFloat 5s ease-in-out 1.6s infinite, swGlow 2.6s ease-in-out 1.6s infinite;
 }
 @keyframes swFloat{
   0%,100%{translate:0 0;}
@@ -1358,8 +1360,8 @@ body.switch-ready .switch-logo-wrap{animation:swLogoIn 1.1s cubic-bezier(.2,1.4,
 }
 .switch-logo-ghost.g1{filter:hue-rotate(-60deg) saturate(3);}
 .switch-logo-ghost.g2{filter:hue-rotate(80deg) saturate(3);}
-body.switch-ready .switch-logo-ghost.g1{animation:swGlitchA 4.5s steps(1) 1.1s infinite;}
-body.switch-ready .switch-logo-ghost.g2{animation:swGlitchB 4.5s steps(1) 1.1s infinite;}
+body.switch-ready .switch-logo-ghost.g1{animation:swGlitchA 4.5s steps(1) 1.4s infinite;}
+body.switch-ready .switch-logo-ghost.g2{animation:swGlitchB 4.5s steps(1) 1.4s infinite;}
 @keyframes swGlitchA{
   0%{opacity:.8;transform:translate(-14px,4px);}
   3%{opacity:.6;transform:translate(10px,-6px);}
@@ -1384,7 +1386,7 @@ body.switch-ready .switch-logo-ghost.g2{animation:swGlitchB 4.5s steps(1) 1.1s i
   opacity:0;
 }
 .switch-scroll svg{width:22px;height:22px;}
-body.switch-ready .switch-scroll{animation:swFadeIn .6s ease 1.2s forwards, swBounce 1.4s cubic-bezier(.5,0,.5,1) 1.2s infinite;}
+body.switch-ready .switch-scroll{animation:swFadeIn .6s ease 1.5s forwards, swBounce 1.4s cubic-bezier(.5,0,.5,1) 1.5s infinite;}
 @keyframes swFadeIn{to{opacity:1;}}
 @keyframes swBounce{
   0%,100%{transform:translateY(0);}
