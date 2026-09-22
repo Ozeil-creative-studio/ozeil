@@ -5,19 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#05001D">
-<title>Le voyage du hoodie — Ozeil</title>
+<title>The Switch — Ozeil</title>
 <meta name="description" content="Un hoodie Ozeil offert à un inconnu, qui se prend en photo avec puis le passe à quelqu'un d'autre. Suis son parcours et ajoute ta photo au mur du voyage.">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://ozeil.net/voyage.html">
-<link rel="alternate" hreflang="fr-ca" href="https://ozeil.net/voyage.html">
-<link rel="alternate" hreflang="en" href="https://ozeil.net/en/voyage.html">
-<link rel="alternate" hreflang="x-default" href="https://ozeil.net/voyage.html">
+<link rel="canonical" href="https://ozeil.net/the-switch.html">
+<link rel="alternate" hreflang="fr-ca" href="https://ozeil.net/the-switch.html">
+<link rel="alternate" hreflang="en" href="https://ozeil.net/en/the-switch.html">
+<link rel="alternate" hreflang="x-default" href="https://ozeil.net/the-switch.html">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ozeil">
-<meta property="og:title" content="Le voyage du hoodie — Ozeil">
+<meta property="og:title" content="The Switch — Ozeil">
 <meta property="og:description" content="Un hoodie Ozeil offert à un inconnu, qui se prend en photo avec puis le passe à quelqu'un d'autre. Suis son parcours et ajoute ta photo au mur du voyage.">
-<meta property="og:url" content="https://ozeil.net/voyage.html">
+<meta property="og:url" content="https://ozeil.net/the-switch.html">
 <meta property="og:image" content="https://ozeil.net/og-image.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
@@ -25,7 +25,7 @@
 <meta property="og:locale" content="fr_CA">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Le voyage du hoodie — Ozeil">
+<meta name="twitter:title" content="The Switch — Ozeil">
 <meta name="twitter:description" content="Un hoodie Ozeil offert à un inconnu, qui se prend en photo avec puis le passe à quelqu'un d'autre. Suis son parcours et ajoute ta photo au mur du voyage.">
 <meta name="twitter:image" content="https://ozeil.net/og-image.png">
 
@@ -52,22 +52,22 @@
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Le voyage",
-      "item": "https://ozeil.net/voyage.html"
+      "name": "The Switch",
+      "item": "https://ozeil.net/the-switch.html"
     }
   ]
 }
 </script>
 </head>
-<body class="is-loading">
+<body class="page-switch switch-intro-on">
 
-<div id="loadingOverlay">
-  <div class="loading-lottie-crop">
-    <div id="loadingLottie"></div>
-  </div>
+<div id="switchIntro" aria-hidden="true">
+  <div id="switchIntroAnim"></div>
+  <button class="switch-intro-skip" type="button" id="switchIntroSkip">Passer</button>
+</div>
+<div class="switch-flash" aria-hidden="true"></div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie.min.js"></script>
-<script src="loading-screen.js"></script>
 
 <!-- reusable icon/logo symbols -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -99,11 +99,10 @@
         <svg class="mark"><use href="#ozeil-mark"/></svg>
       </a>
       <a href="boutique.html" class="nav-link">Boutique</a>
-      <a href="voyage.html" class="nav-link current">Le voyage</a>
     </div>
 
     <div class="nav-end">
-      <a href="/en/voyage.html" class="nav-lang-link" hreflang="en">EN</a>
+      <a href="/en/the-switch.html" class="nav-lang-link" hreflang="en">EN</a>
       <button class="nav-icon-btn" type="button" aria-label="Panier (bientôt disponible)" aria-disabled="true">
         <svg><use href="#icon-bag"/></svg>
       </button>
@@ -111,26 +110,36 @@
   </nav>
 </header>
 
-<section class="shop-hero">
-  <div class="container">
-    <h1>Le voyage du hoodie</h1>
-    <p>Un hoodie Ozeil, offert à un inconnu. Il se prend en photo avec, puis le passe à quelqu'un d'autre. Voici son parcours.</p>
+<section class="switch-hero">
+  <div class="switch-blob b1"></div>
+  <div class="switch-blob b2"></div>
+  <div class="switch-blob b3"></div>
+  <div class="switch-beams"></div>
+  <div class="switch-grid"></div>
+  <div class="switch-sparks" id="switchSparks"></div>
+  <h1>The Switch</h1>
+  <div class="switch-logo-wrap">
+    <img class="switch-logo" src="/images/the-switch-logo.png" alt="The Switch — logo" width="2048" height="1187">
+    <img class="switch-logo-ghost g1" src="/images/the-switch-logo.png" alt="" aria-hidden="true">
+    <img class="switch-logo-ghost g2" src="/images/the-switch-logo.png" alt="" aria-hidden="true">
   </div>
+  <a class="switch-scroll" href="#concept" aria-label="Défiler vers le contenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
 </section>
 
 <section class="section tight" id="concept">
   <div class="container">
+    <p class="switch-intro-text" data-reveal>Un hoodie Ozeil, offert à un inconnu. Il se prend en photo avec, puis le passe à quelqu'un d'autre. Voici son parcours.</p>
     <div class="journey-steps">
-        <div class="journey-step"><span class="num">1</span><h3>Il est offert</h3><p>Ozeil offre un hoodie à une personne au hasard, quelqu'un qu'on ne connaît pas forcément.</p></div>
-        <div class="journey-step"><span class="num">2</span><h3>Une photo</h3><p>Elle se prend en photo avec (ou non, c'est son choix) et l'ajoute au mur du voyage.</p></div>
-        <div class="journey-step"><span class="num">3</span><h3>Il repart</h3><p>Elle redonne le hoodie à quelqu'un d'autre, qui fait pareil. Et ça continue, de main en main.</p></div>
+        <div class="journey-step" data-reveal><span class="num">1</span><h3>Il est offert</h3><p>Ozeil offre un hoodie à une personne au hasard, quelqu'un qu'on ne connaît pas forcément.</p></div>
+        <div class="journey-step" data-reveal><span class="num">2</span><h3>Une photo</h3><p>Elle se prend en photo avec (ou non, c'est son choix) et l'ajoute au mur du voyage.</p></div>
+        <div class="journey-step" data-reveal><span class="num">3</span><h3>Il repart</h3><p>Elle redonne le hoodie à quelqu'un d'autre, qui fait pareil. Et ça continue, de main en main.</p></div>
     </div>
   </div>
 </section>
 
 <section class="section alt tight" id="mur">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head" data-reveal>
       <h2>Le mur du voyage</h2>
       <p>Chaque photo est un nouveau chapitre du parcours.</p>
     </div>
@@ -141,11 +150,11 @@
 
 <section class="section tight" id="participer">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head" data-reveal>
       <h2>Tu as le hoodie ? Ajoute ta photo</h2>
       <p>Tu n'es pas obligé d'apparaître sur la photo. Elle sera vérifiée avant d'être publiée sur le mur.</p>
     </div>
-    <form class="journey-form" id="journeyForm" novalidate>
+    <form class="journey-form" id="journeyForm" novalidate data-reveal>
       <div class="field">
         <label for="journeyPhoto">Photo</label>
         <input id="journeyPhoto" type="file" accept="image/*">
@@ -272,6 +281,7 @@
 <script src="supabase-client.js"></script>
 <script src="main.js"></script>
 <script src="promo.js"></script>
+<script src="/the-switch.js"></script>
 <script>
   if (window.ozeilRenderPromo) window.ozeilRenderPromo();
   (function () {
@@ -287,6 +297,7 @@
 
     function buildItem(entry, n) {
       var item = el('div', 'journey-item');
+      item.setAttribute('data-reveal', n % 2 ? 'left' : 'right');
       item.appendChild(el('div', 'journey-badge', '#' + n));
 
       var card = el('div', 'journey-card');
@@ -319,7 +330,11 @@
         if (empty) empty.style.display = 'block';
         return;
       }
-      res.data.forEach(function (e, i) { host.appendChild(buildItem(e, i + 1)); });
+      res.data.forEach(function (e, i) {
+        var item = buildItem(e, i + 1);
+        host.appendChild(item);
+        if (window.ozeilSwitchReveal) window.ozeilSwitchReveal(item);
+      });
     }
 
     async function shrinkImage(file) {
