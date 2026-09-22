@@ -1535,6 +1535,7 @@ body.switch-ready .switch-hero-sm h1{animation:swTitleIn .9s cubic-bezier(.2,1.4
 .journey-map-wrap{max-width:900px;margin:0 auto;}
 #journeyMap{
   display:none;
+  margin-bottom:14px;
   height:min(60vh,460px);
   border-radius:var(--radius);
   border:1px solid rgba(90,120,255,.45);

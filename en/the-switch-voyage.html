@@ -291,8 +291,8 @@
       var host = document.getElementById('journeyMap');
       var empty = document.getElementById('journeyMapEmpty');
       var located = entries.filter(function (e) { return e.lat != null && e.lng != null; });
-      if (!host || !window.L || located.length === 0) return;
-      if (empty) empty.style.display = 'none';
+      if (!host || !window.L) return;
+      if (empty) empty.style.display = located.length ? 'none' : 'block';
       host.style.display = 'block';
 
       var map = L.map(host, { scrollWheelZoom: false, attributionControl: true });
@@ -318,7 +318,11 @@
       if (points.length > 1) {
         L.polyline(points, { color: '#00d0ff', weight: 2, opacity: .7, dashArray: '6 8' }).addTo(map);
       }
-      map.fitBounds(L.latLngBounds(points).pad(0.35), { maxZoom: 9 });
+      if (points.length) {
+        map.fitBounds(L.latLngBounds(points).pad(0.35), { maxZoom: 9 });
+      } else {
+        map.setView([25, 0], 2);
+      }
     }
 
     async function loadEntries() {
@@ -331,6 +335,7 @@
         .order('created_at', { ascending: true });
       if (res.error || !res.data || res.data.length === 0) {
         if (empty) empty.style.display = 'block';
+        buildMap([]);
         return;
       }
       res.data.forEach(function (e, i) {
