@@ -48,6 +48,7 @@
     <button class="admin-tab active" type="button" data-tab="productsSection">Produits</button>
     <button class="admin-tab" type="button" data-tab="collectionsSection">Collections</button>
     <button class="admin-tab" type="button" data-tab="promoSection">Annonce</button>
+    <button class="admin-tab" type="button" data-tab="journeySection">Voyage <span id="journeyPendingBadge" class="admin-badge pending" style="display:none;margin:0 0 0 6px;"></span></button>
   </div>
 
   <section class="admin-section active" id="productsSection">
@@ -149,6 +150,15 @@
       <button class="btn btn-primary" type="submit" id="promoSubmitBtn">Enregistrer</button>
       <p class="admin-msg" id="promoMsg"></p>
     </form>
+  </section>
+
+  <section class="admin-section" id="journeySection">
+    <div class="admin-section-head">
+      <h2>Voyage du hoodie</h2>
+      <div class="right"><span id="journeyCount"></span></div>
+    </div>
+    <p class="empty-note" style="text-align:left;padding:0 0 20px;">Photos envoyées par le public. Rien n'apparaît sur le mur avant que tu l'approuves. Les photos en attente sont en haut.</p>
+    <div class="admin-list" id="journeyList"></div>
   </section>
 
 </main>
@@ -892,12 +902,98 @@
     closeCollectionModal();
   });
 
+
+  // ================= JOURNEY (voyage du hoodie) =================
+
+  function journeyPhotoPath(url) {
+    var marker = '/journey-photos/';
+    var i = url.indexOf(marker);
+    return i === -1 ? null : decodeURIComponent(url.slice(i + marker.length));
+  }
+
+  async function renderJourney() {
+    var list = document.getElementById('journeyList');
+    var countEl = document.getElementById('journeyCount');
+    var badge = document.getElementById('journeyPendingBadge');
+    var res = await sb.from('journey_entries').select('*').order('created_at', { ascending: false });
+    list.innerHTML = '';
+    if (res.error) { list.innerHTML = '<p class="empty-note">Erreur de chargement (la migration 009 est-elle exécutée ?).</p>'; return; }
+    var entries = res.data || [];
+    var pending = entries.filter(function (e) { return e.status === 'pending'; });
+    var approved = entries.filter(function (e) { return e.status === 'approved'; });
+    countEl.textContent = pending.length + ' en attente · ' + approved.length + ' approuvée' + (approved.length > 1 ? 's' : '');
+    badge.textContent = pending.length;
+    badge.style.display = pending.length ? 'inline-block' : 'none';
+    if (entries.length === 0) {
+      list.innerHTML = '<p class="empty-note">Aucune photo pour l\'instant.</p>';
+      return;
+    }
+    pending.concat(approved).forEach(function (e) {
+      var row = document.createElement('div');
+      row.className = 'admin-row';
+
+      var link = document.createElement('a');
+      link.href = e.photo_url;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      var img = document.createElement('img');
+      img.src = e.photo_url;
+      img.alt = '';
+      link.appendChild(img);
+      row.appendChild(link);
+
+      var info = document.createElement('div');
+      info.className = 'info';
+      var h4 = document.createElement('h4');
+      h4.textContent = e.name + (e.city ? ' — ' + e.city : '');
+      var span = document.createElement('span');
+      var st = document.createElement('span');
+      st.className = 'admin-badge ' + e.status;
+      st.textContent = e.status === 'approved' ? 'Approuvée' : 'En attente';
+      span.appendChild(st);
+      span.appendChild(document.createTextNode(new Date(e.created_at).toLocaleDateString('fr-CA') + (e.message ? ' · ' + e.message : '')));
+      info.appendChild(h4);
+      info.appendChild(span);
+      row.appendChild(info);
+
+      var actions = document.createElement('div');
+      actions.className = 'actions';
+      var toggle = document.createElement('button');
+      toggle.type = 'button';
+      toggle.className = 'admin-text-btn' + (e.status === 'pending' ? ' primary' : '');
+      toggle.textContent = e.status === 'pending' ? 'Approuver' : 'Retirer du mur';
+      toggle.addEventListener('click', async function () {
+        toggle.disabled = true;
+        await sb.from('journey_entries').update({ status: e.status === 'pending' ? 'approved' : 'pending' }).eq('id', e.id);
+        renderJourney();
+      });
+      var del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'admin-icon-btn danger';
+      del.setAttribute('aria-label', 'Supprimer');
+      del.innerHTML = '<svg><use href="#icon-trash"/></svg>';
+      del.addEventListener('click', async function () {
+        if (!confirm('Supprimer définitivement la photo de "' + e.name + '" ?')) return;
+        var path = journeyPhotoPath(e.photo_url);
+        if (path) await sb.storage.from('journey-photos').remove([path]);
+        await sb.from('journey_entries').delete().eq('id', e.id);
+        renderJourney();
+      });
+      actions.appendChild(toggle);
+      actions.appendChild(del);
+      row.appendChild(actions);
+
+      list.appendChild(row);
+    });
+  }
+
   // ---------- boot ----------
   (async function () {
     var ok = await requireSession();
     if (!ok) return;
     await renderCollections();
     await renderProducts();
+    await renderJourney();
     var promo = await loadPromo();
     if (promo) fillPromoForm(promo);
   })();

@@ -6,10 +6,12 @@
 
 - [Accueil](https://ozeil.net/): présentation de la marque, produit en vedette (Nouveauté), meilleur vendeur, derniers arrivages, accessoires, section À propos et formulaire de contact.
 - [Boutique](https://ozeil.net/boutique.html): catalogue complet des produits en vente, avec collections. Le catalogue est chargé dynamiquement depuis une base de données et change régulièrement — les modèles et prix affichés ici peuvent être partiels ou obsolètes; se référer directement au site pour les informations à jour.
+- [Le voyage](https://ozeil.net/voyage.html): projet participatif — un hoodie Ozeil offert à un inconnu, qui se prend en photo avec puis le passe à quelqu'un d'autre. Mur de photos du parcours du hoodie, alimenté par le public (photos approuvées avant publication).
 
 Une version anglaise du site existe sous le préfixe `/en/` (contenu identique, traduit) :
 - [Home (EN)](https://ozeil.net/en/index.html)
 - [Shop (EN)](https://ozeil.net/en/boutique.html)
+- [The journey (EN)](https://ozeil.net/en/voyage.html)
 
 ## À propos
 

@@ -1,27 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#05001D">
-<title>Privacy Policy — Ozeil</title>
-<meta name="description" content="Ozeil's privacy policy: what data we collect, how it is used, and how to contact us.">
+<title>Le voyage du hoodie — Ozeil</title>
+<meta name="description" content="Un hoodie Ozeil offert à un inconnu, qui se prend en photo avec puis le passe à quelqu'un d'autre. Suis son parcours et ajoute ta photo au mur du voyage.">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://ozeil.net/en/privacy-policy.html">
-<link rel="alternate" hreflang="fr-ca" href="https://ozeil.net/politique-de-confidentialite.html">
-<link rel="alternate" hreflang="en" href="https://ozeil.net/en/privacy-policy.html">
-<link rel="alternate" hreflang="x-default" href="https://ozeil.net/politique-de-confidentialite.html">
+<link rel="canonical" href="https://ozeil.net/voyage.html">
+<link rel="alternate" hreflang="fr-ca" href="https://ozeil.net/voyage.html">
+<link rel="alternate" hreflang="en" href="https://ozeil.net/en/voyage.html">
+<link rel="alternate" hreflang="x-default" href="https://ozeil.net/voyage.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ozeil">
+<meta property="og:title" content="Le voyage du hoodie — Ozeil">
+<meta property="og:description" content="Un hoodie Ozeil offert à un inconnu, qui se prend en photo avec puis le passe à quelqu'un d'autre. Suis son parcours et ajoute ta photo au mur du voyage.">
+<meta property="og:url" content="https://ozeil.net/voyage.html">
+<meta property="og:image" content="https://ozeil.net/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="fr_CA">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Le voyage du hoodie — Ozeil">
+<meta name="twitter:description" content="Un hoodie Ozeil offert à un inconnu, qui se prend en photo avec puis le passe à quelqu'un d'autre. Suis son parcours et ajoute ta photo au mur du voyage.">
+<meta name="twitter:image" content="https://ozeil.net/og-image.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/styles.css">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
-<link rel="apple-touch-icon" href="/favicon-180.png">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96.png">
+<link rel="apple-touch-icon" href="favicon-180.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Accueil",
+      "item": "https://ozeil.net/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Le voyage",
+      "item": "https://ozeil.net/voyage.html"
+    }
+  ]
+}
+</script>
 </head>
-<body>
+<body class="is-loading">
+
+<div id="loadingOverlay">
+  <div class="loading-lottie-crop">
+    <div id="loadingLottie"></div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie.min.js"></script>
+<script src="loading-screen.js"></script>
 
 <!-- reusable icon/logo symbols -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -42,57 +88,94 @@
 
 <header>
   <nav class="nav">
-    <a href="/login.html" class="nav-pill">
+    <a href="login.html" class="nav-pill">
       <span class="icon-circle"><svg><use href="#icon-user"/></svg></span>
-      <span class="label">Log in</span>
+      <span class="label">Se connecter</span>
     </a>
 
     <div class="nav-center">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="index.html" class="nav-logo" aria-label="Ozeil — home">
+      <a href="index.html" class="nav-link">Accueil</a>
+      <a href="index.html" class="nav-logo" aria-label="Ozeil — accueil">
         <svg class="mark"><use href="#ozeil-mark"/></svg>
       </a>
-      <a href="boutique.html" class="nav-link">Shop</a>
-      <a href="voyage.html" class="nav-link">The journey</a>
+      <a href="boutique.html" class="nav-link">Boutique</a>
+      <a href="voyage.html" class="nav-link current">Le voyage</a>
     </div>
 
     <div class="nav-end">
-      <a href="/politique-de-confidentialite.html" class="nav-lang-link" hreflang="fr-ca">FR</a>
-      <button class="nav-icon-btn" type="button" aria-label="Cart (coming soon)" aria-disabled="true">
+      <a href="/en/voyage.html" class="nav-lang-link" hreflang="en">EN</a>
+      <button class="nav-icon-btn" type="button" aria-label="Panier (bientôt disponible)" aria-disabled="true">
         <svg><use href="#icon-bag"/></svg>
       </button>
     </div>
   </nav>
 </header>
 
-<section class="section legal-hero">
+<section class="shop-hero">
   <div class="container">
-    <h1>Privacy Policy</h1>
+    <h1>Le voyage du hoodie</h1>
+    <p>Un hoodie Ozeil, offert à un inconnu. Il se prend en photo avec, puis le passe à quelqu'un d'autre. Voici son parcours.</p>
   </div>
 </section>
 
-<section class="section alt">
+<section class="section tight" id="concept">
   <div class="container">
-    <div class="legal-content">
-      <h3>Personal information</h3>
-      <p>We collect personal data such as your email address, first name, last name, and password so we can recognize you on your next visits.</p>
-      <p>If you sign in with Google, we only collect the email address associated with your Google account to identify you on future logins.</p>
-      <p>This data will NEVER be sold, given, or lent to other partners or organizations. We have a very strict policy regarding the security and confidentiality of your data.</p>
-
-      <h3>Use of your information</h3>
-      <p>Your information is used exclusively by our system for your login or sign-up.</p>
-      <p>No one without the required authorization can access your data. Only people working at Ozeil can review it to identify you manually if needed.</p>
-
-      <h3>Cookies</h3>
-      <p>Cookies are not enabled on our site.</p>
-      <p>We have no advertising on our site, which means we do not record any tracking or analytics data, and no targeted ads are shown.</p>
-
-      <h3>Contact</h3>
-      <p>Several contact options are available to reach us.</p>
-      <p><strong>Contact form:</strong> on the homepage, you'll find a Contact section. Clicking on it opens a contact form where you can send us your message.</p>
-      <p><strong>Email:</strong> if you'd rather write to us by email, you can use <a href="mailto:ozeil.proff@gmail.com">ozeil.proff@gmail.com</a>.</p>
-      <p>This company is part of the GuloumeTv group.</p>
+    <div class="journey-steps">
+        <div class="journey-step"><span class="num">1</span><h3>Il est offert</h3><p>Ozeil offre un hoodie à une personne au hasard, quelqu'un qu'on ne connaît pas forcément.</p></div>
+        <div class="journey-step"><span class="num">2</span><h3>Une photo</h3><p>Elle se prend en photo avec (ou non, c'est son choix) et l'ajoute au mur du voyage.</p></div>
+        <div class="journey-step"><span class="num">3</span><h3>Il repart</h3><p>Elle redonne le hoodie à quelqu'un d'autre, qui fait pareil. Et ça continue, de main en main.</p></div>
     </div>
+  </div>
+</section>
+
+<section class="section alt tight" id="mur">
+  <div class="container">
+    <div class="section-head">
+      <h2>Le mur du voyage</h2>
+      <p>Chaque photo est un nouveau chapitre du parcours.</p>
+    </div>
+    <div class="journey-timeline" id="journeyTimeline"></div>
+    <p class="empty-note" id="journeyEmpty" style="display:none;">Le voyage commence bientôt — la première photo arrive.</p>
+  </div>
+</section>
+
+<section class="section tight" id="participer">
+  <div class="container">
+    <div class="section-head">
+      <h2>Tu as le hoodie ? Ajoute ta photo</h2>
+      <p>Tu n'es pas obligé d'apparaître sur la photo. Elle sera vérifiée avant d'être publiée sur le mur.</p>
+    </div>
+    <form class="journey-form" id="journeyForm" novalidate>
+      <div class="field">
+        <label for="journeyPhoto">Photo</label>
+        <input id="journeyPhoto" type="file" accept="image/*">
+        <img class="journey-preview" id="journeyPreview" alt="">
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label for="journeyName">Prénom ou pseudo</label>
+          <input id="journeyName" type="text" maxlength="60" autocomplete="given-name">
+        </div>
+        <div class="field">
+          <label for="journeyCity">Ville (optionnel)</label>
+          <input id="journeyCity" type="text" maxlength="80">
+        </div>
+      </div>
+      <div class="field">
+        <label for="journeyMessage">Un petit mot (optionnel)</label>
+        <textarea id="journeyMessage" rows="3" maxlength="500"></textarea>
+      </div>
+      <div class="field journey-hp" aria-hidden="true">
+        <label for="journeyWebsite">Website</label>
+        <input id="journeyWebsite" type="text" tabindex="-1" autocomplete="off">
+      </div>
+      <div class="field journey-consent">
+        <input id="journeyConsent" type="checkbox">
+        <label for="journeyConsent">J'accepte que ma photo et mon prénom (ou pseudo) soient publiés sur ozeil.net. Aucune personne de moins de 14 ans ne doit apparaître sur la photo sans l'accord d'un parent.</label>
+      </div>
+      <button class="btn btn-primary" type="submit" id="journeySubmit">Envoyer ma photo</button>
+      <p class="journey-msg" id="journeyMsg" role="status"></p>
+    </form>
   </div>
 </section>
 
@@ -107,23 +190,23 @@
       </div>
       <div class="footer-links">
         <div class="footer-col">
-          <h5>Legal</h5>
+          <h5>Légal</h5>
           <ul>
-            <li><a href="privacy-policy.html">Privacy Policy</a></li>
-            <li><a href="printify-privacy-policy.html">Printify Privacy Policy</a></li>
+            <li><a href="politique-de-confidentialite.html">Politique de confidentialité</a></li>
+            <li><a href="politique-printify.html">Politique de confidentialité de Printify</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h5>Contact</h5>
           <ul>
             <li><a href="mailto:ozeil.proff@gmail.com">ozeil.proff@gmail.com</a></li>
-            <li><a href="index.html#contact">Contact form</a></li>
+            <li><a href="index.html#contact">Formulaire de contact</a></li>
           </ul>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Ozeil. All rights reserved.</span>
+      <span>© 2026 Ozeil. Tous droits réservés.</span>
       <a href="https://gozly.net" target="_blank" rel="noopener" class="footer-credit">
         <svg class="footer-credit-mark" viewBox="0 0 29255 17350" xmlns="http://www.w3.org/2000/svg" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
           <g transform="matrix(4.166667,0,0,4.166667,-38.619583,882.059446)">
@@ -185,11 +268,132 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<script src="/i18n.js"></script>
-<script src="/supabase-client.js"></script>
-<script src="/promo.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-client.js"></script>
+<script src="main.js"></script>
+<script src="promo.js"></script>
 <script>
   if (window.ozeilRenderPromo) window.ozeilRenderPromo();
+  (function () {
+    var T = {"locale":"fr-CA","ok":"Merci ! Ta photo a bien été envoyée. Elle apparaîtra sur le mur après vérification.","errPhoto":"Ajoute une photo (JPG, PNG ou WebP).","errName":"Entre ton prénom ou pseudo.","errConsent":"Coche la case pour accepter la publication.","errGeneric":"Oups, l'envoi a échoué. Réessaie dans un instant.","sending":"Envoi en cours…","holder":"Porteur","from":"à"};
+    var sb = window.ozeilSupabase;
+
+    function el(tag, cls, text) {
+      var e = document.createElement(tag);
+      if (cls) e.className = cls;
+      if (text !== undefined) e.textContent = text;
+      return e;
+    }
+
+    function buildItem(entry, n) {
+      var item = el('div', 'journey-item');
+      item.appendChild(el('div', 'journey-badge', '#' + n));
+
+      var card = el('div', 'journey-card');
+      var img = document.createElement('img');
+      img.src = entry.photo_url;
+      img.alt = T.holder + ' #' + n + ' — ' + entry.name;
+      img.loading = 'lazy';
+      card.appendChild(img);
+
+      var body = el('div', 'journey-card-body');
+      var date = new Date(entry.created_at).toLocaleDateString(T.locale, { year: 'numeric', month: 'long', day: 'numeric' });
+      body.appendChild(el('div', 'journey-meta', (entry.city ? entry.city + ' · ' : '') + date));
+      body.appendChild(el('h4', null, entry.name));
+      if (entry.message) body.appendChild(el('p', null, entry.message));
+      card.appendChild(body);
+
+      item.appendChild(card);
+      return item;
+    }
+
+    async function loadEntries() {
+      var host = document.getElementById('journeyTimeline');
+      var empty = document.getElementById('journeyEmpty');
+      if (!sb || !host) return;
+      var res = await sb.from('journey_entries')
+        .select('id,photo_url,name,city,message,created_at')
+        .eq('status', 'approved')
+        .order('created_at', { ascending: true });
+      if (res.error || !res.data || res.data.length === 0) {
+        if (empty) empty.style.display = 'block';
+        return;
+      }
+      res.data.forEach(function (e, i) { host.appendChild(buildItem(e, i + 1)); });
+    }
+
+    async function shrinkImage(file) {
+      try {
+        var bmp = await createImageBitmap(file, { imageOrientation: 'from-image' });
+        var scale = Math.min(1, 1600 / Math.max(bmp.width, bmp.height));
+        var c = document.createElement('canvas');
+        c.width = Math.round(bmp.width * scale);
+        c.height = Math.round(bmp.height * scale);
+        c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+        var blob = await new Promise(function (r) { c.toBlob(r, 'image/jpeg', 0.85); });
+        if (blob) return blob;
+      } catch (e) {}
+      if (file.size <= 5 * 1024 * 1024 && /^image\/(jpeg|png|webp)$/.test(file.type)) return file;
+      throw new Error('unsupported image');
+    }
+
+    var form = document.getElementById('journeyForm');
+    var fileInput = document.getElementById('journeyPhoto');
+    var preview = document.getElementById('journeyPreview');
+    var msg = document.getElementById('journeyMsg');
+    var btn = document.getElementById('journeySubmit');
+
+    function show(text, kind) {
+      msg.textContent = text;
+      msg.className = 'journey-msg' + (kind ? ' ' + kind : '');
+    }
+
+    fileInput.addEventListener('change', function () {
+      var f = fileInput.files[0];
+      if (f && /^image\//.test(f.type)) {
+        preview.src = URL.createObjectURL(f);
+        preview.style.display = 'block';
+      } else {
+        preview.style.display = 'none';
+      }
+    });
+
+    form.addEventListener('submit', async function (ev) {
+      ev.preventDefault();
+      if (document.getElementById('journeyWebsite').value) return;
+      var file = fileInput.files[0];
+      var name = document.getElementById('journeyName').value.trim();
+      var city = document.getElementById('journeyCity').value.trim();
+      var message = document.getElementById('journeyMessage').value.trim();
+
+      if (!file || !/^image\//.test(file.type)) return show(T.errPhoto, 'error');
+      if (!name) return show(T.errName, 'error');
+      if (!document.getElementById('journeyConsent').checked) return show(T.errConsent, 'error');
+      if (!sb) return show(T.errGeneric, 'error');
+
+      btn.disabled = true;
+      show(T.sending);
+      try {
+        var blob = await shrinkImage(file);
+        var ext = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' }[blob.type] || 'jpg';
+        var path = crypto.randomUUID() + '.' + ext;
+        var up = await sb.storage.from('journey-photos').upload(path, blob, { contentType: blob.type, upsert: false });
+        if (up.error) throw up.error;
+        var url = sb.storage.from('journey-photos').getPublicUrl(path).data.publicUrl;
+        var ins = await sb.from('journey_entries').insert({ photo_url: url, name: name, city: city || null, message: message || null });
+        if (ins.error) throw ins.error;
+        form.reset();
+        preview.style.display = 'none';
+        show(T.ok, 'ok');
+      } catch (e) {
+        show(T.errGeneric, 'error');
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    loadEntries();
+  })();
 </script>
 
 </body>
