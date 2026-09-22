@@ -1274,50 +1274,39 @@ body.switch-ready .switch-flash{animation:swFlash .9s ease-out .3s forwards;}
   display:flex;align-items:center;justify-content:center;
   overflow:hidden;
   isolation:isolate;
-  background:
-    radial-gradient(ellipse 70% 55% at 50% 55%, rgba(42,0,255,.55), transparent 70%),
-    radial-gradient(ellipse 45% 40% at 15% 20%, rgba(0,208,255,.28), transparent 70%),
-    radial-gradient(ellipse 45% 40% at 85% 85%, rgba(123,43,255,.35), transparent 70%),
-    var(--sw-deep);
+  background:var(--sw-deep);
 }
+/* moving multicolour glow behind the logo — turns the opposite way to the star */
+.switch-hero:not(.switch-hero-sm)::after{
+  content:"";
+  position:absolute;left:50%;top:50%;
+  width:132vmax;height:132vmax;
+  translate:-50% -50%;
+  z-index:-3;pointer-events:none;
+  background:conic-gradient(from 0deg,#ff2d6f,#ffb400,#ff5a2d,#ff2d9b,#7b2bff,#2a00ff,#00d0ff,#ffb400,#ff2d6f);
+  filter:blur(110px) saturate(1.5);
+  opacity:.46;
+  mask:radial-gradient(circle at center, transparent 0%, rgba(0,0,0,.5) 14%, #000 30%, rgba(0,0,0,.55) 50%, rgba(0,0,0,.18) 66%, transparent 78%);
+  -webkit-mask:radial-gradient(circle at center, transparent 0%, rgba(0,0,0,.5) 14%, #000 30%, rgba(0,0,0,.55) 50%, rgba(0,0,0,.18) 66%, transparent 78%);
+  animation:swAurora 26s linear infinite;
+}
+@keyframes swAurora{to{rotate:-360deg;}}
+@media (prefers-reduced-motion: reduce){
+  .switch-hero:not(.switch-hero-sm)::after{animation:none;}
+}
+
 .switch-hero h1{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
 
-.switch-blob{
-  position:absolute;border-radius:50%;filter:blur(70px);opacity:.75;z-index:-2;
-  animation:swBlob 14s ease-in-out infinite alternate;
-}
-.switch-blob.b1{width:46vmax;height:46vmax;left:-12vmax;top:-14vmax;background:var(--sw-blue);}
-.switch-blob.b2{width:38vmax;height:38vmax;right:-10vmax;bottom:-16vmax;background:var(--sw-violet);animation-duration:17s;animation-delay:-4s;}
-.switch-blob.b3{width:26vmax;height:26vmax;right:12vmax;top:-8vmax;background:var(--sw-cyan);opacity:.45;animation-duration:11s;animation-delay:-7s;}
-@keyframes swBlob{
-  0%{transform:translate(0,0) scale(1);}
-  50%{transform:translate(6vmax,4vmax) scale(1.15);}
-  100%{transform:translate(-4vmax,7vmax) scale(.92);}
-}
-
 .switch-beams{
-  position:absolute;left:50%;top:50%;width:180vmax;height:180vmax;
+  position:absolute;left:50%;top:50%;width:112vmax;height:112vmax;
   translate:-50% -50%;z-index:-1;
-  background:repeating-conic-gradient(from 0deg, rgba(90,120,255,.16) 0deg 5deg, transparent 5deg 22deg);
-  mask:radial-gradient(circle, #000 0%, transparent 55%);
-  -webkit-mask:radial-gradient(circle, #000 0%, transparent 55%);
+  background:url("/images/etoile.svg") center/contain no-repeat;
+  opacity:.18;
+  mask:radial-gradient(circle, #000 0%, rgba(0,0,0,.6) 34%, transparent 72%);
+  -webkit-mask:radial-gradient(circle, #000 0%, rgba(0,0,0,.6) 34%, transparent 72%);
   animation:swSpin 40s linear infinite;
 }
 @keyframes swSpin{to{rotate:360deg;}}
-
-.switch-grid{
-  position:absolute;left:-50%;right:-50%;bottom:-10%;height:55%;z-index:-1;
-  background-image:
-    linear-gradient(rgba(61,91,255,.55) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(61,91,255,.55) 1px, transparent 1px);
-  background-size:70px 70px;
-  transform:perspective(420px) rotateX(62deg);
-  transform-origin:50% 100%;
-  mask:linear-gradient(to top, #000 10%, transparent 85%);
-  -webkit-mask:linear-gradient(to top, #000 10%, transparent 85%);
-  animation:swGrid 2.2s linear infinite;
-}
-@keyframes swGrid{to{background-position:0 70px,0 0;}}
 
 .switch-sparks{position:absolute;inset:0;z-index:-1;pointer-events:none;}
 .switch-sparks i{
@@ -1341,27 +1330,33 @@ body.switch-ready .switch-logo-wrap{animation:swLogoIn 1.1s cubic-bezier(.2,1.4,
   55%{opacity:1;filter:blur(0) brightness(1.6);}
   100%{opacity:1;transform:scale(1) rotate(0);filter:blur(0) brightness(1);}
 }
+/* dark halo that keeps the logo readable over any colour behind it */
+.switch-logo-wrap::before{
+  content:"";
+  position:absolute;inset:-14% -9%;
+  z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse at center, rgba(2,0,20,.88), rgba(2,0,20,.5) 52%, transparent 78%);
+  filter:blur(26px);
+}
+
 .switch-logo{
   width:100%;height:auto;
-  filter:drop-shadow(0 0 22px rgba(42,0,255,.9)) drop-shadow(0 0 60px rgba(0,208,255,.35));
-  animation:swFloat 5s ease-in-out 1.6s infinite, swGlow 2.6s ease-in-out 1.6s infinite;
+  filter:drop-shadow(0 0 18px rgba(42,0,255,.55));
+  animation:swFloat 5s ease-in-out 1.6s infinite;
 }
 @keyframes swFloat{
   0%,100%{translate:0 0;}
   50%{translate:0 -14px;}
 }
-@keyframes swGlow{
-  0%,100%{filter:drop-shadow(0 0 22px rgba(42,0,255,.9)) drop-shadow(0 0 60px rgba(0,208,255,.35));}
-  50%{filter:drop-shadow(0 0 34px rgba(61,91,255,1)) drop-shadow(0 0 110px rgba(0,208,255,.6));}
-}
 .switch-logo-ghost{
   position:absolute;left:0;top:0;width:100%;height:auto;pointer-events:none;
   mix-blend-mode:screen;opacity:0;
+  animation:swFloat 5s ease-in-out 1.6s infinite;
 }
 .switch-logo-ghost.g1{filter:hue-rotate(-60deg) saturate(3);}
 .switch-logo-ghost.g2{filter:hue-rotate(80deg) saturate(3);}
-body.switch-ready .switch-logo-ghost.g1{animation:swGlitchA 4.5s steps(1) 1.4s infinite;}
-body.switch-ready .switch-logo-ghost.g2{animation:swGlitchB 4.5s steps(1) 1.4s infinite;}
+body.switch-ready .switch-logo-ghost.g1{animation:swGlitchA 4.5s steps(1) 1.4s infinite, swFloat 5s ease-in-out 1.6s infinite;}
+body.switch-ready .switch-logo-ghost.g2{animation:swGlitchB 4.5s steps(1) 1.4s infinite, swFloat 5s ease-in-out 1.6s infinite;}
 @keyframes swGlitchA{
   0%{opacity:.8;transform:translate(-14px,4px);}
   3%{opacity:.6;transform:translate(10px,-6px);}
@@ -1431,7 +1426,6 @@ body.switch-ready .switch-scroll{animation:swFadeIn .6s ease 1.5s forwards, swBo
 
 @media (max-width:720px){
   .switch-logo-wrap{width:94vw;}
-  .switch-grid{height:40%;}
 }
 @media (prefers-reduced-motion: reduce){
   .switch-logo-wrap,.switch-scroll{opacity:1;}
@@ -1511,7 +1505,6 @@ body.switch-ready .switch-scroll{animation:swFadeIn .6s ease 1.5s forwards, swBo
 
 .switch-hero.switch-hero-sm{min-height:0;padding:90px 0 80px;flex-direction:column;gap:22px;}
 .switch-hero-sm .switch-logo-wrap{width:min(340px,64vw);}
-.switch-hero-sm .switch-grid{height:70%;}
 .switch-hero-sm h1{
   position:static;width:auto;height:auto;overflow:visible;clip:auto;white-space:normal;
   font-size:clamp(36px,6vw,64px);font-weight:800;text-align:center;color:#fff;
@@ -1533,6 +1526,4 @@ body.switch-ready .switch-hero-sm h1{animation:swTitleIn .9s cubic-bezier(.2,1.4
   .switch-hero-sm h1{opacity:1;}
 }
 .journey-steps.four{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));max-width:1040px;}
-.switch-hero-sm::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 38% 60% at 50% 42%, rgba(2,0,20,.9), rgba(2,0,20,.55) 45%, transparent 75%);}
-.switch-hero-sm .switch-blob{opacity:.45;}
-.switch-hero-sm > *:not(.switch-blob):not(.switch-beams):not(.switch-grid):not(.switch-sparks){position:relative;z-index:1;}
+.switch-hero-sm > *:not(.switch-beams):not(.switch-sparks){position:relative;z-index:1;}
