@@ -9,6 +9,7 @@
 - [The Switch](https://ozeil.net/the-switch): projet participatif — un hoodie Ozeil offert à un inconnu, qui se prend en photo avec puis le passe à quelqu'un d'autre. Mur de photos du parcours du hoodie, alimenté par le public (photos approuvées avant publication).
   - [Le Voyage](https://ozeil.net/the-switch-voyage): le mur de photos du parcours du hoodie.
   - [J'ai le hoodie](https://ozeil.net/the-switch-hoodie): instructions pour la personne qui a reçu le hoodie et formulaire d'envoi de photo.
+- [Projet Laura](https://ozeil.net/projet-laura): projet de designs personnalisés offerts à des personnes choisies pour représenter la marque ; explique pourquoi la personne a été choisie, comment faire modifier son design et comment contacter Ozeil.
 
 Une version anglaise du site existe sous le préfixe `/en/` (contenu identique, traduit) :
 - [Home (EN)](https://ozeil.net/en)

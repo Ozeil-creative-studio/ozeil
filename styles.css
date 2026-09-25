@@ -1650,3 +1650,123 @@ body.switch-ready .switch-hero-sm h1{animation:swTitleIn .9s cubic-bezier(.2,1.4
 @media (prefers-reduced-motion: reduce){
   .nav-panel{transition:none;}
 }
+
+/* ================= Projet Laura (thème clair, palette du logo) ================= */
+.page-laura{
+  --la-mint:#10ffc1;
+  --la-magenta:#ff00e4;
+  --la-mint-deep:#00a37c;
+  --la-magenta-deep:#b8009f;
+
+  /* la page entière bascule en clair */
+  --bg:#fdf8ff;
+  --bg-elevated:#f4ecfa;
+  --bg-elevated-2:#ece2f5;
+  --surface:#ffffff;
+  --line:rgba(20,16,25,.12);
+  --text:#141019;
+  --text-soft:#4b4558;
+  --text-faint:#867e95;
+  --gold:var(--la-magenta-deep);
+  --gold-soft:rgba(184,0,159,.4);
+
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* en-tête et pied de page, prévus pour du sombre à l'origine */
+.page-laura header{
+  background:rgba(253,248,255,.82);
+  border-bottom:1px solid var(--line);
+}
+.page-laura footer{background:var(--bg-elevated);border-top:1px solid var(--line);}
+.page-laura .footer-credit path[style*="fill:white"]{fill:#141019 !important;}
+.page-laura .nav-logo,
+.page-laura .footer-brand-mark .mark{color:#141019;}
+.page-laura .nav-link.current::after{background:var(--la-magenta-deep);}
+.page-laura .nav-panel{box-shadow:0 24px 60px rgba(20,16,25,.18);}
+
+/* ----- en-tête de page ----- */
+.laura-hero{
+  position:relative;
+  padding:100px 0 80px;
+  text-align:center;
+  overflow:hidden;
+  background:var(--bg);
+}
+.laura-glow{
+  position:absolute;left:50%;top:45%;
+  width:120vmax;height:120vmax;
+  translate:-50% -50%;
+  z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 26% 22% at 36% 42%, rgba(16,255,193,.55), transparent 70%),
+    radial-gradient(ellipse 26% 22% at 64% 58%, rgba(255,0,228,.38), transparent 70%);
+  filter:blur(70px);
+  animation:lauraDrift 16s ease-in-out infinite alternate;
+}
+@keyframes lauraDrift{
+  0%{transform:translate(-3%,-2%) scale(1);}
+  100%{transform:translate(3%,2%) scale(1.08);}
+}
+.laura-hero .container{position:relative;z-index:1;}
+.laura-title{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+.laura-logo-card{display:inline-block;padding:0;background:none;box-shadow:none;}
+.laura-logo-card img{width:min(86vw,720px);height:auto;display:block;}
+.laura-lead{
+  margin-top:34px;
+  font-size:clamp(16px,2.4vw,21px);
+  font-weight:600;
+  line-height:1.6;
+  color:var(--text);
+}
+
+/* ----- sections de texte ----- */
+.page-laura .section{background:var(--bg);}
+.page-laura .section.alt{background:var(--bg-elevated);}
+.laura-block{max-width:720px;margin:0 auto;}
+.laura-block h2{
+  font-size:clamp(24px,3.4vw,34px);
+  font-weight:800;
+  margin-bottom:20px;
+  background:linear-gradient(100deg,var(--la-mint-deep),#3aa7b8 45%,var(--la-magenta-deep));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.laura-block p{
+  font-size:15.5px;
+  font-weight:400;
+  line-height:1.85;
+  color:var(--text-soft);
+  margin-bottom:16px;
+}
+.laura-block p:last-child{margin-bottom:0;}
+
+/* ----- bande de contact ----- */
+.laura-band{
+  position:relative;
+  padding:40px 0;
+  background:linear-gradient(90deg,var(--la-mint),var(--la-magenta));
+  overflow:hidden;
+}
+.laura-band .container{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;}
+.laura-band-label{font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#12101a;}
+.laura-social{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:12px 22px;border-radius:999px;
+  background:#12101a;color:#fff;
+  font-size:14px;font-weight:700;
+  transition:transform .2s ease, background .2s ease, color .2s ease;
+}
+.laura-social svg{width:20px;height:20px;}
+.laura-social:hover{transform:translateY(-3px) scale(1.04);background:#fff;color:#12101a;}
+
+.page-laura .btn-ghost{border-color:var(--line);color:var(--text);}
+.page-laura .btn-ghost:hover{border-color:var(--la-magenta-deep);background:#fff;color:var(--la-magenta-deep);}
+
+@media (max-width:720px){
+  .laura-hero{padding:64px 0 52px;}
+  .laura-band-label{width:100%;text-align:center;}
+}
+@media (prefers-reduced-motion: reduce){
+  .laura-glow{animation:none;}
+}
