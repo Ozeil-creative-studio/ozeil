@@ -1787,3 +1787,84 @@ body.switch-ready .switch-hero-sm h1{animation:swTitleIn .9s cubic-bezier(.2,1.4
   .laura-glow::before,
   .laura-glow::after{animation:none;}
 }
+
+/* ----- Projet Laura : le cadeau qui s'ouvre à l'arrivée ----- */
+.laura-gift-stage{
+  position:absolute;left:50%;top:50%;
+  translate:-50% -50%;
+  z-index:3;pointer-events:none;
+}
+.laura-gift{
+  position:relative;
+  width:86px;height:74px;
+  animation:lauraGiftIn .55s cubic-bezier(.2,1.5,.4,1) forwards, lauraGiftShake .42s ease-in-out .6s 1;
+}
+.laura-gift-box{
+  position:absolute;left:0;bottom:0;
+  width:86px;height:56px;
+  border-radius:8px;
+  background:linear-gradient(150deg,var(--la-mint),var(--la-magenta));
+  box-shadow:0 12px 30px rgba(184,0,159,.28);
+}
+.laura-gift-ribbon{
+  position:absolute;left:37px;bottom:0;
+  width:12px;height:56px;
+  background:rgba(255,255,255,.85);
+  border-radius:2px;
+}
+.laura-gift-lid{
+  position:absolute;left:-5px;top:8px;
+  width:96px;height:20px;
+  border-radius:6px;
+  background:linear-gradient(120deg,var(--la-magenta),var(--la-mint));
+  box-shadow:0 6px 18px rgba(16,255,193,.3);
+}
+.laura-gift.open .laura-gift-lid{animation:lauraLidPop .7s cubic-bezier(.3,1.4,.5,1) forwards;}
+.laura-gift.open .laura-gift-box,
+.laura-gift.open .laura-gift-ribbon{animation:lauraBoxOut .5s ease-in .25s forwards;}
+
+@keyframes lauraGiftIn{
+  0%{opacity:0;transform:translateY(-70px) scale(.5);}
+  100%{opacity:1;transform:translateY(0) scale(1);}
+}
+@keyframes lauraGiftShake{
+  0%,100%{rotate:0deg;}
+  25%{rotate:-9deg;}
+  60%{rotate:8deg;}
+}
+@keyframes lauraLidPop{
+  0%{transform:translate(0,0) rotate(0);opacity:1;}
+  60%{transform:translate(18px,-90px) rotate(34deg);opacity:1;}
+  100%{transform:translate(34px,-150px) rotate(60deg);opacity:0;}
+}
+@keyframes lauraBoxOut{
+  0%{opacity:1;transform:scale(1);}
+  100%{opacity:0;transform:scale(.35) translateY(12px);}
+}
+
+.laura-confetti{position:absolute;left:43px;top:34px;}
+.laura-confetti i{
+  position:absolute;
+  width:9px;height:9px;
+  opacity:0;
+}
+.laura-confetti.go i{animation:lauraConfetti 1.25s cubic-bezier(.15,.7,.3,1) var(--delay) forwards;}
+@keyframes lauraConfetti{
+  0%{opacity:1;transform:translate(0,0) rotate(0) scale(.4);}
+  60%{opacity:1;}
+  100%{opacity:0;transform:translate(var(--tx),calc(var(--ty) + 90px)) rotate(var(--rot)) scale(1);}
+}
+
+/* le logo attend son tour, puis surgit */
+body.laura-intro .laura-logo-card,
+body.laura-intro .laura-lead{opacity:0;}
+body.laura-revealed .laura-logo-card{opacity:1;animation:lauraLogoPop .8s cubic-bezier(.2,1.45,.35,1) forwards;}
+body.laura-revealed .laura-lead{opacity:1;animation:lauraLeadIn .7s ease .25s forwards;}
+@keyframes lauraLogoPop{
+  0%{opacity:0;transform:scale(.55) translateY(18px);}
+  100%{opacity:1;transform:scale(1) translateY(0);}
+}
+@keyframes lauraLeadIn{
+  0%{opacity:0;transform:translateY(14px);}
+  100%{opacity:1;transform:none;}
+}
