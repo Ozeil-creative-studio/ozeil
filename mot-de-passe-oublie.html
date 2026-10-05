@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#05001D">
-<title>Connexion — Ozeil</title>
+<meta name="robots" content="noindex, nofollow">
+<title>Mot de passe oublié — Ozeil</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -32,57 +33,53 @@
     <div class="nav-logo">
       <svg class="mark" style="width:44px;height:44px;color:#ffffff;"><use href="#ozeil-mark"/></svg>
     </div>
-    <h1>Connexion</h1>
-    <p class="sub">Accès réservé à la gestion de la boutique Ozeil.</p>
-    <form id="loginForm">
+    <h1>Mot de passe oublié</h1>
+    <p class="sub">Entre ton courriel : on t'envoie un lien pour en choisir un nouveau.</p>
+    <form id="resetForm">
       <div class="field">
         <label for="email">Courriel</label>
         <input id="email" type="email" required autocomplete="email">
       </div>
-      <div class="field">
-        <label for="password">Mot de passe</label>
-        <input id="password" type="password" required autocomplete="current-password">
-      </div>
-      <button class="btn btn-primary" type="submit" id="loginBtn">Se connecter</button>
-      <p class="auth-error" id="loginError"></p>
+      <button class="btn btn-primary" type="submit" id="resetBtn">Envoyer le lien</button>
+      <p class="auth-error" id="resetMsg"></p>
     </form>
-    <p class="auth-alt"><a href="/mot-de-passe-oublie">Mot de passe oublié ?</a></p>
+    <p class="auth-alt"><a href="/login">Retour à la connexion</a></p>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="supabase-client.js"></script>
 <script>
-  (async function () {
+  (function () {
+    var msg = document.getElementById('resetMsg');
+    var btn = document.getElementById('resetBtn');
     if (!window.ozeilSupabase) {
-      document.getElementById('loginError').textContent = "Connexion à Supabase non configurée.";
-      return;
-    }
-    var session = (await window.ozeilSupabase.auth.getSession()).data.session;
-    if (session) {
-      window.location.href = '/dashboard';
+      msg.textContent = "Connexion à Supabase non configurée.";
       return;
     }
 
-    document.getElementById('loginForm').addEventListener('submit', async function (e) {
+    document.getElementById('resetForm').addEventListener('submit', async function (e) {
       e.preventDefault();
-      var errorEl = document.getElementById('loginError');
-      var btn = document.getElementById('loginBtn');
-      errorEl.textContent = '';
+      msg.className = 'auth-error';
+      msg.textContent = '';
       btn.disabled = true;
-      btn.textContent = 'Connexion...';
+      btn.textContent = 'Envoi...';
 
       var email = document.getElementById('email').value.trim();
-      var password = document.getElementById('password').value;
-      var res = await window.ozeilSupabase.auth.signInWithPassword({ email: email, password: password });
+      var res = await window.ozeilSupabase.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + '/nouveau-mot-de-passe'
+      });
+
+      btn.disabled = false;
+      btn.textContent = 'Envoyer le lien';
 
       if (res.error) {
-        errorEl.textContent = "Courriel ou mot de passe incorrect.";
-        btn.disabled = false;
-        btn.textContent = 'Se connecter';
+        msg.textContent = "L'envoi a échoué. Réessaie dans un instant.";
         return;
       }
-      window.location.href = '/dashboard';
+      // même message si l'adresse n'existe pas : on n'indique pas qui a un compte
+      msg.className = 'auth-error auth-ok';
+      msg.textContent = "Si un compte existe avec ce courriel, le lien vient d'être envoyé. Pense à regarder dans les indésirables.";
     });
   })();
 </script>

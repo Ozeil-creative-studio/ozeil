@@ -6,6 +6,8 @@ Disallow: /dashboard
 Disallow: /dashboard.html
 Disallow: /login
 Disallow: /login.html
+Disallow: /mot-de-passe-oublie
+Disallow: /nouveau-mot-de-passe
 
 # AI crawlers / answer engines — explicitly welcome
 User-agent: GPTBot

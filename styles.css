@@ -971,6 +971,10 @@ footer{background:var(--bg-elevated);border-top:1px solid var(--line);padding:70
   margin-top:14px;
   min-height:16px;
 }
+.auth-error.auth-ok{color:#7be0a4;line-height:1.6;}
+.auth-alt{text-align:center;margin-top:18px;font-size:13px;}
+.auth-alt a{color:var(--text-soft);text-decoration:underline;text-underline-offset:3px;}
+.auth-alt a:hover{color:var(--text);}
 
 /* ---------- Dashboard ---------- */
 .admin-header{
